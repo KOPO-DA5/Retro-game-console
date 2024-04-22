@@ -13,11 +13,11 @@
 
 1. GitHub에서 프로젝트를 클론하세요.
    ```bash
-   git clone https://github.com/yourusername/retro-game-console-web.git
+   git clone https://github.com/KOPO-DA5/Retro-game-console.git
    ```
 2. 클론된 폴더로 이동합니다.
    ```bash
-   cd retro-game-console-web
+   cd Retro-game-console
    ```
 3. `index.html` 파일을 웹 브라우저에서 엽니다.
 
