@@ -39,15 +39,20 @@ function updateGameContent(gameId) {
             `;
     /* js부르는 법 */
 
-    let script1 = document.createElement("script");
-    script1.type = "text/javascript";
-    script1.src = "./js/tetris/constants.js";
-    document.body.appendChild(script1);
+    let scriptToConstants = document.createElement("script");
+    scriptToConstants.type = "text/javascript";
+    scriptToConstants.src = "./js/tetris/constants.js";
+    document.body.appendChild(scriptToConstants);
 
-    let script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "./js/tetris/main.js";
-    document.body.appendChild(script);
+    let scriptToBoard = document.createElement("script");
+    scriptToBoard.type = "text/javascript";
+    scriptToBoard.src = "./js/tetris/board.js";
+    document.body.appendChild(scriptToBoard);
+
+    let scriptTomain = document.createElement("script");
+    scriptTomain.type = "text/javascript";
+    scriptTomain.src = "./js/tetris/main.js";
+    document.body.appendChild(scriptTomain);
   } else if (gameId === "game2") {
     content.innerHTML = `
                 <button onclick="changeText()">텍스트 변경</button>

@@ -6,7 +6,7 @@ ctxBoard.canvas.width = COLS * BLOCK_SIZE;
 ctxBoard.canvas.height = ROWS * BLOCK_SIZE;
 
 //블록 크기 변경
-ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
+ctxBoard.scale(BLOCK_SIZE, BLOCK_SIZE);
 
 //Play 실행 함수
 let board = new Board();

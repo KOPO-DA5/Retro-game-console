@@ -5,18 +5,19 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 360px 200px;
+  grid-template-columns: 350px 210px;
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
 }
 
 .game-board {
   border: solid 2px;
+  margin-left: 80px;
+  margin-top: 15px;
 }
 
 .play-button {
