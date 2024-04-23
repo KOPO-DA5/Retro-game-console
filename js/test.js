@@ -26,8 +26,6 @@ function updateGameContent(gameId) {
             `;
   } else if (gameId === "game2") {
     content.innerHTML = `
-                <h2>텍스트 변경 게임</h2>
-                <p>버튼을 클릭할 때마다 텍스트가 변경됩니다.</p>
                 <button onclick="changeText()">텍스트 변경</button>
                 <p id="displayText">여기에 텍스트가 표시됩니다.</p>
             `;
