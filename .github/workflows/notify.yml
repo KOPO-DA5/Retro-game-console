@@ -3,10 +3,10 @@ on: [push] # 이벤트를 변경하여 다른 GitHub 이벤트에 대응하게 �
 # push 이벤트가 발생할 때마다 이 workflow가 실행되도록 설정합니다. GitHub에서는 push,
 # pull request, issue comment 등 다양한 이벤트를 통해 workflow를 트리거할 수 있습니다.
 jobs:
-notify:
-runs-on: ubuntu-latest # 작업 환경: 작업이 최신 Ubuntu 가상 환경에서 실행됨을 의미합니다.
-steps:
-- name: Send notification to Microsoft 365
-run: |
-  curl -H "Content-Type: application/json" -d "{ 'text': '행복 커밋이 차곡차곡 쌓인다.' }" https://o365kopo.webhook.office.com/webhookb2/2e2d852c-b891-45ca-8fce-bce9443d4118@ad21525c-fc0f-4dbc-a403-67ce00add0e4/IncomingWebhook/0326b35ecd1944e28cbfdf17b8fc47ca/437bbbc7-9692-4ffb-969f-fccfa63c2643
+  notify:
+    runs-on: ubuntu-latest # 작업 환경: 작업이 최신 Ubuntu 가상 환경에서 실행됨을 의미합니다.
+    steps:
+      - name: Send notification to Microsoft 365
+        run: |
+          curl -H "Content-Type: application/json" -d "{ 'text': '행복 커밋이 차곡차곡 쌓인다.' }" https://o365kopo.webhook.office.com/webhookb2/2e2d852c-b891-45ca-8fce-bce9443d4118@ad21525c-fc0f-4dbc-a403-67ce00add0e4/IncomingWebhook/0326b35ecd1944e28cbfdf17b8fc47ca/437bbbc7-9692-4ffb-969f-fccfa63c2643
 # ( curl 로 incoming webhook을 호출) 보내고 싶은 메시지를 설정하면 된다. 
