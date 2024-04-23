@@ -4,11 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>레트로 게임 콘솔</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="./css/common.css" />
   </head>
   <body>
     <div id="console">
-      <h1>레트로 게임 콘솔</h1>
+      <div id="gameView">
+        <div id="content"></div>
+      </div>
       <div id="games">
         <button class="game-button" onclick="loadGame('game1')">
           테트리스 게임
@@ -19,9 +26,6 @@
         <button class="game-button" onclick="loadGame('game3')">
           공룡 게임? 웹훅 테스트
         </button>
-      </div>
-      <div id="gameView">
-        <div id="content"></div>
       </div>
     </div>
     <script src="./js/tetris.js"></script>

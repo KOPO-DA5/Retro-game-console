@@ -1,6 +1,9 @@
 function loadGame(gameId) {
   const content = document.getElementById("content");
 
+  var newStyle = document.createElement("link");
+  newStyle.setAttribute("rel", "stylesheet");
+
   resetAnimation(content); // 애니메이션 초기화
   updateGameContent(gameId); // 콘텐츠 업데이트
 
@@ -16,9 +19,11 @@ function resetAnimation(element) {
 
 function updateGameContent(gameId) {
   const content = document.getElementById("content");
-
   if (gameId === "game1") {
+    // newStyle.setAttribute("href", "../css/tetris.css");
     content.innerHTML = `
+                <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet"/>
+                <link rel="stylesheet" href="./css/tetris.css" />
                 <div class="grid">
                  <canvas id="board" class="game-board"></canvas>
                  <div class="right-column">
@@ -31,11 +36,12 @@ function updateGameContent(gameId) {
                     <button onclick="play()" class="play-button">Play</button>
                     </div>
                 </div>
+                <script src="./js/tetris/constants.js"></script>
+                <script src="./js/tetris/main.js"></script>
             `;
   } else if (gameId === "game2") {
     content.innerHTML = `
-                <h2>텍스트 변경 게임</h2>
-                <p>버튼을 클릭할 때마다 텍스트가 변경됩니다.</p>
+                
                 <button onclick="changeText()">텍스트 변경</button>
                 <p id="displayText">여기에 텍스트가 표시됩니다.</p>
             `;
