@@ -8,5 +8,5 @@ jobs:
     steps:
       - name: Send notification to Microsoft 365
         run: |
-          curl -H "Content-Type: application/json" -d "{ 'text': '행복 커밋이 차곡차곡 쌓인다.' }" https://o365kopo.webhook.office.com/webhookb2/2e2d852c-b891-45ca-8fce-bce9443d4118@ad21525c-fc0f-4dbc-a403-67ce00add0e4/IncomingWebhook/0326b35ecd1944e28cbfdf17b8fc47ca/437bbbc7-9692-4ffb-969f-fccfa63c2643
+          curl -H "Content-Type: application/json" -d "{ 'text': '행복 커밋이 차곡차곡 쌓인다.' }" ${{ secrets.M365_WEBHOOK_URL }}
 # ( curl 로 incoming webhook을 호출) 보내고 싶은 메시지를 설정하면 된다. 
