@@ -36,12 +36,11 @@ function updateGameContent(gameId) {
                     <button onclick="play()" class="play-button">Play</button>
                     </div>
                 </div>
-                <script src="./js/tetris/constants.js"></script>
-                <script src="./js/tetris/main.js"></script>
+                <script type="text/javascript" src="./js/tetris/constants.js"></script>
+                <script type="text/javascript" src="./js/tetris/main.js"></script>
             `;
   } else if (gameId === "game2") {
     content.innerHTML = `
-                
                 <button onclick="changeText()">텍스트 변경</button>
                 <p id="displayText">여기에 텍스트가 표시됩니다.</p>
             `;
@@ -50,22 +49,4 @@ function updateGameContent(gameId) {
     <canvas id="canvas"></canvas>
     <script src="./dianosaur.js"></script>`;
   }
-}
-
-let counter = 0;
-function increaseCounter() {
-  counter++;
-  document.getElementById("counter").textContent = counter;
-}
-
-let textIndex = 0;
-const texts = [
-  "안녕하세요",
-  "반갑습니다",
-  "오늘도 좋은 하루!",
-  "프로그래밍 재미있죠?",
-];
-function changeText() {
-  textIndex = (textIndex + 1) % texts.length;
-  document.getElementById("displayText").textContent = texts[textIndex];
 }
