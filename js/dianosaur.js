@@ -97,7 +97,7 @@ function isBumped(dino, cactus) {
 }
 
 var jump = false;
-//스페이스바 누르면 점프
+//스페이스바 누르면 점프 테스트
 document.addEventListener("keydown", function (e) {
   if (e.code === "Space") {
     jump = true;
