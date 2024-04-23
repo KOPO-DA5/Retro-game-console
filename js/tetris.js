@@ -20,7 +20,6 @@ function resetAnimation(element) {
 function updateGameContent(gameId) {
   const content = document.getElementById("content");
   if (gameId === "game1") {
-    // newStyle.setAttribute("href", "../css/tetris.css");
     content.innerHTML = `
                 <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet"/>
                 <link rel="stylesheet" href="./css/tetris.css" />
@@ -36,9 +35,19 @@ function updateGameContent(gameId) {
                     <button onclick="play()" class="play-button">Play</button>
                     </div>
                 </div>
-                <script type="text/javascript" src="./js/tetris/constants.js"></script>
-                <script type="text/javascript" src="./js/tetris/main.js"></script>
+                
             `;
+    /* js부르는 법 */
+
+    let script1 = document.createElement("script");
+    script1.type = "text/javascript";
+    script1.src = "./js/tetris/constants.js";
+    document.body.appendChild(script1);
+
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "./js/tetris/main.js";
+    document.body.appendChild(script);
   } else if (gameId === "game2") {
     content.innerHTML = `
                 <button onclick="changeText()">텍스트 변경</button>
