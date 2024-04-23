@@ -1,1 +1,28 @@
 /* 테트리스 게임에만 담을 css */
+* {
+  font-family: "Press Start 2p", cursive;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 350px 210px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.game-board {
+  border: solid 2px;
+  margin-left: 80px;
+  margin-top: 15px;
+}
+
+.play-button {
+  background-color: #4caf50;
+  font-size: 16px;
+  padding: 15px 30px;
+  cursor: pointer;
+}

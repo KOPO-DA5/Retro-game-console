@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>레트로 게임 콘솔</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="./css/common.css" />
   </head>
   <body>
@@ -12,18 +17,12 @@
         <div id="content"></div>
       </div>
       <div id="games">
-        <button class="game-button" onclick="loadGame('game1')">
-          카운팅 게임
-        </button>
-        <button class="game-button" onclick="loadGame('game2')">
-          텍스트 변경 게임
-        </button>
-        <button class="game-button" onclick="loadGame('game3')">
-          공룡 게임? 웹훅 테스트
-        </button>
+        <button class="game-button" onclick="loadGame('game1')">Tetris</button>
+        <button class="game-button" onclick="loadGame('game2')">Dino</button>
+        <button class="game-button" onclick="loadGame('game3')">Test</button>
       </div>
     </div>
-    <script src="./js/test.js"></script>
+    <script src="./js/tetris.js"></script>
     <script src="./js/dianosaur.js"></script>
   </body>
 </html>
