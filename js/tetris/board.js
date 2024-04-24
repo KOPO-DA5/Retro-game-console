@@ -1,10 +1,28 @@
 class Board {
-  grid;
-  piece;
+  // grid;
+  // piece;
+
+  constructor(ctx, ctxNext) {
+    this.ctx = ctx;
+    this.ctxNext = ctxNext;
+    this.init();
+  }
+
+  init() {
+    // Calculate size of canvas from constants.
+    this.ctx.canvas.width = COLS * BLOCK_SIZE;
+    this.ctx.canvas.height = ROWS * BLOCK_SIZE;
+
+    // Scale so we don't need to give size on every draw.
+    this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
+  }
+
 
   reset() {
     this.grid = this.getEmptyBoard();
-    this.piece = new Piece()
+    this.piece = new Piece(this.ctx);
+    this.piece.setStartingPosition();
+    this.getNewPiece();
   }
 
   getEmptyBoard() {
@@ -47,11 +65,6 @@ class Board {
     return p;
   }
 
-  draw() {
-    this.piece.draw();
-    this.drawBoard();
-  }
-
   drawBoard() {
     this.grid.forEach((row, y) => {
       row.forEach((value, x) => {
@@ -62,4 +75,43 @@ class Board {
       });
     });
   }
+
+  draw() {
+    this.piece.draw();
+    this.drawBoard();
+    console.log("draw");
+  }
+
+  drop() {
+    let p = moves[KEY.DOWN](this.piece);
+    if (this.valid(p)) {
+      this.piece.move(p);
+    } else {
+      this.freeze();
+      this.piece = this.next;
+      console.log(this.ctx);
+      this.piece.ctx = this.ctx;
+      this.piece.setStartingPosition();
+      this.getNewPiece();
+    }
+    return true;
+  }
+
+  getNewPiece() {
+    const { width, height } = this.ctxNext.canvas;
+    this.next = new Piece(this.ctxNext);
+    this.ctxNext.clearRect(0, 0, width, height);
+    this.next.draw();
+  }
+  
+  freeze() {
+    this.piece.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if(value > 0) {
+          this.grid[y + this.piece.y][x + this.piece.x] = value;
+        }
+      })
+    })
+  }
+
 }

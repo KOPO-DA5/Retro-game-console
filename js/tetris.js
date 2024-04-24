@@ -31,6 +31,7 @@ function updateGameContent() {
                         <p>Score: <span id="score">0</span></p>
                         <p>Lines: <span id="lines">0</span></p>
                         <p>Level: <span id="level">0</span></p>
+                        <canvas id="next" class="next"></canvas>
                     </div>
                     <button onclick="play()" class="play-button">Play</button>
                     </div>
