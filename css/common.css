@@ -53,6 +53,30 @@
   font-size: 20px;
 }
 
+.game-controls {
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* 다른 요소 위에 표시 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.control-button.selected {
+  background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
+  color: black;
+  font-size: 1.05em; /* 폰트 크기 증가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+  transition: transform 0.3s, box-shadow 0.3s; /* 부드러운 변화 효과 */
+}
+
+.hide {
+  display: none;
+}
+
 .fade-in {
   animation: fadeIn 1s forwards;
 }

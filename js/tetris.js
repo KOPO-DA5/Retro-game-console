@@ -21,7 +21,6 @@ function resetAnimation(element) {
 function updateGameContent() {
   const content = document.getElementById("content");
   content.innerHTML = `
-                
                 <link rel="stylesheet" href="./css/tetris.css" />
                 <div class="grid">
                  <canvas id="board" class="game-board"></canvas>

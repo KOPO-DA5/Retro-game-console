@@ -4,16 +4,129 @@ const game = document.querySelector("#game");
 const scoreDisplay = document.querySelector("#score");
 const startMessage = document.querySelector("#start-message");
 const gameoverMessage = document.querySelector("#gameover-message");
+const gameControls = document.getElementById("game-controls");
+const buttons = gameControls.querySelectorAll("button");
 
 document.addEventListener("keydown", startGame, { once: true });
 
-/* general variables */
 let lastTime;
 let speedScale;
 let score;
+let isPaused = false;
+let selectedButtonIndex = 0;
+
+document.addEventListener("keydown", function (e) {
+  switch (e.code) {
+    case "Escape":
+      if (!isPaused) {
+        pauseGame();
+      } else {
+        resumeGame();
+      }
+      break;
+    case "ArrowUp":
+      if (isPaused) {
+        selectButton(-1);
+      }
+      break;
+    case "ArrowDown":
+      if (isPaused) {
+        selectButton(1);
+      }
+      break;
+    case "Enter":
+      if (isPaused) {
+        buttons[selectedButtonIndex].click();
+      }
+      break;
+  }
+});
+
+function pauseGame() {
+  isPaused = true;
+  gameControls.classList.remove("hide");
+  selectButton(0); // 초기 선택된 버튼 설정
+}
+
+function resumeGame() {
+  isPaused = false;
+  gameControls.classList.add("hide");
+  lastTime = null;
+  window.requestAnimationFrame(update);
+}
+
+function restartGame() {
+  setupGame();
+  resumeGame();
+}
+
+function returnToSelection() {
+  document.getElementById("game-controls").classList.add("hide"); // 게임 컨트롤 숨기기
+  gameoverMessage.classList.add("hide"); // 게임 오버 메시지 숨기기
+  // 게임 뷰의 요소를 삭제
+  const game = document.getElementById("game");
+  if (game) {
+    game.remove(); // 게임 뷰 요소 삭제
+  }
+
+  // 게임 선택 화면 보이기
+  const gameSelection = document.getElementById("content");
+  gameSelection.innerHTML = `
+    <div id="game-selection">
+      <p id="selected-game">← Tetris →</p>
+      <p>Press Enter to start selected game</p>
+  </div>
+                `;
+}
+
+function setupGame() {
+  lastTime = null;
+  speedScale = 1;
+  score = 0;
+  setupGround();
+  setupDino();
+  setupCactus();
+  window.requestAnimationFrame(update);
+}
+
+function update(time) {
+  if (isPaused) return;
+
+  if (lastTime == null) {
+    lastTime = time;
+    window.requestAnimationFrame(update);
+    return;
+  }
+
+  const delta = time - lastTime;
+  updateGround(delta, speedScale);
+  updateDino(delta, speedScale);
+  updateCactus(delta, speedScale);
+  updateSpeedScale(delta);
+  updateScore(delta);
+
+  if (checkGameOver()) return handleGameOver();
+
+  lastTime = time;
+  window.requestAnimationFrame(update);
+}
+
+function selectButton(direction) {
+  selectedButtonIndex =
+    (selectedButtonIndex + direction + buttons.length) % buttons.length;
+  buttons.forEach((button, index) => {
+    if (index === selectedButtonIndex) {
+      button.classList.add("selected");
+    } else {
+      button.classList.remove("selected");
+    }
+  });
+}
 
 /* frame update */
 function update(time) {
+  if (isPaused) return; // 일시정지 상태일 때 업데이트 중지
+
   if (lastTime == null) {
     lastTime = time;
     window.requestAnimationFrame(update);
@@ -22,11 +135,14 @@ function update(time) {
 
   const delta = time - lastTime;
 
-  updateGround(delta, speedScale);
-  updateDino(delta, speedScale);
-  updateCactus(delta, speedScale);
-  updateSpeedScale(delta);
-  updateScore(delta);
+  if (!isPaused) {
+    // 일시정지가 아닐 때만 게임 로직 업데이트
+    updateGround(delta, speedScale);
+    updateDino(delta, speedScale);
+    updateCactus(delta, speedScale);
+    updateSpeedScale(delta);
+    updateScore(delta);
+  }
 
   if (checkGameOver()) return handleGameOver();
 
@@ -48,10 +164,13 @@ function startGame() {
 
 /* speeds up the game over time */
 function updateSpeedScale(delta) {
+  if (isPaused) return; // 일시정지 상태일 때 업데이트 중지
   speedScale += delta * SPEED_SCALE;
 }
 
 function updateScore(delta) {
+  if (isPaused) return; // 일시정지 상태일 때 업데이트 중지
+
   score += delta * 0.01;
   scoreDisplay.textContent = Math.floor(score);
 }
@@ -111,6 +230,8 @@ function setupGround() {
 }
 
 function updateGround(delta, speedScale) {
+  if (isPaused) return; // 일시정지 상태일 때 업데이트 중지
+
   grounds.forEach((ground) => {
     incrementCustomProperty(
       ground,
@@ -152,6 +273,8 @@ function setupDino() {
 }
 
 function updateDino(delta, speedScale) {
+  if (isPaused) return; // 일시정지 상태일 때 업데이트 중지
+
   handleRun(delta, speedScale);
   handleJump(delta);
 }
@@ -214,6 +337,8 @@ function setupCactus() {
 }
 
 function updateCactus(delta, speedScale) {
+  if (isPaused) return; // 일시정지 상태일 때 업데이트 중지
+
   document.querySelectorAll(".cactus").forEach((cactus) => {
     incrementCustomProperty(
       cactus,

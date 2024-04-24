@@ -32,7 +32,12 @@ function updateGameContent() {
               <p>Game over</p>
               <span>Press any key to restart</span>
             </div>
-          </div>     
+            <div id="game-controls" class="game-controls hide">
+              <button id="resumeButton" class="control-button" onclick="resumeGame()">game resume</button>
+              <button id="restartButton" class="control-button" onclick="restartGame()">game restart</button>
+              <button id="returnButton" class="control-button" onclick="returnToSelection()">game select</button>
+            </div>
+          </div>
               `;
   /* js부르는 법 */
   let scriptTomain = document.createElement("script");
