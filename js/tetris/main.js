@@ -3,6 +3,11 @@ const ctxBoard = canvasBoard.getContext("2d");
 const canvasNext = document.getElementById("next");
 const ctxNext = canvasNext.getContext("2d");
 
+let accountValues = {
+  score: 0,
+  lines: 0,
+};
+
 //캔버스 크기 계산
 ctxBoard.canvas.width = COLS * BLOCK_SIZE;
 ctxBoard.canvas.height = ROWS * BLOCK_SIZE;
@@ -18,37 +23,52 @@ ctxNext.canvas.width = 4 * BLOCK_SIZE;
 ctxNext.canvas.height = 4 * BLOCK_SIZE;
 ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);
 
-function play() {
+function updateAccount(key, value) {
+  let element = document.getElementById(key);
+  if (element) {
+    element.textContent = value;
+  }
+  console.log(element);
+}
 
+let account = new Proxy(accountValues, {
+  set: (target, key, value) => {
+    target[key] = value;
+    updateAccount(key, value);
+    return true;
+  },
+});
+
+function play() {
   board.reset();
-  time = {start: 0, elapsed: 0, level: 1000};
+  time = { start: 0, elapsed: 0, level: 1000 };
   //ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
-  
+
   //let piece = new Piece(ctxBoard);
   //piece.draw();
   animate();
-  
+
   //board.piece = piece;
-  
 }
 
 moves = {
-  [KEY.SPACE]: p => ({...p, y: p.y + 1}),
-  [KEY.LEFT]: p => ({...p, x: p.x - 1}),
-  [KEY.RIGHT]: p => ({...p, x: p.x + 1}),
+  [KEY.SPACE]: (p) => ({ ...p, y: p.y + 1 }),
+  [KEY.LEFT]: (p) => ({ ...p, x: p.x - 1 }),
+  [KEY.RIGHT]: (p) => ({ ...p, x: p.x + 1 }),
   [KEY.UP]: (p) => board.rotate(p),
-  [KEY.DOWN]: p => ({...p, y: p.y + 1})
+  [KEY.DOWN]: (p) => ({ ...p, y: p.y + 1 }),
 };
 
-document.addEventListener('keydown', event => {
-  if(moves[event.keyCode]) {
+document.addEventListener("keydown", (event) => {
+  if (moves[event.keyCode]) {
     event.preventDefault();
 
     let p = moves[event.keyCode](board.piece);
 
-    if(event.keyCode === KEY.SPACE) {
+    if (event.keyCode === KEY.SPACE) {
       console.log(event.keyCode);
-      while(board.valid(p)) {
+      while (board.valid(p)) {
+        account.score += POINTS.HARD_DROP;
         board.piece.move(p);
         p = moves[KEY.DOWN](board.piece);
       }
@@ -57,10 +77,12 @@ document.addEventListener('keydown', event => {
       ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
 
       //board.piece.draw();
-
-    } else{
-        if (board.valid(p)) {
-          board.piece.move(p);
+    } else {
+      if (board.valid(p)) {
+        board.piece.move(p);
+        if (event.keyCode === KEY.DOWN) {
+          account.score += POINTS.SOFT_DROP;
+        }
       }
 
       ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
@@ -68,8 +90,6 @@ document.addEventListener('keydown', event => {
       //board.piece.draw();
     }
   }
-
-
 });
 
 function animate(now = 0) {
