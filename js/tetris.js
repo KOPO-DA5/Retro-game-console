@@ -49,6 +49,11 @@ function updateGameContent(gameId) {
     scriptToBoard.src = "./js/tetris/board.js";
     document.body.appendChild(scriptToBoard);
 
+    let scriptToPiece = document.createElement("script");
+    scriptToPiece.type = "text/javascript";
+    scriptToPiece.src = "./js/tetris/piece.js";
+    document.body.appendChild(scriptToPiece);
+
     let scriptTomain = document.createElement("script");
     scriptTomain.type = "text/javascript";
     scriptTomain.src = "./js/tetris/main.js";
