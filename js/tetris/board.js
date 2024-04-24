@@ -17,7 +17,6 @@ class Board {
     this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
   }
 
-
   reset() {
     this.grid = this.getEmptyBoard();
     this.piece = new Piece(this.ctx);
@@ -43,8 +42,7 @@ class Board {
         let x = p.x + dx;
         let y = p.y + dy;
         return (
-          value === 0 ||
-          (this.isInsideWalls(x, y) && this.notOccupied(x, y))
+          value === 0 || (this.isInsideWalls(x, y) && this.notOccupied(x, y))
         );
       });
     });
@@ -53,14 +51,14 @@ class Board {
   rotate(piece) {
     let p = JSON.parse(JSON.stringify(piece));
 
-    if(!piece.hardDropped) {
-      for(let y = 0; y < p.shape.length; ++y) {
-        for(let x = 0; x < y; ++x) {
+    if (!piece.hardDropped) {
+      for (let y = 0; y < p.shape.length; ++y) {
+        for (let x = 0; x < y; ++x) {
           [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
         }
       }
     }
-    p.shape.forEach(row => row.reverse());
+    p.shape.forEach((row) => row.reverse());
 
     return p;
   }
@@ -102,8 +100,7 @@ class Board {
     let lines = 0;
 
     this.grid.forEach((row, y) => {
-
-      if(row.every((value) => value > 0)) {
+      if (row.every((value) => value > 0)) {
         lines++;
 
         this.grid.splice(y, 1);
@@ -111,6 +108,30 @@ class Board {
         this.grid.unshift(Array(COLS).fill(0));
       }
     });
+    if (lines > 0) {
+      account.score += this.getLineClearPoints(lines);
+
+      account.lines += lines;
+
+      if (account.lines >= LINES_PER_LEVEL) {
+        account.level++;
+        console.log(level);
+        account.lines -= LINES_PER_LEVEL;
+        time.level = LEVEL[account.level];
+      }
+    }
+  }
+
+  getLineClearPoints(lines) {
+    return lines === 1
+      ? POINTS.SINGLE
+      : lines === 2
+      ? POINTS.DOUBLE
+      : lines === 3
+      ? POINTS.TRIPLE
+      : lines === 4
+      ? POINTS.TETRIS
+      : 0;
   }
 
   getNewPiece() {
@@ -119,15 +140,14 @@ class Board {
     this.ctxNext.clearRect(0, 0, width, height);
     this.next.draw();
   }
-  
+
   freeze() {
     this.piece.shape.forEach((row, y) => {
       row.forEach((value, x) => {
-        if(value > 0) {
+        if (value > 0) {
           this.grid[y + this.piece.y][x + this.piece.x] = value;
         }
-      })
-    })
+      });
+    });
   }
-
 }
