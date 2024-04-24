@@ -1,11 +1,11 @@
-function loadGame(gameId) {
+function loadGameTetris() {
   const content = document.getElementById("content");
 
   var newStyle = document.createElement("link");
   newStyle.setAttribute("rel", "stylesheet");
 
   resetAnimation(content); // 애니메이션 초기화
-  updateGameContent(gameId); // 콘텐츠 업데이트
+  updateGameContent(); // 콘텐츠 업데이트
 
   // 애니메이션 시작
   content.classList.add("fade-in");
@@ -17,11 +17,10 @@ function resetAnimation(element) {
   element.classList.add("fade-in");
 }
 
-function updateGameContent(gameId) {
+function updateGameContent() {
   const content = document.getElementById("content");
-  if (gameId === "game1") {
-    content.innerHTML = `
-                <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet"/>
+  content.innerHTML = `
+                
                 <link rel="stylesheet" href="./css/tetris.css" />
                 <div class="grid">
                  <canvas id="board" class="game-board"></canvas>
@@ -37,35 +36,25 @@ function updateGameContent(gameId) {
                 </div>
                 
             `;
-    /* js부르는 법 */
+  /* js부르는 법 */
 
-    let scriptToConstants = document.createElement("script");
-    scriptToConstants.type = "text/javascript";
-    scriptToConstants.src = "./js/tetris/constants.js";
-    document.body.appendChild(scriptToConstants);
+  let scriptToConstants = document.createElement("script");
+  scriptToConstants.type = "text/javascript";
+  scriptToConstants.src = "./js/tetris/constants.js";
+  document.body.appendChild(scriptToConstants);
 
-    let scriptToBoard = document.createElement("script");
-    scriptToBoard.type = "text/javascript";
-    scriptToBoard.src = "./js/tetris/board.js";
-    document.body.appendChild(scriptToBoard);
+  let scriptToBoard = document.createElement("script");
+  scriptToBoard.type = "text/javascript";
+  scriptToBoard.src = "./js/tetris/board.js";
+  document.body.appendChild(scriptToBoard);
 
-    let scriptToPiece = document.createElement("script");
-    scriptToPiece.type = "text/javascript";
-    scriptToPiece.src = "./js/tetris/piece.js";
-    document.body.appendChild(scriptToPiece);
+  let scriptToPiece = document.createElement("script");
+  scriptToPiece.type = "text/javascript";
+  scriptToPiece.src = "./js/tetris/piece.js";
+  document.body.appendChild(scriptToPiece);
 
-    let scriptTomain = document.createElement("script");
-    scriptTomain.type = "text/javascript";
-    scriptTomain.src = "./js/tetris/main.js";
-    document.body.appendChild(scriptTomain);
-  } else if (gameId === "game2") {
-    content.innerHTML = `
-                <button onclick="changeText()">텍스트 변경</button>
-                <p id="displayText">여기에 텍스트가 표시됩니다.</p>
-            `;
-  } else if (gameId === "game3") {
-    content.innerHTML = `               
-    <canvas id="canvas"></canvas>
-    <script src="./dianosaur.js"></script>`;
-  }
+  let scriptTomain = document.createElement("script");
+  scriptTomain.type = "text/javascript";
+  scriptTomain.src = "./js/tetris/main.js";
+  document.body.appendChild(scriptTomain);
 }
