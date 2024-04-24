@@ -88,6 +88,7 @@ class Board {
       this.piece.move(p);
     } else {
       this.freeze();
+      this.clearLines();
       this.piece = this.next;
       console.log(this.ctx);
       this.piece.ctx = this.ctx;
@@ -95,6 +96,21 @@ class Board {
       this.getNewPiece();
     }
     return true;
+  }
+
+  clearLines() {
+    let lines = 0;
+
+    this.grid.forEach((row, y) => {
+
+      if(row.every((value) => value > 0)) {
+        lines++;
+
+        this.grid.splice(y, 1);
+
+        this.grid.unshift(Array(COLS).fill(0));
+      }
+    });
   }
 
   getNewPiece() {
