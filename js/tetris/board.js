@@ -87,8 +87,11 @@ class Board {
     } else {
       this.freeze();
       this.clearLines();
+      if (this.piece.y === 0) {
+        return false;
+      }
       this.piece = this.next;
-      console.log(this.ctx);
+      // console.log(this.ctx);
       this.piece.ctx = this.ctx;
       this.piece.setStartingPosition();
       this.getNewPiece();
@@ -115,7 +118,7 @@ class Board {
 
       if (account.lines >= LINES_PER_LEVEL) {
         account.level++;
-        console.log(level);
+        // console.log(level);
         account.lines -= LINES_PER_LEVEL;
         time.level = LEVEL[account.level];
       }
