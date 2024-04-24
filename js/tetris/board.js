@@ -1,8 +1,10 @@
 class Board {
   grid;
+  piece;
 
   reset() {
     this.grid = this.getEmptyBoard();
+    this.piece = new Piece()
   }
 
   getEmptyBoard() {
@@ -26,6 +28,37 @@ class Board {
           value === 0 ||
           (this.isInsideWalls(x, y) && this.notOccupied(x, y))
         );
+      });
+    });
+  }
+
+  rotate(piece) {
+    let p = JSON.parse(JSON.stringify(piece));
+
+    if(!piece.hardDropped) {
+      for(let y = 0; y < p.shape.length; ++y) {
+        for(let x = 0; x < y; ++x) {
+          [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
+        }
+      }
+    }
+    p.shape.forEach(row => row.reverse());
+
+    return p;
+  }
+
+  draw() {
+    this.piece.draw();
+    this.drawBoard();
+  }
+
+  drawBoard() {
+    this.grid.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value > 0) {
+          this.ctx.fillStyle = COLORS[value];
+          this.ctx.fillRect(x, y, 1, 1);
+        }
       });
     });
   }
