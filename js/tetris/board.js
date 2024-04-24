@@ -17,16 +17,16 @@ class Board {
     return this.grid[y] && this.grid[y][x] === 0;
   }
 
-  // valid(p) {
-  //   return p.shape.every((row, dy) => {
-  //     return row.every((value, dx) => {
-  //       let x = p.x + dx;
-  //       let y = p.y + dy;
-  //       return (
-  //         vlaue === 0 ||
-  //         (this.isInsideWalls)
-  //       );
-  //     });
-  //   });
-  // }
+  valid(p) {
+    return p.shape.every((row, dy) => {
+      return row.every((value, dx) => {
+        let x = p.x + dx;
+        let y = p.y + dy;
+        return (
+          value === 0 ||
+          (this.isInsideWalls(x, y) && this.notOccupied(x, y))
+        );
+      });
+    });
+  }
 }

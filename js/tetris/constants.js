@@ -34,6 +34,7 @@ const SHAPES = [
 
 //키보드 입력 지정
 const KEY = {
+    SPACE: 32,
     LEFT: 37,
     UP: 38,
     RIGHT: 39,
