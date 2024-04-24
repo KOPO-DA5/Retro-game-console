@@ -26,6 +26,7 @@ function play() {
 }
 
 moves = {
+  [KEY.SPACE]: p => ({...p, y: p.y + 1}),
   [KEY.LEFT]: p => ({...p, x: p.x - 1}),
   [KEY.RIGHT]: p => ({...p, x: p.x + 1}),
   [KEY.UP]: p => ({...p, y: p.y - 1}),
@@ -38,17 +39,28 @@ document.addEventListener('keydown', event => {
 
     let p = moves[event.keyCode](board.piece);
 
-    // if(board.valid(p)) {
-    //   board.piece.move(p);
-    //   ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
+    if(event.keyCode === KEY.SPACE) {
+      console.log(event.keyCode);
+      while(board.valid(p)) {
+        board.piece.move(p);
+        p = moves[KEY.DOWN](board.piece);
+      }
+      board.piece.hardDrop();
 
-    //   board.piece.draw();
-    // }
+      ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
 
-    board.piece.move(p);
+      board.piece.draw();
 
-    ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
+    } else{
+        if (board.valid(p)) {
+          board.piece.move(p);
+      }
 
-    board.piece.draw();
+      ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
+
+      board.piece.draw();
+    }
   }
+
+
 });
