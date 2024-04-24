@@ -1,12 +1,24 @@
-name: Notify Microsoft 365
-on: [push] # 이벤트를 변경하여 다른 GitHub 이벤트에 대응하게 할 수 있습니다.
-# push 이벤트가 발생할 때마다 이 workflow가 실행되도록 설정합니다. GitHub에서는 push,
-# pull request, issue comment 등 다양한 이벤트를 통해 workflow를 트리거할 수 있습니다.
+name: Detailed Notifications to Microsoft 365
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, reopened, closed]
+ 
 jobs:
   notify:
-    runs-on: ubuntu-latest # 작업 환경: 작업이 최신 Ubuntu 가상 환경에서 실행됨을 의미합니다.
+    runs-on: ubuntu-latest
     steps:
-      - name: Send notification to Microsoft 365
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Notify on Push
+        if: github.event_name == 'push'
         run: |
-          curl -H "Content-Type: application/json" -d "{ 'text': '행복 커밋이 차곡차곡 쌓인다.' }" ${{ secrets.M365_WEBHOOK_URL }}
-# ( curl 로 incoming webhook을 호출) 보내고 싶은 메시지를 설정하면 된다. 
+          curl -H "Content-Type: application/json" -d "{\"text\": \"🔔 New Push to Main: ${GITHUB_REF} by ${GITHUB_ACTOR}. Commit message: '${{ github.event.commits[0].message }}'.\"}" ${{ secrets.M365_WEBHOOK_URL }}
+        env:
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_ACTOR: ${{ github.actor }}
+      - name: Notify on Pull Request
+        if: github.event_name == 'pull_request'
+        run: |
+          curl -H "Content-Type: application/json" -d "{\"text\": \"🔔 Pull Request Event: ${{ github.event.pull_request.title }} by ${{ github.event.pull_request.user.login }}. Action: ${{ github.event.action }}, URL: ${{ github.event.pull_request.html_url }}.\"}" ${{ secrets.M365_WEBHOOK_URL }}
