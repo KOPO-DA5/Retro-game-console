@@ -20,23 +20,20 @@ function resetAnimation(element) {
 function updateGameContent() {
   const content = document.getElementById("content");
   content.innerHTML = `
-                  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet"/>
-                  <link rel="stylesheet" href="./css/dinosaur.css" />
-                  <div id="game" class="game">
-         <div id="score" class="score">0</div>
-         <div id="start-message" class="start-message">Press any key to start</div>
-         <img src="./images/dinosaur/ground.png" class="ground">
-         <img src="./images/dinosaur/ground.png" class="ground">
-         <img src="./images/dinosaur/dino-stationary.png" id="dino" class="dino">
-         <div id="gameover-message" class="gameover-message hide">
-            <p>Game over</p>
-            <span>Press any key to restart</span>
-         </div>
-      </div>
-                  
+  <link rel="stylesheet" href="./css/dinosaur.css" />
+  <div id="game" class="game">
+    <div id="score" class="score">0</div>
+    <div id="start-message" class="start-message">Press any key to start</div>
+    <img src="./images/dinosaur/ground.png" class="ground" />
+    <img src="./images/dinosaur/ground.png" class="ground" />
+    <img src="./images/dinosaur/dino-stationary.png" id="dino" class="dino" />
+    <div id="gameover-message" class="gameover-message hide">
+      <p>Game over</p>
+      <span>Press any key to restart</span>
+    </div>
+  </div>     
               `;
   /* js부르는 법 */
-
   let scriptTomain = document.createElement("script");
   scriptTomain.type = "text/javascript";
   scriptTomain.src = "./js/dinosaur/main.js";

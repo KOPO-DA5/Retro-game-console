@@ -3,13 +3,6 @@
   font-family: "Press Start 2p", cursive;
 }
 
-body,
-html {
-  min-height: 100%;
-  margin: 0;
-  font-family: "Press Start 2p", cursive;
-}
-
 #console {
   width: 600px;
   height: 467px;

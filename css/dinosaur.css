@@ -10,9 +10,10 @@
   box-sizing: border-box;
   user-select: none;
 }
-
-body {
-  min-height: 100vh;
+/* 화면 크기 벗어나는 이유 파악을 위해 잠시 주석 처리 */
+/* body { 
+  min-height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +21,7 @@ body {
   color: var(--txt-primary);
   background-color: var(--background);
   margin: 0;
-}
+} */
 
 .game {
   position: relative;
