@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function loadSelectedGame(game) {
-    hideGameSelection(); // 게임 선택 UI 숨김
+    removeGameSelection(); // 게임 선택 UI 삭제
     let scriptPath = game === "Tetris" ? "./js/tetris.js" : "./js/dinosaur.js";
     let script = document.createElement("script");
     script.src = scriptPath;
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("game-selection").style.display = "none";
   }
 
-  function showGameSelection() {
-    document.getElementById("game-selection").style.display = "block";
+  function removeGameSelection() {
+    document.getElementById("game-selection").remove();
   }
 });
