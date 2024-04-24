@@ -1,3 +1,4 @@
+// tetris.js
 function loadGameTetris() {
   const content = document.getElementById("content");
 

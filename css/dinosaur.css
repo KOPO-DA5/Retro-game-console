@@ -4,24 +4,6 @@
   --background: #f7f7f7;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  user-select: none;
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Press Start 2P", cursive;
-  color: var(--txt-primary);
-  background-color: var(--background);
-  margin: 0;
-}
-
 .game {
   position: relative;
   width: 600px;

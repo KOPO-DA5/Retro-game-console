@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>레트로 게임 콘솔</title>
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
-
-  <link rel="stylesheet" href="./css/common.css" />
-</head>
-
-<body>
-  <div id="console">
-    <div id="gameView">
-      <div id="content"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>레트로 게임 콘솔</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/common.css" />
+  </head>
+  <body>
+    <div id="console">
+      <div id="gameView">
+        <div id="content"></div>
+      </div>
+      <div id="games">
+        <div id="game-selection">
+          <p id="selected-game">← Tetris →</p>
+          <p>Press Enter to start selected game</p>
+        </div>
+        <button
+          class="game-button"
+          onclick="loadScriptAndGame('./js/tetris.js')"
+        >
+          Tetris
+        </button>
+        <button
+          class="game-button"
+          onclick="loadScriptAndGame('./js/dinosaur.js')"
+        >
+          Dino
+        </button>
+      </div>
     </div>
-    <div id="games">
-      <button class="game-button" onclick="loadScriptAndGame('./js/tetris.js')">Tetris</button>
-      <button class="game-button" onclick="loadScriptAndGame('./js/dinosaur.js')">Dino</button>
-
-    </div>
-  </div>
-  <script src="./js/app.js"></script>
-</body>
-
+    <script src="./js/app.js"></script>
+  </body>
 </html>
