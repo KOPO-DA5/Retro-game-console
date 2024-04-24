@@ -6,6 +6,33 @@ const ROWS = 20;
 //블록 사이즈 지정
 const BLOCK_SIZE = 15;
 
+//3줄 삭제 시 레벨 업
+const LINES_PER_LEVEL = 3;
+
+const LEVEL = {
+  0: 800,
+  1: 720,
+  2: 630,
+  3: 550,
+  4: 470,
+  5: 380,
+  6: 300,
+  7: 220,
+  8: 130,
+  9: 100,
+  10: 80,
+  11: 80,
+  12: 80,
+  13: 70,
+  14: 70,
+  15: 70,
+  16: 50,
+  17: 50,
+  18: 50,
+  19: 30,
+  20: 30,
+};
+
 //블록 색상
 const COLORS = [
   "none",
@@ -80,3 +107,5 @@ const POINTS = {
 Object.freeze(KEY);
 
 Object.freeze(POINTS);
+
+Object.freeze(LEVEL);

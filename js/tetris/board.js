@@ -110,18 +110,27 @@ class Board {
     });
     if (lines > 0) {
       account.score += this.getLineClearPoints(lines);
+
+      account.lines += lines;
+
+      if (account.lines >= LINES_PER_LEVEL) {
+        account.level++;
+        console.log(level);
+        account.lines -= LINES_PER_LEVEL;
+        time.level = LEVEL[account.level];
+      }
     }
   }
 
   getLineClearPoints(lines) {
     return lines === 1
-      ? Points.SINGLE
+      ? POINTS.SINGLE
       : lines === 2
-      ? Points.DOUBLE
+      ? POINTS.DOUBLE
       : lines === 3
-      ? Points.TRIPLE
+      ? POINTS.TRIPLE
       : lines === 4
-      ? Points.TETRIS
+      ? POINTS.TETRIS
       : 0;
   }
 

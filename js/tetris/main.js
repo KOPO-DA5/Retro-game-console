@@ -6,6 +6,7 @@ const ctxNext = canvasNext.getContext("2d");
 let accountValues = {
   score: 0,
   lines: 0,
+  level: 0,
 };
 
 //캔버스 크기 계산
@@ -38,6 +39,13 @@ let account = new Proxy(accountValues, {
     return true;
   },
 });
+
+function resetGame() {
+  account.score = 0;
+  account.lines = 0;
+  account.level = 0;
+  board = this.getEmptyBoard();
+}
 
 function play() {
   board.reset();
