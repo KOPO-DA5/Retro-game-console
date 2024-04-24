@@ -16,11 +16,12 @@ function play() {
   // console.table(board.grid);
 
   board.reset();
-  board = board.getEmptyBoard();
+  ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
+  //board = board.getEmptyBoard();
   let piece = new Piece(ctxBoard);
   piece.draw();
   
-  board.piece = piece
+  board.piece = piece;
   
 }
 
@@ -37,9 +38,8 @@ document.addEventListener('keydown', event => {
 
     let p = moves[event.keyCode](board.piece);
 
-    // if(board.move_valid(p)) {
+    // if(board.valid(p)) {
     //   board.piece.move(p);
-
     //   ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
 
     //   board.piece.draw();
