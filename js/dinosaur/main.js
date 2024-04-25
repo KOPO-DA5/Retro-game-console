@@ -27,11 +27,13 @@ document.addEventListener("keydown", function (e) {
     case "ArrowUp":
       if (isPaused) {
         selectButton(-1);
+        playMenuMoveSound(); // 메뉴 이동 소리 재생
       }
       break;
     case "ArrowDown":
       if (isPaused) {
         selectButton(1);
+        playMenuMoveSound(); // 메뉴 이동 소리 재생
       }
       break;
     case "Enter":
@@ -46,6 +48,7 @@ function pauseGame() {
   isPaused = true;
   gameControls.classList.remove("hide");
   selectButton(0); // 초기 선택된 버튼 설정
+  pauseBackgroundMusic();
 }
 
 function resumeGame() {
@@ -151,6 +154,8 @@ function update(time) {
 }
 
 function startGame() {
+  playBackgroundMusic();
+
   lastTime = null;
   speedScale = 1;
   score = 0;
@@ -200,6 +205,9 @@ function handleGameOver() {
     }); /* prevents accidental click */
     gameoverMessage.classList.remove("hide");
   }, 100);
+
+  pauseBackgroundMusic();
+  playGameOverSound(); // 게임 오버 소리 재생
 }
 
 /* HANDLING CSS PROPERTIES */
@@ -319,6 +327,7 @@ function onJump(e) {
 
   yVelocity = JUMP_SPEED;
   isJumping = true;
+  playJumpSound();
 }
 
 /* ADD CACTUS */
@@ -376,4 +385,37 @@ function randomizer(min, max) {
   return Math.floor(
     Math.random() * (max - min + 1) + min
   ); /* choose a number between minimum and maximum */
+}
+
+/* ADD AUDIO */
+
+function playJumpSound() {
+  const jumpSound = document.getElementById("jumpSound");
+  jumpSound.currentTime = 0;
+  jumpSound.play();
+}
+
+function playBackgroundMusic() {
+  if (!isGameOver) {
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    backgroundMusic.play();
+  }
+}
+
+function pauseBackgroundMusic() {
+  const backgroundMusic = document.getElementById("backgroundMusic");
+  backgroundMusic.pause();
+}
+
+function playMenuMoveSound() {
+  // 메뉴 이동 소리를 재생하는 함수
+  const menuMoveSound = document.getElementById("menuMoveSound");
+  menuMoveSound.currentTime = 0;
+  menuMoveSound.play();
+}
+
+function playGameOverSound() {
+  const gameOverSound = document.getElementById("gameOverSound");
+  gameOverSound.currentTime = 0;
+  gameOverSound.play();
 }

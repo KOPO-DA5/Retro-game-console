@@ -22,6 +22,10 @@ function updateGameContent() {
   const content = document.getElementById("content");
   content.innerHTML = `
           <link rel="stylesheet" href="./css/dinosaur.css" />
+          <audio id="jumpSound" src="./audios/dino-jump.mp3"></audio>
+          <audio id="backgroundMusic" src="./audios/dino-background.mp3" loop></audio>
+          <audio id="menuMoveSound" src="./audios/menu-move.mp3"></audio>
+          <audio id="gameOverSound" src="./audios/dino-gameover.mp3"></audio>
           <div id="game" class="game">
             <div id="score" class="score">0</div>
             <div id="start-message" class="start-message">Press any key to start</div>
