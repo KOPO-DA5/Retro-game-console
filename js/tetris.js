@@ -17,6 +17,45 @@ function resetAnimation(element) {
   void element.offsetWidth; // DOM 리플로우 강제 실행으로 CSS 애니메이션 리셋
   element.classList.add("fade-in");
 }
+
+let selectedButtonIndex = 0;
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    toggleGamePauseMenu();
+  }
+  if (event.key === KEY.UP) {
+    selectButton(-1);
+    playMenuMoveSound();
+  }
+  if (event.key === KEY.DOWN) {
+    selectButton(1);
+    playMenuMoveSound();
+  }
+  if (event.key === "Enter") {
+    buttons[selectedButtonIndex].click();
+  }
+});
+
+function toggleGamePauseMenu() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.toggle("hide");
+  pause();
+  sound.pause();
+}
+
+function selectButton(direction) {
+  selectedButtonIndex =
+    (selectedButtonIndex + direction + buttons.length) % buttons.length;
+  buttons.forEach((button, index) => {
+    if (index === selectedButtonIndex) {
+      button.classList.add("selected");
+    } else {
+      button.classList.remove("selected");
+    }
+  });
+}
+
 // 각 스크립트 파일의 로드 상태를 추적하기 위한 변수들
 let constantsLoaded = false;
 let boardLoaded = false;
@@ -51,6 +90,14 @@ function updateGameContent() {
                     </div>
                      <button id="play-btn" onclick="play()" class="play-button">Play</button>
                     <button id="pause-btn" onclick="pause()" class="play-button">Pause</button>
+                  
+      <div id="game-controls" class="game-controls hide">
+        <button id="resumeButton" class="control-button" onclick="resumeGame()">game resume</button>
+        <button id="restartButton" class="control-button" onclick="restartGame()">game restart</button>
+        <button id="returnButton" class="control-button" onclick="returnToSelection()">game select</button>
+      </div>
+
+
                 </div>
             `;
 

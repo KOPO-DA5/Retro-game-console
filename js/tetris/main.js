@@ -82,9 +82,7 @@ function handleKeyPress(event) {
     pause();
     backgroundSound.pause();
   }
-  if (event.keyCode === KEY.ESC) {
-    gameOver();
-  } else if (moves[event.keyCode]) {
+  if (moves[event.keyCode]) {
     event.preventDefault();
     // Get new state
     let p = moves[event.keyCode](board.piece);
