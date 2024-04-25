@@ -20,6 +20,7 @@ document.addEventListener("keydown", function (e) {
     case "Escape":
       if (!isPaused) {
         pauseGame();
+        playPauseSound(); // 일시 정지 소리 재생
       } else {
         resumeGame();
       }
@@ -108,7 +109,11 @@ function update(time) {
   updateSpeedScale(delta);
   updateScore(delta);
 
-  if (checkGameOver()) return handleGameOver();
+  if (checkGameOver()) {
+    pauseBackgroundMusic();
+    playObstacleHitSound();
+    return handleGameOver();
+  }
 
   lastTime = time;
   window.requestAnimationFrame(update);
@@ -147,13 +152,19 @@ function update(time) {
     updateScore(delta);
   }
 
-  if (checkGameOver()) return handleGameOver();
+  if (checkGameOver()) {
+    pauseBackgroundMusic();
+    playObstacleHitSound();
+    return handleGameOver();
+  }
 
   lastTime = time;
   window.requestAnimationFrame(update);
 }
 
 function startGame() {
+  isGameOver = false;
+
   playBackgroundMusic();
 
   lastTime = null;
@@ -206,7 +217,6 @@ function handleGameOver() {
     gameoverMessage.classList.remove("hide");
   }, 100);
 
-  pauseBackgroundMusic();
   playGameOverSound(); // 게임 오버 소리 재생
 }
 
@@ -418,4 +428,16 @@ function playGameOverSound() {
   const gameOverSound = document.getElementById("gameOverSound");
   gameOverSound.currentTime = 0;
   gameOverSound.play();
+}
+
+function playObstacleHitSound() {
+  const obstacleHitSound = document.getElementById("obstacleHitSound");
+  obstacleHitSound.currentTime = 0;
+  obstacleHitSound.play();
+}
+
+function playPauseSound() {
+  const pauseSound = document.getElementById("pauseSound");
+  pauseSound.currentTime = 0;
+  pauseSound.play();
 }
