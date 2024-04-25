@@ -32,11 +32,13 @@
     isPaused = false;
     gameControls.classList.add("hide");
     lastTime = null;
+    resumeBackgroundMusic();
     window.requestAnimationFrame(update);
   }
 
   function restartGame() {
     setupGame();
+    playBackgroundMusic();
     resumeGame();
   }
 
@@ -182,21 +184,28 @@
   }
 
   /* collision conditions */
-  function checkCollision(rect1, rect2) {
+  function checkCollision(rect1, rect2, padding) {
+    // 여유 공간(padding)을 적용하여 충돌 감지
     return (
-      rect1.left < rect2.right &&
-      rect1.top < rect2.bottom &&
-      rect1.right > rect2.left &&
-      rect1.bottom > rect2.top
+      rect1.left < rect2.right - padding &&
+      rect1.top < rect2.bottom - padding &&
+      rect1.right > rect2.left + padding &&
+      rect1.bottom > rect2.top + padding
     );
   }
-
+  
   function checkGameOver() {
     const dinoRect = getDinoRect();
-    return getCactusRects().some((rect) =>
-      checkCollision(rect, dinoRect)
-    ); /* check collision with any of the cactus */
+    const cactusRects = getCactusRects();
+  
+    // 여유 공간 설정 (예: 10 픽셀)
+    const padding = 10;
+  
+    return cactusRects.some((rect) =>
+      checkCollision(rect, dinoRect, padding)
+    );
   }
+  
 
   function handleGameOver() {
     setDinoLose();
@@ -330,7 +339,10 @@
 
     yVelocity = JUMP_SPEED;
     isJumping = true;
-    playJumpSound();
+
+    if (!isPaused) {
+      playJumpSound(); // 게임 중일 때만 점프 소리 재생
+    }
   }
 
   /* ADD CACTUS */
@@ -401,7 +413,15 @@
   function playBackgroundMusic() {
     if (!isGameOver) {
       const backgroundMusic = document.getElementById("backgroundMusic");
-      backgroundMusic.play();
+      backgroundMusic.currentTime = 0; // 배경음악을 처음으로 되감음
+      backgroundMusic.play(); // 배경음악 재생
+    }
+  }
+
+  function resumeBackgroundMusic() {
+    if (!isGameOver) {
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      backgroundMusic.play(); // 배경음악 재생
     }
   }
 
