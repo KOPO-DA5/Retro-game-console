@@ -57,6 +57,7 @@ function play() {
   //let piece = new Piece(ctxBoard);
   //piece.draw();
   animate();
+  backgroundSound.play();
 
   //board.piece = piece;
 }
