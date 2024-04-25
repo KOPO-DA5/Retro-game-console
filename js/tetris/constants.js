@@ -9,6 +9,8 @@ const BLOCK_SIZE = 15;
 //3줄 삭제 시 레벨 업
 const LINES_PER_LEVEL = 3;
 
+const NO_OF_HIGH_SCORES = 10;
+
 const LEVEL = {
   0: 800,
   1: 720,
@@ -87,6 +89,7 @@ const SHAPES = [
 
 //키보드 입력 지정
 const KEY = {
+  ESC: 27,
   SPACE: 32,
   LEFT: 37,
   UP: 38,
