@@ -20,6 +20,8 @@ ctxBoard.scale(BLOCK_SIZE, BLOCK_SIZE);
 let board = new Board(ctxBoard, ctxNext);
 //board.reset();
 
+showHighScores();
+
 ctxNext.canvas.width = 4 * BLOCK_SIZE;
 ctxNext.canvas.height = 4 * BLOCK_SIZE;
 ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);

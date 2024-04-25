@@ -4,6 +4,11 @@
   grid-template-columns: 350px 210px;
 }
 
+.left-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .right-column {
   display: flex;
   flex-direction: column;

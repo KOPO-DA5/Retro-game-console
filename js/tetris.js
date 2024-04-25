@@ -23,6 +23,10 @@ function updateGameContent() {
   content.innerHTML = `
                 <link rel="stylesheet" href="./css/tetris.css" />
                 <div class="grid">
+                  <div class="left-column">
+                    <h2>HIGH SCORES</h2>
+                    <ol id="highScores"></ol>
+                  </div>
                  <canvas id="board" class="game-board"></canvas>
                  <div class="right-column">
                     <div>
