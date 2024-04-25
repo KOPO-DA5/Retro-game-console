@@ -9,6 +9,7 @@ const BLOCK_SIZE = 15;
 //3줄 삭제 시 레벨 업
 const LINES_PER_LEVEL = 3;
 
+//랭킹 보여지는 개수
 const NO_OF_HIGH_SCORES = 10;
 
 const LEVEL = {

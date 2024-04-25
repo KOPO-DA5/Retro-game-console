@@ -38,8 +38,11 @@ function updateGameContent() {
                         <p>Level: <span id="level">0</span></p>
                         <canvas id="next" class="next"></canvas>
                     </div>
-                    <button onclick="play()" class="play-button">Play</button>
+                    <div id="sound-div">
+                      <span class="sound-item" id="sound-speaker"></span>
+                      <span class="sound-item" id="sound-description"></span>
                     </div>
+                    <button onclick="play()" class="play-button">Play</button>
                 </div>
                 
             `;
@@ -64,4 +67,9 @@ function updateGameContent() {
   scriptTomain.type = "text/javascript";
   scriptTomain.src = "./js/tetris/main.js";
   document.body.appendChild(scriptTomain);
+
+  let scriptTosound = document.createElement("script");
+  scriptTosound.type = "text/javascript";
+  scriptTosound.src = "./js/tetris/sound.js";
+  document.body.appendChild(scriptTosound);
 }
