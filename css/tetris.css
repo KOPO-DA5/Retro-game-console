@@ -38,3 +38,11 @@
   padding: 15px 30px;
   cursor: pointer;
 }
+
+#sound-speaker {
+  font-size: 20px;
+}
+
+.sound-item {
+  cursor: pointer;
+}
