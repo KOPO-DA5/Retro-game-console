@@ -132,6 +132,8 @@ function gameOver() {
   ctxBoard.fillText("GAME OVER", 1.8, 4);
 
   checkHighScore(account.score);
+  sound.pause();
+  finishSound.play();
 }
 
 function showHighScores() {

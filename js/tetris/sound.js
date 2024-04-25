@@ -62,13 +62,13 @@ Sound.prototype.play = function () {
 
 let sound = new Sound(document.querySelector("#sound-div")),
   backgroundSound = sound.create(
-    "assets/sounds/Dungeon_Theme.mp3",
+    "audios/tetris/background_tetris.mp3",
     "background_sound",
     true
   ),
-  movesSound = sound.create("assets/sounds/moves.mp3", "moves_sound"),
-  dropSound = sound.create("assets/sounds/drop.mp3", "drop_sound"),
-  pointsSound = sound.create("assets/sounds/points.mp3", "points_sound"),
-  finishSound = sound.create("assets/sounds/finish.mp3", "finish_sound");
+  movesSound = sound.create("audios/moves.mp3", "moves_sound"),
+  dropSound = sound.create("audios/drop.mp3", "drop_sound"),
+  pointsSound = sound.create("audios/points.mp3", "points_sound"),
+  finishSound = sound.create("audios/tetris/finish_tetris.mp3", "finish_sound");
 sound.muteToggle();
 sound.soundSetting();
