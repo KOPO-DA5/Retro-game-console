@@ -79,6 +79,7 @@ document.addEventListener("keydown", (event) => {
     let p = moves[event.keyCode](board.piece);
 
     if (event.keyCode === KEY.SPACE) {
+      dropSound.play();
       console.log(event.keyCode);
       while (board.valid(p)) {
         account.score += POINTS.HARD_DROP;

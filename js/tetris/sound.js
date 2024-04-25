@@ -66,9 +66,9 @@ let sound = new Sound(document.querySelector("#sound-div")),
     "background_sound",
     true
   ),
-  movesSound = sound.create("audios/moves.mp3", "moves_sound"),
-  dropSound = sound.create("audios/drop.mp3", "drop_sound"),
-  pointsSound = sound.create("audios/points.mp3", "points_sound"),
+  //   movesSound = sound.create("audios/moves.mp3", "moves_sound"),
+  dropSound = sound.create("audios/tetris/drop.mp3", "drop_sound"),
+  //   pointsSound = sound.create("audios/tetris/points.mp3", "points_sound"),
   finishSound = sound.create("audios/tetris/finish_tetris.mp3", "finish_sound");
 sound.muteToggle();
 sound.soundSetting();
