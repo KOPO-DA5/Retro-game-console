@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     script.src = scriptPath;
     script.onload = function () {
       if (game === "Tetris") {
-        // Tetris game loading logic
+        loadGameTetris();
       } else {
         loadGameDino();
       }
