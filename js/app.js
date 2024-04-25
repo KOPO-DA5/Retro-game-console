@@ -1,48 +1,55 @@
-// app.js
 document.addEventListener("DOMContentLoaded", function (e) {
-  var currentGame = "Tetris"; // 기본 선택 게임
-  console.log("app.js");
-  console.log(e.target);
-  document.addEventListener("keydown", function (event) {
-    console.log(e.target);
+  const gameState = {
+    currentGame: "Tetris",
+    scriptLoaded: false,
+    scriptElement: null,
+  };
+
+  console.log("1. app.js DOMContentLoaded", e.target);
+
+  function handleKeyDownApp(event) {
+    console.log("2. app.js handleKeyDownApp", event.code);
 
     if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
       toggleGameSelection();
     }
     if (event.key === "Enter") {
-      loadSelectedGame(currentGame);
+      loadSelectedGame(gameState.currentGame);
     }
-  });
+  }
+  document.addEventListener("keydown", handleKeyDownApp);
 
   function toggleGameSelection() {
-    currentGame = currentGame === "Tetris" ? "Dino" : "Tetris";
-    var displayGame = currentGame === "Tetris" ? "← Tetris →" : "← Dino →";
+    gameState.currentGame =
+      gameState.currentGame === "Tetris" ? "Dino" : "Tetris";
+    var displayGame =
+      gameState.currentGame === "Tetris" ? "← Tetris →" : "← Dino →";
+    console.log(displayGame);
     document.getElementById("selected-game").textContent = displayGame;
   }
 
   function loadSelectedGame(game) {
     console.log("app.js + loadSelectedGame");
-    console.log(e.target);
+    console.log(game);
+    document.removeEventListener("keydown", handleKeyDownApp);
 
-    removeGameSelection(); // 게임 선택 UI 삭제
+    if (gameState.scriptElement) {
+      document.body.removeChild(gameState.scriptElement);
+      gameState.scriptElement = null;
+    }
+
     let scriptPath = game === "Tetris" ? "./js/tetris.js" : "./js/dinosaur.js";
     let script = document.createElement("script");
     script.src = scriptPath;
     script.onload = function () {
       if (game === "Tetris") {
-        loadGameTetris();
+        // Tetris game loading logic
       } else {
         loadGameDino();
       }
+      document.addEventListener("keydown", handleKeyDownApp);
     };
     document.body.appendChild(script);
-  }
-
-  function hideGameSelection() {
-    document.getElementById("game-selection").style.display = "none";
-  }
-
-  function removeGameSelection() {
-    document.getElementById("game-selection").remove();
+    gameState.scriptElement = script;
   }
 });
