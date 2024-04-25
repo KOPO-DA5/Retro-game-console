@@ -2,29 +2,27 @@ const canvasBoard = document.getElementById("board");
 const ctxBoard = canvasBoard.getContext("2d");
 const canvasNext = document.getElementById("next");
 const ctxNext = canvasNext.getContext("2d");
-
 let accountValues = {
   score: 0,
   lines: 0,
   level: 0,
 };
 
-//캔버스 크기 계산
-ctxBoard.canvas.width = COLS * BLOCK_SIZE;
-ctxBoard.canvas.height = ROWS * BLOCK_SIZE;
-
-//블록 크기 변경
-ctxBoard.scale(BLOCK_SIZE, BLOCK_SIZE);
-
 //Play 실행 함수
 let board = new Board(ctxBoard, ctxNext);
 //board.reset();
 
+initNext();
 showHighScores();
 
-ctxNext.canvas.width = 4 * BLOCK_SIZE;
-ctxNext.canvas.height = 4 * BLOCK_SIZE;
-ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);
+let requestId = null;
+let time = null;
+
+function initNext() {
+  ctxNext.canvas.width = 4 * BLOCK_SIZE;
+  ctxNext.canvas.height = 4 * BLOCK_SIZE;
+  ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);
+}
 
 function updateAccount(key, value) {
   let element = document.getElementById(key);
@@ -56,7 +54,17 @@ function play() {
 
   //let piece = new Piece(ctxBoard);
   //piece.draw();
+  // if (document.querySelector("#play-btn").style.display == "") {
+  //   resetGame();
+  // }
+
+  if (requestId) {
+    cancelAnimationFrame(requestId);
+  }
+
   animate();
+  // document.querySelector("#play-btn").style.display = "none";
+  // document.querySelector("#pause-btn").style.display = "block";
   backgroundSound.play();
 
   //board.piece = piece;
@@ -70,9 +78,15 @@ moves = {
   [KEY.DOWN]: (p) => ({ ...p, y: p.y + 1 }),
 };
 
+let isPausedTetris = false;
+
 document.addEventListener("keydown", (event) => {
   if (event.keyCode === KEY.ESC) {
-    gameOver();
+    if (!isPausedTetris) {
+      backgroundSound.pause();
+      escSound.play();
+      pause(); //일시정지
+    }
   } else if (moves[event.keyCode]) {
     event.preventDefault();
 
@@ -102,6 +116,16 @@ document.addEventListener("keydown", (event) => {
       ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
 
       //board.piece.draw();
+    }
+  } else if (event.keyCode === KEY.UP) {
+    selectButton(-1);
+    playMenuMoveSound();
+  } else if (event.keyCode === KEY.DOWN) {
+    selectButton(1);
+    playMenuMoveSound();
+  } else if (event.keyCode === 13) {
+    if (isPausedTetris) {
+      buttons[selectedButtonIndex].click();
     }
   }
 });
@@ -135,6 +159,31 @@ function gameOver() {
   checkHighScore(account.score);
   sound.pause();
   finishSound.play();
+
+  document.querySelector("#pause-btn").style.display = "none";
+  document.querySelector("#play-btn").style.display = "";
+}
+
+function pause() {
+  if (!requestId) {
+    document.querySelector("#play-btn").style.display = "none";
+    document.querySelector("#pause-btn").style.display = "block";
+    animate();
+    backgroundSound.play();
+    return;
+  }
+
+  cancelAnimationFrame(requestId);
+  requestId = null;
+
+  ctx.fillStyle = "black";
+  ctx.fillRect(1, 3, 8, 1.2);
+  ctx.font = "1px Arial";
+  ctx.fillStyle = "yellow";
+  ctx.fillText("PAUSED", 3, 4);
+  document.querySelector("#play-btn").style.display = "block";
+  document.querySelector("#pause-btn").style.display = "none";
+  sound.pause();
 }
 
 function showHighScores() {

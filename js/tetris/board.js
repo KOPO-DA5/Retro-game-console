@@ -1,7 +1,4 @@
 class Board {
-  // grid;
-  // piece;
-
   constructor(ctx, ctxNext) {
     this.ctx = ctx;
     this.ctxNext = ctxNext;
@@ -105,10 +102,9 @@ class Board {
     this.grid.forEach((row, y) => {
       if (row.every((value) => value > 0)) {
         lines++;
-
         this.grid.splice(y, 1);
-
         this.grid.unshift(Array(COLS).fill(0));
+        removeLineSound.play();
       }
     });
     if (lines > 0) {
@@ -118,6 +114,7 @@ class Board {
 
       if (account.lines >= LINES_PER_LEVEL) {
         account.level++;
+        levelUpSound.play();
         // console.log(level);
         account.lines -= LINES_PER_LEVEL;
         time.level = LEVEL[account.level];

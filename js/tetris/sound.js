@@ -62,13 +62,19 @@ Sound.prototype.play = function () {
 
 let sound = new Sound(document.querySelector("#sound-div")),
   backgroundSound = sound.create(
-    "audios/tetris/background_tetris.mp3",
+    "audios/tetris/tetris-background.mp3",
     "background_sound",
     true
   ),
   //   movesSound = sound.create("audios/moves.mp3", "moves_sound"),
   dropSound = sound.create("audios/tetris/drop.mp3", "drop_sound"),
+  levelUpSound = sound.create("audios/tetris/levelUp.mp3", "levelup_sound"),
+  removeLineSound = sound.create(
+    "audios/tetris/remove-line.mp3",
+    "removeLine_sound"
+  ),
   //   pointsSound = sound.create("audios/tetris/points.mp3", "points_sound"),
-  finishSound = sound.create("audios/tetris/finish_tetris.mp3", "finish_sound");
+  finishSound = sound.create("audios/tetris/tetris-finish.mp3", "finish_sound"),
+  escSound = sound.create("audios/else/esc-on.mp3", "esc_sound");
 sound.muteToggle();
 sound.soundSetting();
