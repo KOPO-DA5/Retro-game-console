@@ -39,6 +39,10 @@
   cursor: pointer;
 }
 
+#pause-btn {
+  display: none;
+}
+
 #sound-speaker {
   font-size: 20px;
 }

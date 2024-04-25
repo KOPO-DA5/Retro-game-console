@@ -49,7 +49,8 @@ function updateGameContent() {
                       <span class="sound-item" id="sound-speaker"></span>
                       <span class="sound-item" id="sound-description"></span>
                     </div>
-                    <button onclick="play()" class="play-button">Play</button>
+                     <button id="play-btn" onclick="play()" class="play-button">Play</button>
+                    <button id="pause-btn" onclick="pause()" class="play-button">Pause</button>
                 </div>
             `;
 

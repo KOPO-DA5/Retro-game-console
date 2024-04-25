@@ -44,91 +44,75 @@ function resetGame() {
   account.score = 0;
   account.lines = 0;
   account.level = 0;
-  board = this.getEmptyBoard();
+  board.reset();
+  time = { start: performance.now(), elapsed: 0, level: LEVEL[account.level] };
 }
 
 function play() {
-  board.reset();
-  time = { start: 0, elapsed: 0, level: 1000 };
-  //ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
-
-  //let piece = new Piece(ctxBoard);
-  //piece.draw();
-  // if (document.querySelector("#play-btn").style.display == "") {
-  //   resetGame();
-  // }
-
+  addEventListener();
+  if (document.querySelector("#play-btn").style.display == "") {
+    resetGame();
+  }
   if (requestId) {
     cancelAnimationFrame(requestId);
   }
 
   animate();
-  // document.querySelector("#play-btn").style.display = "none";
-  // document.querySelector("#pause-btn").style.display = "block";
+  document.querySelector("#play-btn").style.display = "none";
+  document.querySelector("#pause-btn").style.display = "block";
   backgroundSound.play();
 
   //board.piece = piece;
 }
 
-moves = {
+const moves = {
   [KEY.SPACE]: (p) => ({ ...p, y: p.y + 1 }),
   [KEY.LEFT]: (p) => ({ ...p, x: p.x - 1 }),
   [KEY.RIGHT]: (p) => ({ ...p, x: p.x + 1 }),
   [KEY.UP]: (p) => board.rotate(p),
   [KEY.DOWN]: (p) => ({ ...p, y: p.y + 1 }),
 };
+function addEventListener() {
+  document.removeEventListener("keydown", handleKeyPress);
+  document.addEventListener("keydown", handleKeyPress);
+}
 
-let isPausedTetris = false;
-
-document.addEventListener("keydown", (event) => {
+function handleKeyPress(event) {
+  if (event.keyCode === KEY.P) {
+    pause();
+    backgroundSound.pause();
+  }
   if (event.keyCode === KEY.ESC) {
-    if (!isPausedTetris) {
-      backgroundSound.pause();
-      escSound.play();
-      pause(); //일시정지
-    }
+    gameOver();
   } else if (moves[event.keyCode]) {
     event.preventDefault();
-
+    // Get new state
     let p = moves[event.keyCode](board.piece);
-
     if (event.keyCode === KEY.SPACE) {
-      dropSound.play();
-      console.log(event.keyCode);
+      // Hard drop
+      if (document.querySelector("#pause-btn").style.display === "block") {
+        dropSound.play();
+      } else {
+        return;
+      }
+
       while (board.valid(p)) {
         account.score += POINTS.HARD_DROP;
         board.piece.move(p);
         p = moves[KEY.DOWN](board.piece);
       }
       board.piece.hardDrop();
-
-      ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
-
-      //board.piece.draw();
-    } else {
-      if (board.valid(p)) {
-        board.piece.move(p);
-        if (event.keyCode === KEY.DOWN) {
-          account.score += POINTS.SOFT_DROP;
-        }
+    } else if (board.valid(p)) {
+      board.piece.move(p);
+      if (
+        event.keyCode === KEY.DOWN &&
+        document.querySelector("#pause-btn").style.display === "block"
+      ) {
+        account.score += POINTS.SOFT_DROP;
       }
-
-      ctxBoard.clearRect(0, 0, ctxBoard.canvas.width, ctxBoard.canvas.height);
-
-      //board.piece.draw();
-    }
-  } else if (event.keyCode === KEY.UP) {
-    selectButton(-1);
-    playMenuMoveSound();
-  } else if (event.keyCode === KEY.DOWN) {
-    selectButton(1);
-    playMenuMoveSound();
-  } else if (event.keyCode === 13) {
-    if (isPausedTetris) {
-      buttons[selectedButtonIndex].click();
     }
   }
-});
+}
 
 function animate(now = 0) {
   time.elapsed = now - time.start;
@@ -176,11 +160,11 @@ function pause() {
   cancelAnimationFrame(requestId);
   requestId = null;
 
-  ctx.fillStyle = "black";
-  ctx.fillRect(1, 3, 8, 1.2);
-  ctx.font = "1px Arial";
-  ctx.fillStyle = "yellow";
-  ctx.fillText("PAUSED", 3, 4);
+  ctxBoard.fillStyle = "black";
+  ctxBoard.fillRect(1, 3, 8, 1.2);
+  ctxBoard.font = "1px Arial";
+  ctxBoard.fillStyle = "yellow";
+  ctxBoard.fillText("PAUSED", 3, 4);
   document.querySelector("#play-btn").style.display = "block";
   document.querySelector("#pause-btn").style.display = "none";
   sound.pause();
