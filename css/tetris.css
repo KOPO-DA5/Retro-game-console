@@ -1,19 +1,35 @@
 /* 테트리스 게임에만 담을 css */
 .grid {
   display: grid;
-  grid-template-columns: 350px 210px;
+  flex-direction: column;
+  grid-template-columns: 200px 150px 200px;
+  font-size: 10px;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  font-size: 8px;
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-left: 20px;
 }
 
 .game-board {
   border: solid 2px;
-  margin-left: 80px;
   margin-top: 15px;
+}
+
+.game-board-container {
+  display: flex;
+  justify-self: center;
+  align-items: center;
 }
 
 .play-button {

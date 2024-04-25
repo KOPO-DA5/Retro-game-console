@@ -20,6 +20,8 @@ ctxBoard.scale(BLOCK_SIZE, BLOCK_SIZE);
 let board = new Board(ctxBoard, ctxNext);
 //board.reset();
 
+showHighScores();
+
 ctxNext.canvas.width = 4 * BLOCK_SIZE;
 ctxNext.canvas.height = 4 * BLOCK_SIZE;
 ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);
@@ -68,7 +70,9 @@ moves = {
 };
 
 document.addEventListener("keydown", (event) => {
-  if (moves[event.keyCode]) {
+  if (event.keyCode === KEY.ESC) {
+    gameOver();
+  } else if (moves[event.keyCode]) {
     event.preventDefault();
 
     let p = moves[event.keyCode](board.piece);
@@ -125,4 +129,35 @@ function gameOver() {
   ctxBoard.fillStyle = "red";
   ctxBoard.font = "1px Arial";
   ctxBoard.fillText("GAME OVER", 1.8, 4);
+
+  checkHighScore(account.score);
+}
+
+function showHighScores() {
+  const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+  const highScoreList = document.getElementById("highScores");
+
+  highScoreList.innerHTML = highScores
+    .map((score) => `<li>${score.score} - ${score.name}`)
+    .join("");
+}
+
+function checkHighScore(score) {
+  const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+  const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
+
+  if (score > lowestScore) {
+    const name = prompt("You got a highscore! Enter name:");
+    const newScore = { score, name };
+    saveHighScore(newScore, highScores);
+    showHighScores();
+  }
+}
+
+function saveHighScore(score, highScores) {
+  highScores.push(score);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores.splice(NO_OF_HIGH_SCORES);
+
+  localStorage.setItem("highScores", JSON.stringify(highScores));
 }
