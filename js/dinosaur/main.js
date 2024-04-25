@@ -8,7 +8,6 @@ const gameControls = document.getElementById("game-controls");
 const buttons = gameControls.querySelectorAll("button");
 
 document.addEventListener("keydown", startGame, { once: true });
-
 let lastTime;
 let speedScale;
 let score;
@@ -16,6 +15,8 @@ let isPaused = false;
 let selectedButtonIndex = 0;
 
 document.addEventListener("keydown", function (e) {
+  console.log("main.js addEventListener");
+  console.log(e.target);
   switch (e.code) {
     case "Escape":
       if (!isPaused) {
