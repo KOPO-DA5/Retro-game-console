@@ -89,7 +89,7 @@
   }
 
   function handleKeyDown(event) {
-    console.log("3.main.js addEventListener", event.target);
+    console.log("3.main.js 공룡게임 일시정지 리스너", event.target);
     event.stopPropagation(); // 이벤트 버블링 중단
 
     switch (event.code) {
@@ -325,7 +325,7 @@
   function onJump(e) {
     e.stopPropagation(); // 이벤트 버블링 중단
 
-    console.log("3. main.js onJump", e.target);
+    console.log("3. main.js 공룡게임 onJump", e.target);
     if (e.code !== "Space" || isJumping) return;
 
     yVelocity = JUMP_SPEED;
