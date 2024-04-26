@@ -1,21 +1,19 @@
-//dinosaur.js
 function loadGameDino() {
-  console.log(globalSelectedCharacter); // 선택된 캐릭터 확인
+  console.log(globalSelectedCharacter);
   const content = document.getElementById('content');
 
   var newStyle = document.createElement('link');
   newStyle.setAttribute('rel', 'stylesheet');
 
-  resetAnimation(content); // 애니메이션 초기화
-  updateGameContent(); // 콘텐츠 업데이트
+  resetAnimation(content);
+  updateGameContent();
 
-  // 애니메이션 시작
   content.classList.add('fade-in');
 }
 
 function resetAnimation(element) {
   element.classList.remove('fade-in');
-  void element.offsetWidth; // DOM 리플로우 강제 실행으로 CSS 애니메이션 리셋
+  void element.offsetWidth;
   element.classList.add('fade-in');
 }
 
@@ -51,16 +49,14 @@ function updateGameContent() {
 }
 
 function loadScript(src) {
-  // 기존에 로드된 동일한 스크립트 파일을 찾아 제거합니다.
   const existingScript = document.querySelector(`script[src="${src}"]`);
   if (existingScript) {
     existingScript.remove();
   }
 
-  // 새 스크립트 요소를 생성하고, 페이지에 추가합니다.
   let script = document.createElement('script');
   script.src = src;
   script.type = 'text/javascript';
-  script.async = false; // 스크립트 로딩 순서를 보장합니다.
+  script.async = false;
   document.body.appendChild(script);
 }

@@ -1,4 +1,3 @@
-//main.js
 (function () {
   console.log(globalSelectedCharacter);
   const SPEED_SCALE = 0.00001;
@@ -98,7 +97,7 @@
       case 'Escape':
         if (!isPaused) {
           pauseGame();
-          playPauseSound(); // 일시 정지 소리 재생
+          playSound('pauseSound');
         } else {
           resumeGame();
         }
@@ -106,13 +105,13 @@
       case 'ArrowUp':
         if (isPaused) {
           selectButton(-1);
-          playMenuMoveSound(); // 메뉴 이동 소리 재생
+          playSound('menuMoveSound');
         }
         break;
       case 'ArrowDown':
         if (isPaused) {
           selectButton(1);
-          playMenuMoveSound(); // 메뉴 이동 소리 재생
+          playSound('menuMoveSound');
         }
         break;
       case 'Space':
@@ -147,7 +146,7 @@
 
     if (checkGameOver()) {
       pauseBackgroundMusic();
-      playObstacleHitSound();
+      playSound('obstacleHitSound');
       return handleGameOver();
     }
 
@@ -214,7 +213,7 @@
       gameoverMessage.classList.remove('hide');
     }, 100);
 
-    playGameOverSound(); // 게임 오버 소리 재생
+    playSound('gameOverSound');
   }
 
   /* HANDLING CSS PROPERTIES */
@@ -337,7 +336,7 @@
     isJumping = true;
 
     if (!isPaused) {
-      playJumpSound(); // 게임 중일 때만 점프 소리 재생
+      playSound('jumpSound');
     }
   }
 
@@ -393,24 +392,18 @@
 
   /* ADD AUDIO */
 
-  function playJumpSound() {
-    const jumpSound = document.getElementById('jumpSound');
-    jumpSound.currentTime = 0;
-    jumpSound.play();
-  }
-
   function playBackgroundMusic() {
     if (!isGameOver) {
       const backgroundMusic = document.getElementById('backgroundMusic');
-      backgroundMusic.currentTime = 0; // 배경음악을 처음으로 되감음
-      backgroundMusic.play(); // 배경음악 재생
+      backgroundMusic.currentTime = 0;
+      backgroundMusic.play();
     }
   }
 
   function resumeBackgroundMusic() {
     if (!isGameOver) {
       const backgroundMusic = document.getElementById('backgroundMusic');
-      backgroundMusic.play(); // 배경음악 재생
+      backgroundMusic.play();
     }
   }
 
@@ -419,28 +412,9 @@
     backgroundMusic.pause();
   }
 
-  function playMenuMoveSound() {
-    // 메뉴 이동 소리를 재생하는 함수
-    const menuMoveSound = document.getElementById('menuMoveSound');
-    menuMoveSound.currentTime = 0;
-    menuMoveSound.play();
-  }
-
-  function playGameOverSound() {
-    const gameOverSound = document.getElementById('gameOverSound');
-    gameOverSound.currentTime = 0;
-    gameOverSound.play();
-  }
-
-  function playObstacleHitSound() {
-    const obstacleHitSound = document.getElementById('obstacleHitSound');
-    obstacleHitSound.currentTime = 0;
-    obstacleHitSound.play();
-  }
-
-  function playPauseSound() {
-    const pauseSound = document.getElementById('pauseSound');
-    pauseSound.currentTime = 0;
-    pauseSound.play();
+  function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
   }
 })();
