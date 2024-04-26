@@ -8,13 +8,27 @@
   const gameoverMessage = document.querySelector("#gameover-message");
   const gameControls = document.getElementById("game-controls");
   const buttons = gameControls.querySelectorAll("button");
-
   document.addEventListener("keydown", startGame, { once: true });
+
+  let accountValues = {
+    score: 0,
+    lines: 0,
+    level: 0,
+  };
+
   let lastTime;
   let speedScale;
   let score;
   let isPaused = false;
   let selectedButtonIndex = 0;
+
+  let account = new Proxy(accountValues, {
+    set: (target, key, value) => {
+      target[key] = value;
+      updateAccount(key, value);
+      return true;
+    },
+  });
 
   // 명명된 함수 정의
 
@@ -145,6 +159,7 @@
     if (checkGameOver()) {
       pauseBackgroundMusic();
       playObstacleHitSound();
+      checkHighScore(account.score); // 최고 점수 확인 함수 추가
       return handleGameOver();
     }
 
@@ -200,6 +215,7 @@
 
   function handleGameOver() {
     setDinoLose();
+    // checkHighScore(account.score); // 최고 점수 확인 함수 추가
     setTimeout(() => {
       document.addEventListener("keydown", startGame, {
         once: true,
@@ -433,5 +449,45 @@
     const pauseSound = document.getElementById("pauseSound");
     pauseSound.currentTime = 0;
     pauseSound.play();
+  }
+
+  function showHighScores() {
+    console.log("save 실행");
+    const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    const highScoreList = document.getElementById("highScores");
+
+    highScoreList.innerHTML = highScores
+      .map((score) => `<li>${score.score} - ${score.name}`)
+      .join("");
+  }
+
+  function checkHighScore(score) {
+    console.log(" checkHighScoresave 실행");
+
+    const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    const lowestScore = highScores[highScores - 1]?.score ?? 0;
+    if (score > lowestScore) {
+      const name = prompt("You got a highscore! Enter name:");
+      const newScore = { score, name };
+      saveHighScore(newScore, highScores);
+      showHighScores();
+    }
+  }
+
+  function saveHighScore(score, highScores) {
+    console.log("save 실행");
+    highScores.push(score);
+    highScores.sort((a, b) => b.score - a.score);
+    highScores.splice(NO_OF_HIGH_SCORES);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+  }
+
+  function updateAccount(key, value) {
+    let element = document.getElementById(key);
+    if (element) {
+      element.textContent = value;
+    }
+    console.log(element);
   }
 })();
