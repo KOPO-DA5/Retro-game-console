@@ -45,9 +45,20 @@ function updateGameContent() {
             </div>
           </div>
               `;
-  /* js부르는 법 */
-  let scriptTomain = document.createElement("script");
-  scriptTomain.type = "text/javascript";
-  scriptTomain.src = "./js/dinosaur/main.js";
-  document.body.appendChild(scriptTomain);
+
+  loadScript("./js/dinosaur/main.js");
+}
+function loadScript(src) {
+  // 기존에 로드된 동일한 스크립트 파일을 찾아 제거합니다.
+  const existingScript = document.querySelector(`script[src="${src}"]`);
+  if (existingScript) {
+    existingScript.remove();
+  }
+
+  // 새 스크립트 요소를 생성하고, 페이지에 추가합니다.
+  let script = document.createElement("script");
+  script.src = src;
+  script.type = "text/javascript";
+  script.async = false; // 스크립트 로딩 순서를 보장합니다.
+  document.body.appendChild(script);
 }
