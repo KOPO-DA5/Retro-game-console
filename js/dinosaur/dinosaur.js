@@ -1,6 +1,6 @@
 //dinosaur.js
 function loadGameDino() {
-  console.log('123123');
+  console.log(globalSelectedCharacter); // 선택된 캐릭터 확인
   const content = document.getElementById('content');
 
   var newStyle = document.createElement('link');
@@ -34,7 +34,7 @@ function updateGameContent() {
             <div id="start-message" class="start-message">Press any key to start</div>
             <img src="../images/dinosaur/ground.png" class="ground" />
             <img src="../images/dinosaur/ground.png" class="ground" />
-            <img src="../images/dinosaur/dino-stationary.png" id="dino" class="dino" />
+            <img src="../images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-stationary.png" id="dino" class="dino" />
             <div id="gameover-message" class="gameover-message hide">
               <p>Game over</p>
               <span>Press any key to restart</span>
@@ -49,6 +49,7 @@ function updateGameContent() {
 
   loadScript('../js/dinosaur/main.js');
 }
+
 function loadScript(src) {
   // 기존에 로드된 동일한 스크립트 파일을 찾아 제거합니다.
   const existingScript = document.querySelector(`script[src="${src}"]`);

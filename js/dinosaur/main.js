@@ -1,5 +1,6 @@
 //main.js
 (function () {
+  console.log(globalSelectedCharacter);
   const SPEED_SCALE = 0.00001;
 
   const game = document.querySelector('#game');
@@ -116,6 +117,7 @@
         break;
       case 'Space':
         if (isPaused) {
+          event.preventDefault(); // 스페이스바 기본 동작 방지
           buttons[selectedButtonIndex].click();
         }
         break;
@@ -263,7 +265,7 @@
   const dino = document.querySelector('#dino');
   const JUMP_SPEED = 0.45;
   const GRAVITY = 0.0015;
-  const DINO_FRAME_COUNT = 2;
+  const DINO_FRAME_COUNT = 3;
   const FRAME_TIME = 100;
 
   let isJumping;
@@ -294,18 +296,18 @@
   }
 
   function setDinoLose() {
-    dino.src = '../images/dinosaur/dino-lose.png';
+    dino.src = `../images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-lose.png`;
   }
 
   function handleRun(delta, speedScale) {
     if (isJumping) {
-      dino.src = `../images/dinosaur/dino-stationary.png`;
+      dino.src = `../images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-jump.png`;
       return;
     }
 
     if (currentFrameTime >= FRAME_TIME) {
       dinoFrame = (dinoFrame + 1) % DINO_FRAME_COUNT;
-      dino.src = `../images/dinosaur/dino-run-${dinoFrame}.png`; /* switch between images to simulate movement */
+      dino.src = `../images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-run-${dinoFrame}.png`; /* switch between images to simulate movement */
       currentFrameTime -= FRAME_TIME;
     }
     currentFrameTime += delta * speedScale;
@@ -325,6 +327,7 @@
   }
 
   function onJump(e) {
+    e.preventDefault(); // 스페이스바 기본 동작 방지
     e.stopPropagation(); // 이벤트 버블링 중단
 
     console.log('3. main.js onJump', e.target);
