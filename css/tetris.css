@@ -50,3 +50,7 @@
 .sound-item {
   cursor: pointer;
 }
+
+.hide {
+  display: none;
+}

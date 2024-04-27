@@ -1,4 +1,5 @@
 // tetris.js
+
 function loadGameTetris() {
   const content = document.getElementById("content");
 
@@ -24,11 +25,11 @@ document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
     toggleGamePauseMenu();
   }
-  if (event.key === KEY.UP) {
+  if (event.key === "ArrowUp") {
     selectButton(-1);
     playMenuMoveSound();
   }
-  if (event.key === KEY.DOWN) {
+  if (event.key === "ArrowDown") {
     selectButton(1);
     playMenuMoveSound();
   }
@@ -39,9 +40,18 @@ document.addEventListener("keydown", function (event) {
 
 function toggleGamePauseMenu() {
   const gameControls = document.getElementById("game-controls");
+
+  // 게임 컨트롤 보이기/숨기기
   gameControls.classList.toggle("hide");
-  pause();
-  sound.pause();
+
+  if (!gameControls.classList.contains("hide")) {
+    pause();
+    sound.pause();
+  } else {
+    pause();
+    sound.pause();
+    play();
+  }
 }
 
 function selectButton(direction) {
@@ -63,7 +73,6 @@ let pieceLoaded = false;
 let mainLoaded = false;
 let soundLoaded = false;
 
-// updateGameContent 함수 내에서 호출
 function updateGameContent() {
   const content = document.getElementById("content");
   content.innerHTML = `
@@ -90,14 +99,12 @@ function updateGameContent() {
                     </div>
                      <button id="play-btn" onclick="play()" class="play-button">Play</button>
                     <button id="pause-btn" onclick="pause()" class="play-button">Pause</button>
-                  
-      <div id="game-controls" class="game-controls hide">
-        <button id="resumeButton" class="control-button" onclick="resumeGame()">game resume</button>
-        <button id="restartButton" class="control-button" onclick="restartGame()">game restart</button>
-        <button id="returnButton" class="control-button" onclick="returnToSelection()">game select</button>
-      </div>
 
-
+                     <div id="game-controls" class="game-controls hide">
+                      <button id="resumeButton" class="control-button" onclick="resumeGame()">game resume</button>
+                      <button id="restartButton" class="control-button" onclick="restartGame()">game restart</button>
+                      <button id="returnButton" class="control-button" onclick="returnToSelection()">game select</button>
+                    </div>
                 </div>
             `;
 
