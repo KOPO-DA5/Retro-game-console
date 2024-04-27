@@ -21,26 +21,25 @@ function resetAnimation(element) {
 
 let selectedButtonIndex = 0;
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    toggleGamePauseMenu();
-    escSound.play();
+function handleMenuKeyPress(event) {
+  const gameControls = document.getElementById("game-controls");
+  if (!gameControls.classList.contains("hide")) {
+    if (event.key === "ArrowUp") {
+      selectButton(-1);
+      escMove.currentTime = 0;
+      escMove.play();
+    }
+    if (event.key === "ArrowDown") {
+      selectButton(1);
+      escMove.currentTime = 0;
+      escMove.play();
+    }
+    if (event.key === "Space") {
+      event.preventDefault();
+      buttons[selectedButtonIndex].click();
+    }
   }
-  if (event.key === "ArrowUp") {
-    selectButton(-1);
-    escMove.currentTime = 0;
-    escMove.play();
-  }
-  if (event.key === "ArrowDown") {
-    selectButton(1);
-    escMove.currentTime = 0;
-    escMove.play();
-  }
-  if (event.key === "Space") {
-    event.preventDefault();
-    buttons[selectedButtonIndex].click();
-  }
-});
+}
 
 let isEventListener = false;
 
@@ -51,7 +50,7 @@ function toggleGamePauseMenu() {
 
   if (!gameControls.classList.contains("hide")) {
     if (!isEventListener) {
-      addEventListener();
+      addMenuEventListener();
       isEventListener = true;
     }
     pause();
@@ -59,17 +58,17 @@ function toggleGamePauseMenu() {
   } else {
     play();
     if (isEventListener) {
-      removeEventListener();
+      removeMenuEventListener();
       isEventListener = false;
     }
   }
 }
-function addEventListener() {
-  document.addEventListener("keydown", handleKeyPress);
+function addMenuEventListener() {
+  document.addEventListener("keydown", handleMenuKeyPress);
 }
 
-function removeEventListener() {
-  document.removeEventListener("keydown", handleKeyPress);
+function removeMenuEventListener() {
+  document.removeEventListener("keydown", handleMenuKeyPress);
 }
 
 function resumeGame() {
@@ -114,6 +113,7 @@ function selectButton(direction) {
       button.classList.remove("selected");
     }
   });
+
   return buttons;
 }
 

@@ -78,10 +78,18 @@ function addEventListener() {
   document.addEventListener("keydown", handleKeyPress);
 }
 
+function removeEventListener() {
+  document.removeEventListener("keydown", handleKeyPress);
+}
+
 function handleKeyPress(event) {
   if (event.keyCode === KEY.P) {
     pause();
-    backgroundSound.pause();
+    sound.pause();
+  }
+  if (event.keyCode === KEY.ESC) {
+    toggleGamePauseMenu();
+    escSound.play();
   }
   if (moves[event.keyCode]) {
     event.preventDefault();
@@ -148,6 +156,8 @@ function gameOver() {
 }
 
 function pause() {
+  removeEventListener();
+
   if (!requestId) {
     document.querySelector("#play-btn").style.display = "none";
     document.querySelector("#pause-btn").style.display = "block";
