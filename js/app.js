@@ -1,10 +1,11 @@
 let coin = 0;
 const coinImg = document.querySelector('#game-coin-img');
 const mainPage = document.querySelector('#main-page');
-const joyStick = document.querySelector('#game-joystick-img');
-const yellowBtn = document.querySelector('#game-yellow-btn-img');
-const greenBtn = document.querySelector('#game-green-btn-img');
-const blueBtn = document.querySelector('#game-blue-btn-img');
+// const joyStick_app = document.querySelector('#game-joystick-img');
+// const yellowBtn = document.querySelector('#game-yellow-btn-img');
+// const greenBtn = document.querySelector('#game-green-btn-img');
+// const blueBtn = document.querySelector('#game-blue-btn-img');
+const gameControler = document.write('<script src="./js/gameControler.js"></script>');
 
 function getCoin() {
   return coin;
@@ -42,26 +43,17 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(coin);
       }
       if(coin > 0) {
-        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-          if(event.key === "ArrowRight") {
-            joyStick.classList.remove('joystick-right');
-            joyStick.classList.remove('joystick-left');
-            joyStick.classList.add('joystick-right');
-          } else if(event.key === "ArrowLeft") {
-            joyStick.classList.remove('joystick-right');
-            joyStick.classList.remove('joystick-left');
-            joyStick.classList.add('joystick-left');
-          }
+        gameControl(event.key);
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key === "ArrowDown") {
           toggleGameSelection();
         }
+        
         if (event.key === "Enter") {
-          yellowBtn.classList.remove('push-yellow-btn');
-          greenBtn.classList.remove('push-green-btn');
-          blueBtn.classList.remove('push-blue-btn');
-          greenBtn.classList.add('push-green-btn');
           loadSelectedGame(GlobalState.currentGame);
         }
       }
+
+    
     }
   }
 

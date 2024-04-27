@@ -132,6 +132,8 @@
     console.log('3.main.js 공룡게임 일시정지 리스너', event.target);
     event.stopPropagation(); // 이벤트 버블링 중단
 
+    gameControl(event.code);
+    console.log(event.code);
     switch (event.code) {
       case 'Escape':
         if (!isPaused) {
