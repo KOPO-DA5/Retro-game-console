@@ -24,19 +24,25 @@ let selectedButtonIndex = 0;
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
     toggleGamePauseMenu();
+    escSound.play();
   }
   if (event.key === "ArrowUp") {
     selectButton(-1);
-    playMenuMoveSound();
+    escMove.currentTime = 0;
+    escMove.play();
   }
   if (event.key === "ArrowDown") {
     selectButton(1);
-    playMenuMoveSound();
+    escMove.currentTime = 0;
+    escMove.play();
   }
-  if (event.key === "Enter") {
+  if (event.key === "Space") {
+    event.preventDefault();
     buttons[selectedButtonIndex].click();
   }
 });
+
+let isEventListener = false;
 
 function toggleGamePauseMenu() {
   const gameControls = document.getElementById("game-controls");
@@ -44,11 +50,26 @@ function toggleGamePauseMenu() {
   gameControls.classList.toggle("hide");
 
   if (!gameControls.classList.contains("hide")) {
+    if (!isEventListener) {
+      addEventListener();
+      isEventListener = true;
+    }
     pause();
     sound.pause();
   } else {
     play();
+    if (isEventListener) {
+      removeEventListener();
+      isEventListener = false;
+    }
   }
+}
+function addEventListener() {
+  document.addEventListener("keydown", handleKeyPress);
+}
+
+function removeEventListener() {
+  document.removeEventListener("keydown", handleKeyPress);
 }
 
 function resumeGame() {
@@ -82,6 +103,8 @@ function returnToSelection() {
 }
 
 function selectButton(direction) {
+  const gameControls = document.getElementById("game-controls");
+  const buttons = gameControls.querySelectorAll("button");
   selectedButtonIndex =
     (selectedButtonIndex + direction + buttons.length) % buttons.length;
   buttons.forEach((button, index) => {
@@ -91,6 +114,7 @@ function selectButton(direction) {
       button.classList.remove("selected");
     }
   });
+  return buttons;
 }
 
 // 각 스크립트 파일의 로드 상태를 추적하기 위한 변수들
