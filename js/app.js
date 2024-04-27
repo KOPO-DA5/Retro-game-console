@@ -1,3 +1,15 @@
+let coin = 0;
+const coinImg = document.querySelector('#game-coin-img');
+const mainPage = document.querySelector('#main-page');
+const joyStick = document.querySelector('#game-joystick-img');
+const yellowBtn = document.querySelector('#game-yellow-btn-img');
+const greenBtn = document.querySelector('#game-green-btn-img');
+const blueBtn = document.querySelector('#game-blue-btn-img');
+
+function getCoin() {
+  return coin;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const content = document.getElementById('content');
   resetAnimation(content);
@@ -10,12 +22,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function handleKeyDownApp(event) {
     if (!GlobalState.isGameActive) {
-      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-        playSound('menuMove');
-        toggleGameSelection();
+      if(event.key === "Insert") {
+        coinImg.style.display = "block";
+        coinImg.classList.add('animate__animated', 'animate__flip'); 
+
+        coinImg.addEventListener('animationend', () => {
+          coinImg.classList.remove('animate__animated', 'animate__flip');
+
+          coinImg.style.display = "none";
+
+          setTimeout(function(){
+            mainPage.style.transform = 'scale(1.9)';
+            mainPage.style.transition = '.5s';
+            mainPage.style.overflow = 'hidden';
+          },100);
+        });
+      
+        coin += 5;
+        console.log(coin);
       }
-      if (event.key === 'Enter') {
-        loadSelectedGame(GlobalState.currentGame);
+      if(coin > 0) {
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+          if(event.key === "ArrowRight") {
+            joyStick.classList.remove('joystick-right');
+            joyStick.classList.remove('joystick-left');
+            joyStick.classList.add('joystick-right');
+          } else if(event.key === "ArrowLeft") {
+            joyStick.classList.remove('joystick-right');
+            joyStick.classList.remove('joystick-left');
+            joyStick.classList.add('joystick-left');
+          }
+          toggleGameSelection();
+        }
+        if (event.key === "Enter") {
+          yellowBtn.classList.remove('push-yellow-btn');
+          greenBtn.classList.remove('push-green-btn');
+          blueBtn.classList.remove('push-blue-btn');
+          greenBtn.classList.add('push-green-btn');
+          loadSelectedGame(GlobalState.currentGame);
+        }
       }
     }
   }
