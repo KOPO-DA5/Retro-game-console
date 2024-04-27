@@ -44,8 +44,9 @@ function resetGame() {
   account.score = 0;
   account.lines = 0;
   account.level = 0;
-  board.reset();
+  board.clear();
   time = { start: performance.now(), elapsed: 0, level: LEVEL[account.level] };
+  backgroundSound.currentTime = 0;
 }
 
 function play() {

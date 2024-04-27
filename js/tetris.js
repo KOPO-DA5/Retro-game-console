@@ -40,7 +40,6 @@ document.addEventListener("keydown", function (event) {
 
 function toggleGamePauseMenu() {
   const gameControls = document.getElementById("game-controls");
-
   // 게임 컨트롤 보이기/숨기기
   gameControls.classList.toggle("hide");
 
@@ -48,10 +47,20 @@ function toggleGamePauseMenu() {
     pause();
     sound.pause();
   } else {
-    pause();
-    sound.pause();
     play();
   }
+}
+
+function resumeGame() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.add("hide");
+  play();
+}
+
+function restartGame() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.add("hide");
+  resetGame();
 }
 
 function selectButton(direction) {
