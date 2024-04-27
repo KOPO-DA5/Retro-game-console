@@ -76,11 +76,6 @@
   bottom: 0;
   left: calc(var(--left) * 1%);
 }
-
-.hide {
-  display: none;
-}
-
 .parent {
   width: 100%;
   height: 100%;
@@ -118,4 +113,98 @@
   width: 45%;
   height: 45%;
   object-fit: contain;
+}
+
+.ranking-modal {
+  position: relative;
+  bottom: 10%;
+  left: 50%;
+  width: 400px;
+  height: 220px;
+  transform: translate(-50%, -50%);
+  background-color: rgb(188, 145, 145);
+  padding: 10px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.rank-modal-button {
+  width: 100%; /* 전체 너비 사용 */
+  display: flex;
+  justify-content: space-around; /* 버튼 간격 조정 */
+}
+.hide {
+  display: none;
+}
+#dinoHighScores > li {
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.name-entry-modal {
+  position: relative;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background: #e9a0a0;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1050;
+  border-radius: 5px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.modal-button-name {
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  text-transform: uppercase;
+}
+.hide {
+  display: none;
+}
+.modal-button {
+  margin-left: 10px;
+  width: 220px;
+  height: 50px;
+}
+
+.modal-button.selected {
+  background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
+  color: black;
+  font-size: 0.98em; /* 폰트 크기 증가 */
+  transition: transform 0.3s; /* 부드러운 변화 효과 */
+}
+.flash-effect {
+  animation: flash 1s infinite;
+}
+@keyframes flash {
+  0%,
+  100% {
+    color: rgb(234, 255, 0);
+  }
+  50% {
+    color: rgba(234, 255, 0, 0.805);
+  }
+  25% {
+    color: white;
+  }
 }

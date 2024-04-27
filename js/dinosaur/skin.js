@@ -1,8 +1,13 @@
 let globalSelectedCharacter;
+function resetAnimation(element) {
+  element.classList.remove("fade-in");
+  void element.offsetWidth;
+  element.classList.add("fade-in");
+}
 
 function loadGameSkin() {
-  const content = document.getElementById('content');
-
+  const content = document.getElementById("content");
+  resetAnimation(content);
   content.innerHTML = `
       <link rel="stylesheet" href="../css/dinosaur.css" />
       <div class="parent">
@@ -23,36 +28,39 @@ function loadGameSkin() {
     `;
 
   let selectedIndex = 0;
-  const buttons = document.querySelectorAll('.button');
+  const buttons = document.querySelectorAll(".button");
   updateSelectedButton();
 
   function handleKeyPress(event) {
     const key = event.key;
 
-    if (key === 'ArrowLeft') {
+    if (key === "ArrowLeft") {
       selectedIndex = Math.max(0, selectedIndex - 1);
       updateSelectedButton();
-    } else if (key === 'ArrowRight') {
+    } else if (key === "ArrowRight") {
       selectedIndex = Math.min(buttons.length - 1, selectedIndex + 1);
       updateSelectedButton();
-    } else if (key === ' ') {
-      document.removeEventListener('keydown', handleKeyPress);
+    } else if (key === "Enter") {
+      document.removeEventListener("keydown", handleKeyPress);
       event.preventDefault();
 
-      let isScriptLoaded = document.querySelector('script[src="../js/dinosaur/dinosaur.js"]') !== null;
-      globalSelectedCharacter = buttons[selectedIndex].getAttribute('data-character');
+      let isScriptLoaded =
+        document.querySelector('script[src="../js/dinosaur/dinosaur.js"]') !==
+        null;
+      globalSelectedCharacter =
+        buttons[selectedIndex].getAttribute("data-character");
 
       if (!isScriptLoaded) {
-        let script = document.createElement('script');
-        script.src = '../js/dinosaur/dinosaur.js';
+        let script = document.createElement("script");
+        script.src = "../js/dinosaur/dinosaur.js";
         script.onload = function () {
-          if (typeof loadGameDino === 'function') {
+          if (typeof loadGameDino === "function") {
             loadGameDino();
           }
         };
         document.head.appendChild(script);
       } else {
-        if (typeof loadGameDino === 'function') {
+        if (typeof loadGameDino === "function") {
           loadGameDino();
         }
       }
@@ -62,12 +70,12 @@ function loadGameSkin() {
   function updateSelectedButton() {
     buttons.forEach((button, index) => {
       if (index === selectedIndex) {
-        button.classList.add('selected');
+        button.classList.add("selected");
       } else {
-        button.classList.remove('selected');
+        button.classList.remove("selected");
       }
     });
   }
 
-  document.addEventListener('keydown', handleKeyPress);
+  document.addEventListener("keydown", handleKeyPress);
 }
