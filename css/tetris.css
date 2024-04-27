@@ -124,6 +124,8 @@
 
 #leaderboard-list {
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 }
 
@@ -149,4 +151,35 @@
 
 .button-row button:hover {
   background-color: #45a049;
+}
+
+/*축하 애니메이션*/
+@keyframes confetti {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotateZ(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(500px) rotateZ(720deg);
+  }
+}
+
+.confetti {
+  position: relative;
+  display: inline-block;
+  transform-origin: top left;
+}
+
+.confetti::before {
+  content: "🎉";
+  position: absolute;
+  opacity: 1;
+  animation: confetti 5s forwards;
+}
+.confetti::after {
+  content: "🥳";
+  position: absolute;
+  opacity: 1;
+  animation: confetti 4s forwards;
 }

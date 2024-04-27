@@ -270,6 +270,8 @@ function showLeaderboard() {
   );
 
   leaderboardList.innerHTML = ""; // 기존 목록 초기화
+  const previousTopScore = highScores.length > 0 ? highScores[0].score : -1;
+  const currentTopScore = account.score;
 
   for (let i = 0; i < Math.min(highScores.length, 3); i++) {
     const listItem = document.createElement("li");
@@ -277,6 +279,11 @@ function showLeaderboard() {
       highScores[i].score
     }`;
     leaderboardList.appendChild(listItem);
+    console.log(currentTopScore);
+    console.log(previousTopScore);
+    if (currentTopScore >= previousTopScore) {
+      listItem.classList.add("confetti"); //축하 애니메이션
+    }
   }
 
   leaderboardContainer.style.display = "block"; // leaderboard 보이기
