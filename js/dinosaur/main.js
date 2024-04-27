@@ -68,6 +68,7 @@
   function returnToSelection() {
     document.getElementById("game-controls").classList.add("hide"); // 게임 컨트롤 숨기기
     gameoverMessage.classList.add("hide"); // 게임 오버 메시지 숨기기
+    //공룡게임에서 사용했던 모든 이벤트리스너 제거
     document.removeEventListener("keydown", handleKeyDown);
     document.removeEventListener("keydown", onJump);
     document.removeEventListener("keydown", modalButtonSelection);
@@ -75,13 +76,13 @@
     // 게임 뷰의 요소를 삭제
     const game = document.getElementById("game");
     if (game) {
-      game.remove(); // 게임 뷰 요소 삭제
+      game.remove();
     }
 
     // 게임 선택 화면 보이기
     const gameSelection = document.getElementById("content");
-    resetAnimation(gameSelection);
-
+    resetAnimation(gameSelection); // 부드러운 전환 효과 적용
+    playSound("mainBgm");
     gameSelection.innerHTML = `
     <div id="game-selection">
       <p id="selected-game">← Dino →</p>
@@ -558,6 +559,7 @@
           (modalCurrentButtonIndex - 1 + modalButtons.length) %
           modalButtons.length;
         updateButtonSelection(modalCurrentButtonIndex);
+        playSound("menuMoveSound");
         break;
       case "ArrowDown":
       case "ArrowRight":
@@ -565,6 +567,7 @@
         modalCurrentButtonIndex =
           (modalCurrentButtonIndex + 1) % modalButtons.length;
         updateButtonSelection(modalCurrentButtonIndex);
+        playSound("menuMoveSound");
         break;
       case "Enter":
         // 선택된 버튼의 클릭 이벤트를 강제 실행
