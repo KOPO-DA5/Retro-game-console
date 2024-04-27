@@ -63,6 +63,24 @@ function restartGame() {
   resetGame();
 }
 
+function returnToSelection() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.add("hide");
+  const game = document.getElementById("game");
+  if (game) {
+    game.remove(); // 게임 뷰 요소 삭제
+  }
+
+  // 게임 선택 화면 보이기
+  const gameSelection = document.getElementById("content");
+  gameSelection.innerHTML = `
+    <div id="game-selection">
+      <p id="selected-game">← Tetris →</p>
+      <p>Press Enter to start selected game</p>
+  </div>
+                `;
+}
+
 function selectButton(direction) {
   selectedButtonIndex =
     (selectedButtonIndex + direction + buttons.length) % buttons.length;
