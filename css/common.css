@@ -91,7 +91,7 @@ body{
   animation-duration : 0.3s;
 }
 
-.push-Blue-btn{
+.push-blue-btn{
   animation: pushBlueBtn;
   animation-duration : 0.3s;
 }
@@ -106,12 +106,22 @@ body{
 
 .joystick-left{
   animation: jostickLeft;
-  animation-duration : 1.5s;
+  animation-duration : 0.5s;
 }
 
 .joystick-right{
   animation: jostickRight;
-  animation-duration : 1.5s;
+  animation-duration : 0.5s;
+}
+
+.joystick-up{
+  animation: jostickUp;
+  animation-duration : 0.5s;
+}
+
+.joystick-down{
+  animation: jostickDown;
+  animation-duration : 0.5s;
 }
 
 #game-joystick-body-img {
@@ -230,6 +240,25 @@ body{
     transform: rotate(30deg);
   }
 }
+
+@keyframes jostickDown {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: perspective(170px) rotatex(-35deg);
+  }
+}
+
+@keyframes jostickUp {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotatex(35deg);
+  }
+}
+
 
 @keyframes pushYellowBtn {
   100% {

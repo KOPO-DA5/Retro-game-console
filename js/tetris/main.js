@@ -2,6 +2,9 @@ const canvasBoard = document.getElementById("board");
 const ctxBoard = canvasBoard.getContext("2d");
 const canvasNext = document.getElementById("next");
 const ctxNext = canvasNext.getContext("2d");
+
+// const gameControler_tetris = document.write('<script src="./js/gameControler.js"></script>');
+
 let accountValues = {
   score: 0,
   lines: 0,
@@ -81,6 +84,7 @@ moves = {
 let isPausedTetris = false;
 
 document.addEventListener("keydown", (event) => {
+  gameControl(event.keyCode);
   if (event.keyCode === KEY.ESC) {
     if (!isPausedTetris) {
       backgroundSound.pause();

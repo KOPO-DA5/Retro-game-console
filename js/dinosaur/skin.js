@@ -35,6 +35,7 @@ function loadGameSkin() {
   function handleKeyPress(event) {
     const key = event.key;
 
+    gameControl(key);
     if (key === 'ArrowLeft') {
       selectedIndex = Math.max(0, selectedIndex - 1);
       playSound('menuMoveSound');
