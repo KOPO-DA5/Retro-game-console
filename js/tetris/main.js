@@ -217,26 +217,26 @@ function showHighScores() {
 
 function checkHighScore(score) {
   const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-  const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
-  if (score > lowestScore) {
-    showNicknameScreen();
-    function handleNicknameFormSubmit(event) {
-      event.preventDefault();
-      const name = document.getElementById("nickname").value;
-      const newScore = { score, name };
-      saveHighScore(newScore, highScores);
-      hideNicknameScreen();
-      showHighScores();
-    }
-    const nicknameForm = document.getElementById("nickname-form");
-    nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
 
-    const submitButton = document.getElementById("submit-button");
-    submitButton.addEventListener("click", () => {
-      nicknameForm.removeEventListener("submit", handleNicknameFormSubmit); // 제출 이벤트 리스너 삭제
-      hideNicknameScreen(); // 화면 닫기
-    });
+  showNicknameScreen();
+  function handleNicknameFormSubmit(event) {
+    event.preventDefault();
+    const name = document.getElementById("nickname").value;
+    const newScore = { score, name };
+    saveHighScore(newScore, highScores);
+    hideNicknameScreen();
+    showHighScores();
+    showLeaderboard();
   }
+  const nicknameForm = document.getElementById("nickname-form");
+  nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
+
+  const submitButton = document.getElementById("submit-button");
+  submitButton.addEventListener("click", () => {
+    nicknameForm.removeEventListener("submit", handleNicknameFormSubmit); // 제출 이벤트 리스너 삭제
+    hideNicknameScreen(); // 화면 닫기
+    showLeaderboard();
+  });
 }
 
 function saveHighScore(score, highScores) {
@@ -255,4 +255,32 @@ function showNicknameScreen() {
 function hideNicknameScreen() {
   const nicknameScreen = document.getElementById("nickname-screen");
   nicknameScreen.style.display = "none"; // 화면 숨김
+}
+
+function showLeaderboard() {
+  const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+  highScores.sort((a, b) => b.score - a.score); // 점수에 따라 내림차순 정렬
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  const leaderboardList =
+    leaderboardContainer.querySelector("#leaderboard-list");
+  const closeButton = leaderboardContainer.querySelector("#close-button");
+
+  leaderboardList.innerHTML = ""; // 기존 목록 초기화
+
+  for (let i = 0; i < Math.min(highScores.length, 3); i++) {
+    const listItem = document.createElement("li");
+    listItem.textContent = `${i + 1}. ${highScores[i].name} - ${
+      highScores[i].score
+    }`;
+    leaderboardList.appendChild(listItem);
+  }
+
+  leaderboardContainer.style.display = "block"; // leaderboard 보이기
+
+  closeButton.addEventListener("click", hideLeaderboard);
+}
+
+function hideLeaderboard() {
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  leaderboardContainer.style.display = "none"; // leaderboard 숨기기
 }

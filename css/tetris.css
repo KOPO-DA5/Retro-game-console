@@ -105,3 +105,46 @@
   color: white;
   border: 0px;
 }
+
+.leaderboard-container {
+  display: none;
+  color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border: 0px;
+  border-radius: 8px;
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#leaderboard-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+#leaderboard-list li {
+  margin-bottom: 10px;
+}
+
+#close-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#close-button:hover {
+  background-color: #45a049;
+}

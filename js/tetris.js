@@ -24,25 +24,23 @@ let buttonIndex = 0;
 function handleMenuKeyPress(event) {
   event.stopPropagation();
   const gameControls = document.getElementById("game-controls");
-  const buttons = gameControls.querySelectorAll("button");
-  if (!gameControls.classList.contains("hide")) {
-    if (event.key === "ArrowUp") {
-      selectButton(-1);
-      escMove.currentTime = 0;
-      escMove.play();
+  if (gameControls) {
+    const buttons = gameControls.querySelectorAll("button");
+    if (!gameControls.classList.contains("hide")) {
+      if (event.key === "ArrowUp") {
+        selectButton(-1);
+        escMove.currentTime = 0;
+        escMove.play();
+      }
+      if (event.key === "ArrowDown") {
+        selectButton(1);
+        escMove.currentTime = 0;
+        escMove.play();
+      }
+      if (event.key === "Escape") {
+        buttons[buttonIndex].click();
+      }
     }
-    if (event.key === "ArrowDown") {
-      selectButton(1);
-      escMove.currentTime = 0;
-      escMove.play();
-    }
-    if (event.key === "Escape") {
-      buttons[buttonIndex].click();
-    }
-    // if (event.key === "Escape") {
-    //   resumeGame();
-    //   escSound.play();
-    // }
   }
 }
 
@@ -164,7 +162,11 @@ function updateGameContent() {
                     <button type="submit">Submit</button>
                     </form>
                     </div>
-
+                    <div class="leaderboard-container">
+                       <h1>Ranking</h1>
+                      <ol id="leaderboard-list"></ol>
+                      <button id="close-button">Close</button>
+                    </div>
                 </div>
             `;
 
