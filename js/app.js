@@ -1,35 +1,33 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const content = document.getElementById("content");
+document.addEventListener('DOMContentLoaded', function () {
+  const content = document.getElementById('content');
   resetAnimation(content);
-  playSound("mainBgm");
+  playSound('mainBgm');
   function resetAnimation(element) {
-    element.classList.remove("fade-in");
+    element.classList.remove('fade-in');
     void element.offsetWidth;
-    element.classList.add("fade-in");
+    element.classList.add('fade-in');
   }
 
   function handleKeyDownApp(event) {
     if (!GlobalState.isGameActive) {
-      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-        playSound("menuMove");
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        playSound('menuMove');
         toggleGameSelection();
       }
-      if (event.key === "Enter") {
+      if (event.key === 'Enter') {
         loadSelectedGame(GlobalState.currentGame);
       }
     }
   }
 
   // 게임 선택 이벤트 리스너 등록
-  document.addEventListener("keydown", handleKeyDownApp);
+  document.addEventListener('keydown', handleKeyDownApp);
 
   function toggleGameSelection() {
     if (!GlobalState.isGameActive) {
-      GlobalState.currentGame =
-        GlobalState.currentGame === "Tetris" ? "Dino" : "Tetris";
-      var displayGame =
-        GlobalState.currentGame === "Tetris" ? "← Tetris →" : "← Dino →";
-      document.getElementById("selected-game").textContent = displayGame;
+      GlobalState.currentGame = GlobalState.currentGame === 'Tetris' ? 'Dino' : 'Tetris';
+      var displayGame = GlobalState.currentGame === 'Tetris' ? '← Tetris →' : '← Dino →';
+      document.getElementById('selected-game').textContent = displayGame;
     }
   }
 
@@ -39,12 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
       document.body.removeChild(GlobalState.scriptElement);
     }
 
-    let scriptPath =
-      game === "Tetris" ? "./js/tetris.js" : "./js/dinosaur/skin.js";
-    let script = document.createElement("script");
+    let scriptPath = game === 'Tetris' ? 'js/tetris.js' : 'js/dinosaur/skin.js';
+    let script = document.createElement('script');
     script.src = scriptPath;
     script.onload = function () {
-      if (game === "Tetris") {
+      if (game === 'Tetris') {
         loadGameTetris();
       } else {
         loadGameSkin();
