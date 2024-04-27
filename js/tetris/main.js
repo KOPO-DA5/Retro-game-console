@@ -263,7 +263,11 @@ function showLeaderboard() {
   const leaderboardContainer = document.querySelector(".leaderboard-container");
   const leaderboardList =
     leaderboardContainer.querySelector("#leaderboard-list");
-  const closeButton = leaderboardContainer.querySelector("#close-button");
+  const gameAgainButton =
+    leaderboardContainer.querySelector("#game-again-button");
+  const gameSelectButton = leaderboardContainer.querySelector(
+    "#game-select-button"
+  );
 
   leaderboardList.innerHTML = ""; // 기존 목록 초기화
 
@@ -277,7 +281,15 @@ function showLeaderboard() {
 
   leaderboardContainer.style.display = "block"; // leaderboard 보이기
 
-  closeButton.addEventListener("click", hideLeaderboard);
+  gameAgainButton.addEventListener("click", () => {
+    resetGame();
+    hideLeaderboard();
+  });
+
+  gameSelectButton.addEventListener("click", () => {
+    returnToSelection();
+    hideLeaderboard();
+  });
 }
 
 function hideLeaderboard() {

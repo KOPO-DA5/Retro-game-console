@@ -163,10 +163,14 @@ function updateGameContent() {
                     </form>
                     </div>
                     <div class="leaderboard-container">
-                       <h1>Ranking</h1>
+                      <h1>Ranking</h1>
                       <ol id="leaderboard-list"></ol>
-                      <button id="close-button">Close</button>
+                      <div class="button-row">
+                      <button id="game-again-button">Game Again</button>
+                      <button id="game-select-button">Game Select</button>
+                      </div>
                     </div>
+
                 </div>
             `;
 

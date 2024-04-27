@@ -124,19 +124,21 @@
 
 #leaderboard-list {
   list-style-type: none;
-  padding: 0;
-  margin-top: 10px;
+  padding: 20px;
 }
 
 #leaderboard-list li {
   margin-bottom: 10px;
 }
 
-#close-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
+.button-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-row button {
+  width: 45%;
+  padding: 4px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -145,6 +147,6 @@
   font-size: 13px;
 }
 
-#close-button:hover {
+.button-row button:hover {
   background-color: #45a049;
 }
