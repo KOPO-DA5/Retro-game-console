@@ -1,17 +1,134 @@
 /* 공통적으로 모두 적용할 css */
 * {
+  margin: 0px;
+  padding: 0px;
   font-family: "Press Start 2p", cursive;
 }
 
+body{
+  background-color: black;
+}
+
+#game-container{
+  width:  1707px;
+  height: 930px;
+  position: relative;
+}
+
+#game-background-img{
+  width:  1707px;
+  height: 930px;
+  background-repeat: no-repeat;
+  object-fit: fill;
+}
+
 #console {
-  width: 600px;
-  height: 467px;
-  margin: 10px auto;
-  padding: 40px;
-  border: 3px solid #333;
+  width: 403px;
+  border: 3px solid #000;
   border-radius: 10px;
-  background-color: #f0f0f0;
   text-align: center;
+  position: absolute;
+  z-index: 2;
+  left: 660px;
+  bottom: 325px;
+}
+
+#game-coin-img{
+  position: absolute;
+  z-index: 3;
+  top: 440px;
+  left: 820px;
+  width: 100px;
+  display: none;
+}
+
+#game-yellow-btn-img {
+  position: absolute;
+  width: 100px;
+}
+
+#game-green-btn-img {
+  position: absolute;
+  width: 100px;
+}
+
+#game-blue-btn-img {
+  position: absolute;
+  width: 100px;
+}
+
+#game-yellow-btn-container{
+  position: absolute;
+  top: 630px;
+  left: 850px;
+}
+
+#game-green-btn-container{
+  position: absolute;
+  top: 630px;
+  left: 930px;
+}
+
+#game-blue-btn-container{
+  position: absolute;
+  top: 630px;
+  left: 1010px;
+}
+
+
+#game-btn-body-img{
+  position: absolute;
+  width: 100px;
+}
+
+.push-yellow-btn{
+  animation: pushYellowBtn;
+  animation-duration : 0.3s;
+}
+
+.push-green-btn{
+  animation: pushGreenBtn;
+  animation-duration : 0.3s;
+}
+
+.push-blue-btn{
+  animation: pushBlueBtn;
+  animation-duration : 0.3s;
+}
+
+#game-joystick-img{
+  position: absolute;
+  z-index: 2;
+  width: 130px;
+  top: 591px;
+  left: 650px;
+}
+
+.joystick-left{
+  animation: jostickLeft;
+  animation-duration : 0.5s;
+}
+
+.joystick-right{
+  animation: jostickRight;
+  animation-duration : 0.5s;
+}
+
+.joystick-up{
+  animation: jostickUp;
+  animation-duration : 0.5s;
+}
+
+.joystick-down{
+  animation: jostickDown;
+  animation-duration : 0.5s;
+}
+
+#game-joystick-body-img {
+  position: absolute;
+  width: 120px;
+  top: 598px;
+  left: 655px;
 }
 
 #games {
@@ -28,7 +145,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 330px; /* 이전에 설정된 높이 */
+  height: 240px; /* 이전에 설정된 높이 */
   background-color: #000; /* 기존의 배경색 */
   color: white;
 }
@@ -54,9 +171,9 @@
 }
 
 .game-controls {
-  position: absolute;
+  position: relative;
+  bottom: 20%;
   width: 50%;
-  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10; /* 다른 요소 위에 표시 */
@@ -100,5 +217,63 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+@keyframes jostickLeft {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+  
+    left: 635px;
+    transform: rotate(-30deg);
+  }
+}
+
+@keyframes jostickRight {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    left: 670px;
+    transform: rotate(30deg);
+  }
+}
+
+@keyframes jostickDown {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: perspective(170px) rotatex(-35deg);
+  }
+}
+
+@keyframes jostickUp {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotatex(35deg);
+  }
+}
+
+
+@keyframes pushYellowBtn {
+  100% {
+    top: 5px;
+  }
+}
+
+@keyframes pushGreenBtn {
+  100% {
+    top: 5px;
+  }
+}
+
+@keyframes pushBlueBtn {
+  100% {
+    top: 5px;
   }
 }

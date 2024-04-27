@@ -218,7 +218,6 @@ function showHighScores() {
 function checkHighScore(score) {
   const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
   const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
-
   if (score > lowestScore) {
     showNicknameScreen();
     function handleNicknameFormSubmit(event) {
