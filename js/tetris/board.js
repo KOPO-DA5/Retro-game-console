@@ -15,13 +15,13 @@ class Board {
   }
 
   reset() {
-    this.grid = this.getEmptyBoard();
+    this.grid = this.getEmptyGrid();
     this.piece = new Piece(this.ctx);
     this.piece.setStartingPosition();
     this.getNewPiece();
   }
 
-  getEmptyBoard() {
+  getEmptyGrid() {
     return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
   }
 
@@ -94,6 +94,14 @@ class Board {
       this.getNewPiece();
     }
     return true;
+  }
+
+  clear() {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.grid = this.getEmptyGrid();
+    this.piece = new Piece(this.ctx);
+    this.piece.setStartingPosition();
+    this.getNewPiece();
   }
 
   clearLines() {

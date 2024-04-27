@@ -96,6 +96,8 @@ const KEY = {
   UP: 38,
   RIGHT: 39,
   DOWN: 40,
+  P: 80,
+  Q: 81,
 };
 
 const POINTS = {
@@ -107,9 +109,11 @@ const POINTS = {
   HARD_DROP: 2,
 };
 
-//KEY를 불변하게 만듬
-Object.freeze(KEY);
+const ROTATION = {
+  LEFT: "left",
+  RIGHT: "right",
+};
 
-Object.freeze(POINTS);
-
-Object.freeze(LEVEL);
+[COLORS, SHAPES, KEY, POINTS, LEVEL, ROTATION].forEach((item) =>
+  Object.freeze(item)
+);

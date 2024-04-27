@@ -39,10 +39,64 @@
   cursor: pointer;
 }
 
+#pause-btn {
+  display: none;
+}
+
 #sound-speaker {
   font-size: 20px;
 }
 
 .sound-item {
   cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#nickname-screen {
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#nickname-form {
+  background-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+#nickname-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#nickname-form input {
+  background-color: black;
+  border: 0px;
+  color: white;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+#nickname-form button {
+  padding: 5px 10px;
+  background-color: #848484;
+  color: white;
+  border: 0px;
 }
