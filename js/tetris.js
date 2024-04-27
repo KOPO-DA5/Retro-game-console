@@ -131,7 +131,7 @@ function updateGameContent() {
                 <link rel="stylesheet" href="./css/tetris.css" />
                 <div class="grid">
                   <div class="left-column">
-                    <h2>HIGH SCORES</h2>
+                    <h2 style="margin-bottom:10px;">HIGH SCORES</h2>
                     <ol id="highScores"></ol>
                   </div>
                   <div class="game-board-container">

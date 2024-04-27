@@ -4,7 +4,7 @@ const COLS = 10;
 //20개 행 지정
 const ROWS = 20;
 //블록 사이즈 지정
-const BLOCK_SIZE = 15;
+const BLOCK_SIZE = 12;
 
 //3줄 삭제 시 레벨 업
 const LINES_PER_LEVEL = 3;
