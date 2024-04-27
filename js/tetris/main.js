@@ -2,6 +2,17 @@ const canvasBoard = document.getElementById("board");
 const ctxBoard = canvasBoard.getContext("2d");
 const canvasNext = document.getElementById("next");
 const ctxNext = canvasNext.getContext("2d");
+
+document.addEventListener("keydown", handlePKeyPress);
+
+function handlePKeyPress(event) {
+  if (event.keyCode === KEY.P) {
+    if (document.querySelector("#play-btn").style.display !== "none") {
+      play();
+    }
+  }
+}
+
 let accountValues = {
   score: 0,
   lines: 0,
@@ -11,6 +22,7 @@ let accountValues = {
 //Play 실행 함수
 let board = new Board(ctxBoard, ctxNext);
 //board.reset();
+let isPlaying = false;
 
 initNext();
 showHighScores();
@@ -47,9 +59,13 @@ function resetGame() {
   board.clear();
   time = { start: performance.now(), elapsed: 0, level: LEVEL[account.level] };
   backgroundSound.currentTime = 0;
+  isPlaying = true;
+
+  document.addEventListener("keydown", handlePKeyPress);
 }
 
 function play() {
+  document.removeEventListener("keydown", handlePKeyPress);
   addEventListener();
   if (document.querySelector("#play-btn").style.display == "") {
     resetGame();
@@ -64,6 +80,7 @@ function play() {
   backgroundSound.play();
 
   //board.piece = piece;
+  isPlaying = true;
 }
 
 const moves = {
@@ -84,8 +101,16 @@ function removeEventListener() {
 
 function handleKeyPress(event) {
   if (event.keyCode === KEY.P) {
-    pause();
-    sound.pause();
+    if (isPlaying) {
+      console.log(isPlaying);
+      pause();
+      sound.pause();
+    } else {
+      console.log(isPlaying);
+      play();
+    }
+    document.removeEventListener("keydown", handleKeyPress);
+    document.addEventListener("keydown", handleKeyPress);
   }
   if (event.keyCode === KEY.ESC) {
     toggleGamePauseMenu();
@@ -163,6 +188,7 @@ function pause() {
     document.querySelector("#pause-btn").style.display = "block";
     animate();
     backgroundSound.play();
+    isPlaying = true;
     return;
   }
 
@@ -177,6 +203,7 @@ function pause() {
   document.querySelector("#play-btn").style.display = "block";
   document.querySelector("#pause-btn").style.display = "none";
   sound.pause();
+  isPlaying = false;
 }
 
 function showHighScores() {
