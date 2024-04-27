@@ -220,10 +220,23 @@ function checkHighScore(score) {
   const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
 
   if (score > lowestScore) {
-    const name = prompt("You got a highscore! Enter name:");
-    const newScore = { score, name };
-    saveHighScore(newScore, highScores);
-    showHighScores();
+    showNicknameScreen();
+    function handleNicknameFormSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById("nickname").value;
+      const newScore = { score, name };
+      saveHighScore(newScore, highScores);
+      hideNicknameScreen();
+      showHighScores();
+    }
+    const nicknameForm = document.getElementById("nickname-form");
+    nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
+
+    const submitButton = document.getElementById("submit-button");
+    submitButton.addEventListener("click", () => {
+      nicknameForm.removeEventListener("submit", handleNicknameFormSubmit); // 제출 이벤트 리스너 삭제
+      hideNicknameScreen(); // 화면 닫기
+    });
   }
 }
 
@@ -233,4 +246,14 @@ function saveHighScore(score, highScores) {
   highScores.splice(NO_OF_HIGH_SCORES);
 
   localStorage.setItem("highScores", JSON.stringify(highScores));
+}
+
+function showNicknameScreen() {
+  const nicknameScreen = document.getElementById("nickname-screen");
+  nicknameScreen.style.display = "flex"; // 화면 표시
+}
+
+function hideNicknameScreen() {
+  const nicknameScreen = document.getElementById("nickname-screen");
+  nicknameScreen.style.display = "none"; // 화면 숨김
 }

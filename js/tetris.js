@@ -157,6 +157,14 @@ function updateGameContent() {
                       <button id="restartButton" class="control-button" onclick="restartGame()">game restart</button>
                       <button id="returnButton" class="control-button" onclick="returnToSelection()">game select</button>
                     </div>
+                    <div id="nickname-screen" class="screen">
+                    <form id="nickname-form">
+                    <label for="nickname">Enter your nickname:</label>
+                    <input type="text" id="nickname" name="nickname">
+                    <button type="submit">Submit</button>
+                    </form>
+                    </div>
+
                 </div>
             `;
 
