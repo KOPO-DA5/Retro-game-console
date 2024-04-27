@@ -1,20 +1,20 @@
-// import { gameState } from "../gameState.js";
+// import { gameState } from "gameState.js";
 (function () {
   const SPEED_SCALE = 0.00001;
 
-  const game = document.querySelector("#game");
-  const scoreDisplay = document.querySelector("#score");
-  const startMessage = document.querySelector("#start-message");
-  const gameoverMessage = document.querySelector("#gameover-message");
-  const gameControls = document.getElementById("game-controls");
-  const buttons = gameControls.querySelectorAll("button");
+  const game = document.querySelector('#game');
+  const scoreDisplay = document.querySelector('#score');
+  const startMessage = document.querySelector('#start-message');
+  const gameoverMessage = document.querySelector('#gameover-message');
+  const gameControls = document.getElementById('game-controls');
+  const buttons = gameControls.querySelectorAll('button');
   let dinoAccountValues = {
     score: 0,
     lines: 0,
     level: 0,
   };
 
-  document.addEventListener("keydown", startGame, { once: true });
+  document.addEventListener('keydown', startGame, { once: true });
 
   let account = new Proxy(dinoAccountValues, {
     set: (target, key, value) => {
@@ -44,14 +44,14 @@
 
   function pauseGame() {
     isPaused = true;
-    gameControls.classList.remove("hide");
+    gameControls.classList.remove('hide');
     selectButton(0); // 초기 선택된 버튼 설정
     pauseBackgroundMusic();
   }
 
   function resumeGame() {
     isPaused = false;
-    gameControls.classList.add("hide");
+    gameControls.classList.add('hide');
     lastTime = null;
     resumeBackgroundMusic();
     window.requestAnimationFrame(update);
@@ -61,28 +61,28 @@
     setupGame();
     playBackgroundMusic();
     resumeGame();
-    document.addEventListener("keydown", handleKeyDown);
-    document.removeEventListener("keydown", modalButtonSelection);
+    document.addEventListener('keydown', handleKeyDown);
+    document.removeEventListener('keydown', modalButtonSelection);
   }
 
   function returnToSelection() {
-    document.getElementById("game-controls").classList.add("hide"); // 게임 컨트롤 숨기기
-    gameoverMessage.classList.add("hide"); // 게임 오버 메시지 숨기기
+    document.getElementById('game-controls').classList.add('hide'); // 게임 컨트롤 숨기기
+    gameoverMessage.classList.add('hide'); // 게임 오버 메시지 숨기기
     //공룡게임에서 사용했던 모든 이벤트리스너 제거
-    document.removeEventListener("keydown", handleKeyDown);
-    document.removeEventListener("keydown", onJump);
-    document.removeEventListener("keydown", modalButtonSelection);
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('keydown', onJump);
+    document.removeEventListener('keydown', modalButtonSelection);
 
     // 게임 뷰의 요소를 삭제
-    const game = document.getElementById("game");
+    const game = document.getElementById('game');
     if (game) {
       game.remove();
     }
 
     // 게임 선택 화면 보이기
-    const gameSelection = document.getElementById("content");
+    const gameSelection = document.getElementById('content');
     resetAnimation(gameSelection); // 부드러운 전환 효과 적용
-    playSound("mainBgm");
+    playSound('mainBgm');
     gameSelection.innerHTML = `
     <div id="game-selection">
       <p id="selected-game">← Dino →</p>
@@ -93,9 +93,9 @@
   }
 
   function resetAnimation(element) {
-    element.classList.remove("fade-in");
+    element.classList.remove('fade-in');
     void element.offsetWidth;
-    element.classList.add("fade-in");
+    element.classList.add('fade-in');
   }
 
   window.returnToSelection = returnToSelection;
@@ -112,49 +112,48 @@
     setupDino();
     setupCactus();
     window.requestAnimationFrame(update);
-    document.getElementById("ranking-modal").classList.add("hide"); // 게임 컨트롤 숨기기
-    document.removeEventListener("keydown", modalButtonSelection);
+    document.getElementById('ranking-modal').classList.add('hide'); // 게임 컨트롤 숨기기
+    document.removeEventListener('keydown', modalButtonSelection);
   }
 
   function selectButton(direction) {
-    selectedButtonIndex =
-      (selectedButtonIndex + direction + buttons.length) % buttons.length;
+    selectedButtonIndex = (selectedButtonIndex + direction + buttons.length) % buttons.length;
     buttons.forEach((button, index) => {
       if (index === selectedButtonIndex) {
-        button.classList.add("selected");
+        button.classList.add('selected');
       } else {
-        button.classList.remove("selected");
+        button.classList.remove('selected');
         ``;
       }
     });
   }
 
   function handleKeyDown(event) {
-    console.log("3.main.js 공룡게임 일시정지 리스너", event.target);
+    console.log('3.main.js 공룡게임 일시정지 리스너', event.target);
     event.stopPropagation(); // 이벤트 버블링 중단
 
     switch (event.code) {
-      case "Escape":
+      case 'Escape':
         if (!isPaused) {
           pauseGame();
-          playSound("pauseSound");
+          playSound('pauseSound');
         } else {
           resumeGame();
         }
         break;
-      case "ArrowUp":
+      case 'ArrowUp':
         if (isPaused) {
           selectButton(-1);
-          playSound("menuMoveSound");
+          playSound('menuMoveSound');
         }
         break;
-      case "ArrowDown":
+      case 'ArrowDown':
         if (isPaused) {
           selectButton(1);
-          playSound("menuMoveSound");
+          playSound('menuMoveSound');
         }
         break;
-      case "Enter":
+      case 'Enter':
         if (isPaused) {
           event.preventDefault(); // 스페이스바 기본 동작 방지
           buttons[selectedButtonIndex].click();
@@ -185,10 +184,10 @@
     }
 
     if (checkGameOver()) {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keydown", onJump);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keydown', onJump);
       pauseBackgroundMusic();
-      playSound("obstacleHitSound");
+      playSound('obstacleHitSound');
       checkHighScore(account.score);
       return handleGameOver();
     }
@@ -199,9 +198,9 @@
 
   function startGame() {
     isGameOver = false;
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keydown", onJump);
-    document.getElementById("ranking-modal").classList.add("hide"); // 게임 컨트롤 숨기기
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', onJump);
+    document.getElementById('ranking-modal').classList.add('hide'); // 게임 컨트롤 숨기기
 
     playBackgroundMusic();
 
@@ -211,8 +210,8 @@
     setupGround();
     setupDino();
     setupCactus();
-    startMessage.classList.add("hide");
-    gameoverMessage.classList.add("hide");
+    startMessage.classList.add('hide');
+    gameoverMessage.classList.add('hide');
     window.requestAnimationFrame(update);
   }
 
@@ -259,7 +258,7 @@
     //   gameoverMessage.classList.remove("hide");
     // }, 100);
 
-    playSound("gameOverSound");
+    playSound('gameOverSound');
   }
 
   /* HANDLING CSS PROPERTIES */
@@ -282,11 +281,11 @@
   /* GROUND MOVEMENT */
 
   const GROUND_SPEED = 0.05;
-  const grounds = document.querySelectorAll(".ground");
+  const grounds = document.querySelectorAll('.ground');
 
   function setupGround() {
-    setCustomProperty(grounds[0], "--left", 0);
-    setCustomProperty(grounds[1], "--left", 300);
+    setCustomProperty(grounds[0], '--left', 0);
+    setCustomProperty(grounds[1], '--left', 300);
   }
 
   function updateGround(delta, speedScale) {
@@ -295,19 +294,19 @@
     grounds.forEach((ground) => {
       incrementCustomProperty(
         ground,
-        "--left",
+        '--left',
         delta * speedScale * GROUND_SPEED * -1
       ); /* moves the ground according to game speed */
 
-      if (getCustomProperty(ground, "--left") <= -300) {
-        incrementCustomProperty(ground, "--left", 600); /* loop the elements */
+      if (getCustomProperty(ground, '--left') <= -300) {
+        incrementCustomProperty(ground, '--left', 600); /* loop the elements */
       }
     });
   }
 
   /* DINOSAUR MOVEMENT */
 
-  const dino = document.querySelector("#dino");
+  const dino = document.querySelector('#dino');
   const JUMP_SPEED = 0.45;
   const GRAVITY = 0.0015;
   const DINO_FRAME_COUNT = 3;
@@ -324,12 +323,9 @@
     currentFrameTime = 0;
     yVelocity = 0;
 
-    setCustomProperty(dino, "--bottom", 0);
-    document.removeEventListener(
-      "keydown",
-      onJump
-    ); /* reset the dinosaur if the player dies while jumping */
-    document.addEventListener("keydown", onJump);
+    setCustomProperty(dino, '--bottom', 0);
+    document.removeEventListener('keydown', onJump); /* reset the dinosaur if the player dies while jumping */
+    document.addEventListener('keydown', onJump);
   }
 
   function updateDino(delta, speedScale) {
@@ -344,18 +340,18 @@
   }
 
   function setDinoLose() {
-    dino.src = `../images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-lose.png`;
+    dino.src = `images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-lose.png`;
   }
 
   function handleRun(delta, speedScale) {
     if (isJumping) {
-      dino.src = `../images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-jump.png`;
+      dino.src = `images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-jump.png`;
       return;
     }
 
     if (currentFrameTime >= FRAME_TIME) {
       dinoFrame = (dinoFrame + 1) % DINO_FRAME_COUNT;
-      dino.src = `../images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-run-${dinoFrame}.png`; /* switch between images to simulate movement */
+      dino.src = `images/dinosaur/${globalSelectedCharacter}/${globalSelectedCharacter}-run-${dinoFrame}.png`; /* switch between images to simulate movement */
       currentFrameTime -= FRAME_TIME;
     }
     currentFrameTime += delta * speedScale;
@@ -364,10 +360,10 @@
   function handleJump(delta) {
     if (!isJumping) return;
 
-    incrementCustomProperty(dino, "--bottom", yVelocity * delta);
+    incrementCustomProperty(dino, '--bottom', yVelocity * delta);
 
-    if (getCustomProperty(dino, "--bottom") <= 0) {
-      setCustomProperty(dino, "--bottom", 0);
+    if (getCustomProperty(dino, '--bottom') <= 0) {
+      setCustomProperty(dino, '--bottom', 0);
       isJumping = false;
     }
 
@@ -378,14 +374,14 @@
     e.preventDefault(); // 스페이스바 기본 동작 방지
     e.stopPropagation(); // 이벤트 버블링 중단
 
-    console.log("3. main.js 공룡게임 onJump", e.target);
-    if (e.code !== "Space" || isJumping) return;
+    console.log('3. main.js 공룡게임 onJump', e.target);
+    if (e.code !== 'Space' || isJumping) return;
 
     yVelocity = JUMP_SPEED;
     isJumping = true;
 
     if (!isPaused) {
-      playSound("jumpSound");
+      playSound('jumpSound');
     }
   }
 
@@ -399,7 +395,7 @@
 
   function setupCactus() {
     nextCactusTime = CACTUS_INTERVAL_MIN;
-    document.querySelectorAll(".cactus").forEach((cactus) => {
+    document.querySelectorAll('.cactus').forEach((cactus) => {
       cactus.remove(); /* remove cactus when game restart */
     });
   }
@@ -407,50 +403,43 @@
   function updateCactus(delta, speedScale) {
     if (isPaused) return; // 일시정지 상태일 때 업데이트 중지
 
-    document.querySelectorAll(".cactus").forEach((cactus) => {
-      incrementCustomProperty(
-        cactus,
-        "--left",
-        delta * speedScale * CACTUS_SPEED * -1
-      );
-      if (getCustomProperty(cactus, "--left") <= -100) {
+    document.querySelectorAll('.cactus').forEach((cactus) => {
+      incrementCustomProperty(cactus, '--left', delta * speedScale * CACTUS_SPEED * -1);
+      if (getCustomProperty(cactus, '--left') <= -100) {
         cactus.remove(); /* remove cactus off screen so it doesn't impair game performance */
       }
     });
 
     if (nextCactusTime <= 0) {
       createCactus();
-      nextCactusTime =
-        randomizer(CACTUS_INTERVAL_MIN, CACTUS_INTERVAL_MAX) / speedScale;
+      nextCactusTime = randomizer(CACTUS_INTERVAL_MIN, CACTUS_INTERVAL_MAX) / speedScale;
     }
     nextCactusTime -= delta;
   }
 
   function getCactusRects() {
-    return [...document.querySelectorAll(".cactus")].map((cactus) => {
+    return [...document.querySelectorAll('.cactus')].map((cactus) => {
       return cactus.getBoundingClientRect(); /* get the hitbox of all the cactus on the screen */
     });
   }
 
   function createCactus() {
-    const cactus = document.createElement("img");
-    cactus.src = "../images/dinosaur/cactus.png";
-    cactus.classList.add("cactus");
-    setCustomProperty(cactus, "--left", 100);
+    const cactus = document.createElement('img');
+    cactus.src = 'images/dinosaur/cactus.png';
+    cactus.classList.add('cactus');
+    setCustomProperty(cactus, '--left', 100);
     game.append(cactus);
   }
 
   function randomizer(min, max) {
-    return Math.floor(
-      Math.random() * (max - min + 1) + min
-    ); /* choose a number between minimum and maximum */
+    return Math.floor(Math.random() * (max - min + 1) + min); /* choose a number between minimum and maximum */
   }
 
   /* ADD AUDIO */
 
   function playBackgroundMusic() {
     if (!isGameOver) {
-      const backgroundMusic = document.getElementById("backgroundMusic");
+      const backgroundMusic = document.getElementById('backgroundMusic');
       backgroundMusic.currentTime = 0;
       backgroundMusic.play();
     }
@@ -458,13 +447,13 @@
 
   function resumeBackgroundMusic() {
     if (!isGameOver) {
-      const backgroundMusic = document.getElementById("backgroundMusic");
+      const backgroundMusic = document.getElementById('backgroundMusic');
       backgroundMusic.play();
     }
   }
 
   function pauseBackgroundMusic() {
-    const backgroundMusic = document.getElementById("backgroundMusic");
+    const backgroundMusic = document.getElementById('backgroundMusic');
     backgroundMusic.pause();
   }
 
@@ -476,28 +465,27 @@
 
   // 점수 관련 함수들
   function checkHighScore(score) {
-    const modal = document.getElementById("nameInputModal");
-    const input = document.getElementById("playerNameInput");
-    const button = document.getElementById("submitScoreButton");
+    const modal = document.getElementById('nameInputModal');
+    const input = document.getElementById('playerNameInput');
+    const button = document.getElementById('submitScoreButton');
 
-    modal.classList.remove("hide"); // 모달 보이기
+    modal.classList.remove('hide'); // 모달 보이기
     input.focus();
-    input.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
+    input.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
         submitScore();
-        input.removeEventListener("keypress", arguments.callee);
+        input.removeEventListener('keypress', arguments.callee);
       }
     });
 
     function submitScore() {
       const name = input.value.trim();
       if (name) {
-        const highScores =
-          JSON.parse(localStorage.getItem("dinoHighScores")) || [];
+        const highScores = JSON.parse(localStorage.getItem('dinoHighScores')) || [];
         const newScore = { score, name };
         saveHighScore(newScore, highScores, true); // 플래그로 새 점수 추가를 표시
-        modal.classList.add("hide");
-        input.value = "";
+        modal.classList.add('hide');
+        input.value = '';
       } else {
       }
     }
@@ -508,68 +496,63 @@
     highScores.push(score);
     highScores.sort((a, b) => b.score - a.score);
     highScores.splice(30);
-    localStorage.setItem("dinoHighScores", JSON.stringify(highScores));
+    localStorage.setItem('dinoHighScores', JSON.stringify(highScores));
 
     // 랭킹 모달을 표시하면서 새로운 점수가 최고 점수인지 전달
     showRankingModal(isNewScore && score.score === highScores[0].score);
   }
 
   function showRankingModal(isNewTopScore) {
-    const modal = document.getElementById("ranking-modal");
-    const rankingList = document.getElementById("dinoHighScores");
-    const scores = JSON.parse(localStorage.getItem("dinoHighScores")) || [];
+    const modal = document.getElementById('ranking-modal');
+    const rankingList = document.getElementById('dinoHighScores');
+    const scores = JSON.parse(localStorage.getItem('dinoHighScores')) || [];
     scores.sort((a, b) => b.score - a.score);
 
-    rankingList.innerHTML = "";
+    rankingList.innerHTML = '';
 
     scores.slice(0, 3).forEach((score, index) => {
-      const scoreElement = document.createElement("li");
+      const scoreElement = document.createElement('li');
       scoreElement.textContent = `${Math.round(score.score)} - ${score.name}`;
       rankingList.appendChild(scoreElement);
       if (index === 0 && isNewTopScore) {
-        scoreElement.classList.add("flash-effect");
+        scoreElement.classList.add('flash-effect');
       }
     });
 
-    modal.classList.remove("hide");
-    document.addEventListener("keydown", modalButtonSelection);
+    modal.classList.remove('hide');
+    document.addEventListener('keydown', modalButtonSelection);
   }
 
   let modalCurrentButtonIndex = 0;
-  const modalButtons = document.querySelectorAll(
-    ".rank-modal-button .modal-button"
-  ); // 모달 내의 모든 버튼을 선택
+  const modalButtons = document.querySelectorAll('.rank-modal-button .modal-button'); // 모달 내의 모든 버튼을 선택
 
   function updateButtonSelection(index) {
     // 모든 버튼의 'selected' 클래스를 제거
-    modalButtons.forEach((button) => button.classList.remove("selected"));
+    modalButtons.forEach((button) => button.classList.remove('selected'));
 
     // 현재 선택된 버튼에 'selected' 클래스 추가
-    modalButtons[index].classList.add("selected");
+    modalButtons[index].classList.add('selected');
   }
 
   function modalButtonSelection(event) {
     updateButtonSelection(modalCurrentButtonIndex); // 초기 버튼 선택
 
     switch (event.key) {
-      case "ArrowUp":
-      case "ArrowLeft":
+      case 'ArrowUp':
+      case 'ArrowLeft':
         // 선택된 버튼 인덱스를 감소
-        modalCurrentButtonIndex =
-          (modalCurrentButtonIndex - 1 + modalButtons.length) %
-          modalButtons.length;
+        modalCurrentButtonIndex = (modalCurrentButtonIndex - 1 + modalButtons.length) % modalButtons.length;
         updateButtonSelection(modalCurrentButtonIndex);
-        playSound("menuMoveSound");
+        playSound('menuMoveSound');
         break;
-      case "ArrowDown":
-      case "ArrowRight":
+      case 'ArrowDown':
+      case 'ArrowRight':
         // 선택된 버튼 인덱스를 증가
-        modalCurrentButtonIndex =
-          (modalCurrentButtonIndex + 1) % modalButtons.length;
+        modalCurrentButtonIndex = (modalCurrentButtonIndex + 1) % modalButtons.length;
         updateButtonSelection(modalCurrentButtonIndex);
-        playSound("menuMoveSound");
+        playSound('menuMoveSound');
         break;
-      case "Enter":
+      case 'Enter':
         // 선택된 버튼의 클릭 이벤트를 강제 실행
         modalButtons[modalCurrentButtonIndex].click();
         break;
