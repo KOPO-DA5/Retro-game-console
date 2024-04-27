@@ -9,6 +9,7 @@ function loadGameSkin() {
   const content = document.getElementById("content");
   resetAnimation(content);
   content.innerHTML = `
+  <audio id="menuMoveSound" src="../audios/else/esc-move.mp3"></audio>
       <link rel="stylesheet" href="../css/dinosaur.css" />
       <div class="parent">
         <div class="button-container">
@@ -36,9 +37,12 @@ function loadGameSkin() {
 
     if (key === "ArrowLeft") {
       selectedIndex = Math.max(0, selectedIndex - 1);
+      playSound("menuMoveSound");
       updateSelectedButton();
     } else if (key === "ArrowRight") {
       selectedIndex = Math.min(buttons.length - 1, selectedIndex + 1);
+      playSound("menuMoveSound");
+
       updateSelectedButton();
     } else if (key === "Enter") {
       document.removeEventListener("keydown", handleKeyPress);
@@ -78,4 +82,9 @@ function loadGameSkin() {
   }
 
   document.addEventListener("keydown", handleKeyPress);
+  function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
+  }
 }

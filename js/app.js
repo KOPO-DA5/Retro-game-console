@@ -1,7 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const content = document.getElementById("content");
+  resetAnimation(content);
+  playSound("mainBgm");
+  function resetAnimation(element) {
+    element.classList.remove("fade-in");
+    void element.offsetWidth;
+    element.classList.add("fade-in");
+  }
+
   function handleKeyDownApp(event) {
     if (!GlobalState.isGameActive) {
       if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        playSound("menuMove");
         toggleGameSelection();
       }
       if (event.key === "Enter") {
@@ -42,5 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     document.body.appendChild(script);
     GlobalState.scriptElement = script;
+  }
+
+  function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
   }
 });

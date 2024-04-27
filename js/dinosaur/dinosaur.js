@@ -15,7 +15,13 @@ function resetAnimation(element) {
   element.classList.add("fade-in");
 }
 
+function pauseMusic(soundId) {
+  const backgroundMusic = document.getElementById(soundId);
+  backgroundMusic.pause();
+}
+
 function updateGameContent() {
+  pauseMusic("mainBgm");
   const content = document.getElementById("content");
   content.innerHTML = `
   <link rel="stylesheet" href="../css/dinosaur.css" />
