@@ -19,10 +19,12 @@ function resetAnimation(element) {
   element.classList.add("fade-in");
 }
 
-let selectedButtonIndex = 0;
+let buttonIndex = 0;
 
 function handleMenuKeyPress(event) {
+  event.stopPropagation();
   const gameControls = document.getElementById("game-controls");
+  const buttons = gameControls.querySelectorAll("button");
   if (!gameControls.classList.contains("hide")) {
     if (event.key === "ArrowUp") {
       selectButton(-1);
@@ -34,10 +36,13 @@ function handleMenuKeyPress(event) {
       escMove.currentTime = 0;
       escMove.play();
     }
-    if (event.key === "Space") {
-      event.preventDefault();
-      buttons[selectedButtonIndex].click();
+    if (event.key === "Escape") {
+      buttons[buttonIndex].click();
     }
+    // if (event.key === "Escape") {
+    //   resumeGame();
+    //   escSound.play();
+    // }
   }
 }
 
@@ -48,19 +53,16 @@ function toggleGamePauseMenu() {
   // 게임 컨트롤 보이기/숨기기
   gameControls.classList.toggle("hide");
 
+  if (!isEventListener) {
+    addMenuEventListener(); // 항상 이벤트 리스너를 추가
+    isEventListener = true;
+  }
+
   if (!gameControls.classList.contains("hide")) {
-    if (!isEventListener) {
-      addMenuEventListener();
-      isEventListener = true;
-    }
     pause();
     sound.pause();
   } else {
     play();
-    if (isEventListener) {
-      removeMenuEventListener();
-      isEventListener = false;
-    }
   }
 }
 function addMenuEventListener() {
@@ -104,10 +106,9 @@ function returnToSelection() {
 function selectButton(direction) {
   const gameControls = document.getElementById("game-controls");
   const buttons = gameControls.querySelectorAll("button");
-  selectedButtonIndex =
-    (selectedButtonIndex + direction + buttons.length) % buttons.length;
+  buttonIndex = (buttonIndex + direction + buttons.length) % buttons.length;
   buttons.forEach((button, index) => {
-    if (index === selectedButtonIndex) {
+    if (index === buttonIndex) {
       button.classList.add("selected");
     } else {
       button.classList.remove("selected");
