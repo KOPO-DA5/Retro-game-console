@@ -148,6 +148,7 @@ function returnToInsert() {
 
         // 게임 선택 화면 보이기
         const gameSelection = document.getElementById("content");
+        mainBgm.play();
         gameSelection.innerHTML = `
         <div id="game-selection">
           <p id="selected-game">← Tetris →</p>
