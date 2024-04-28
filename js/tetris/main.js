@@ -62,6 +62,7 @@ function resetGame() {
   isPlaying = true;
 
   document.addEventListener("keydown", handlePKeyPress);
+  document.removeEventListener("keydown", addKeyListener);
 }
 
 function play() {
@@ -174,9 +175,9 @@ function gameOver() {
   ctxBoard.font = "1px Arial";
   ctxBoard.fillText("GAME OVER", 1.8, 4);
 
-  checkHighScore(account.score);
   sound.pause();
   finishSound.play();
+  checkHighScore(account.score);
 
   document.querySelector("#pause-btn").style.display = "none";
   document.querySelector("#play-btn").style.display = "";
@@ -293,6 +294,7 @@ function showLeaderboard() {
   gameAgainButton.addEventListener("click", () => {
     resetGame();
     hideLeaderboard();
+    document.removeEventListener("keydown", addKeyListener);
   });
 
   gameSelectButton.addEventListener("click", () => {
