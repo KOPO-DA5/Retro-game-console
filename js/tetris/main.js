@@ -341,9 +341,9 @@ function selectButton(direction) {
     (twobuttonIndex + direction + buttons.length) % buttons.length;
   buttons.forEach((button, index) => {
     if (index === twobuttonIndex) {
-      button.classList.add("selected");
+      button.classList.add("select");
     } else {
-      button.classList.remove("selected");
+      button.classList.remove("select");
     }
   });
 

@@ -184,9 +184,16 @@
   animation: confetti 4s forwards;
 }
 
-.gameButton.selected {
+.gameButton.select {
   background-color: #1c9822;
   color: black;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.control-button {
+  height: 4vmin;
+  position: relative;
+  top: 50px;
+  margin-bottom: 10px;
 }

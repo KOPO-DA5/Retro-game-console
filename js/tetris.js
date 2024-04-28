@@ -28,17 +28,20 @@ function handleMenuKeyPress(event) {
     const buttons = gameControls.querySelectorAll("button");
     if (!gameControls.classList.contains("hide")) {
       if (event.key === "ArrowUp") {
-        selectButton(-1);
+        selectThreeButton(-1);
+        console.log(buttons[buttonIndex]);
         escMove.currentTime = 0;
         escMove.play();
       }
       if (event.key === "ArrowDown") {
-        selectButton(1);
+        selectThreeButton(1);
+        console.log(buttons[buttonIndex]);
         escMove.currentTime = 0;
         escMove.play();
       }
       if (event.key === "Escape") {
         buttons[buttonIndex].click();
+        console.log(buttons[buttonIndex]);
       }
     }
   }
@@ -101,13 +104,14 @@ function returnToSelection() {
                 `;
 }
 
-function selectButton(direction) {
+function selectThreeButton(direction) {
   const gameControls = document.getElementById("game-controls");
   const buttons = gameControls.querySelectorAll("button");
   buttonIndex = (buttonIndex + direction + buttons.length) % buttons.length;
   buttons.forEach((button, index) => {
     if (index === buttonIndex) {
       button.classList.add("selected");
+      console.log(button.classList);
     } else {
       button.classList.remove("selected");
     }
