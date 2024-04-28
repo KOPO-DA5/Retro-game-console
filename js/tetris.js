@@ -166,8 +166,8 @@ function updateGameContent() {
                       <h1>Ranking</h1>
                       <ol id="leaderboard-list"></ol>
                       <div class="button-row">
-                      <button id="game-again-button">Game Again</button>
-                      <button id="game-select-button">Game Select</button>
+                      <button id="game-again-button" class="gameButton">Game Again</button>
+                      <button id="game-select-button" class="gameButton">Game Select</button>
                       </div>
                     </div>
 

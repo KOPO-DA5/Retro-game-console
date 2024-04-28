@@ -183,3 +183,10 @@
   opacity: 1;
   animation: confetti 4s forwards;
 }
+
+.gameButton.selected {
+  background-color: #1c9822;
+  color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}

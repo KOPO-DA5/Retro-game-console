@@ -66,6 +66,7 @@ function resetGame() {
 
 function play() {
   document.removeEventListener("keydown", handlePKeyPress);
+  document.removeEventListener("keydown", addKeyListener);
   addEventListener();
   if (document.querySelector("#play-btn").style.display == "") {
     resetGame();
@@ -100,6 +101,7 @@ function removeEventListener() {
 }
 
 function handleKeyPress(event) {
+  removeKeyListener();
   if (event.keyCode === KEY.P) {
     if (isPlaying) {
       console.log(isPlaying);
@@ -297,9 +299,64 @@ function showLeaderboard() {
     returnToSelection();
     hideLeaderboard();
   });
+
+  addKeyListener();
 }
 
 function hideLeaderboard() {
   const leaderboardContainer = document.querySelector(".leaderboard-container");
   leaderboardContainer.style.display = "none"; // leaderboard 숨기기
+  removeKeyListener();
+}
+
+let twobuttonIndex = 0;
+
+let keydownEventListener = null;
+
+function addKeyListener() {
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  const buttons = leaderboardContainer.querySelectorAll("button");
+  keydownEventListener = document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      selectButton(-1);
+      console.log(buttons);
+      escMove.currentTime = 0;
+      escMove.play();
+    }
+    if (event.key === "ArrowRight") {
+      selectButton(1);
+      escMove.currentTime = 0;
+      escMove.play();
+    }
+    if (event.key === "Enter") {
+      buttons[twobuttonIndex].click();
+    }
+  });
+}
+
+function selectButton(direction) {
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  const buttons = leaderboardContainer.querySelectorAll("button");
+  twobuttonIndex =
+    (twobuttonIndex + direction + buttons.length) % buttons.length;
+  buttons.forEach((button, index) => {
+    if (index === twobuttonIndex) {
+      button.classList.add("selected");
+    } else {
+      button.classList.remove("selected");
+    }
+  });
+
+  return buttons;
+}
+
+function removeKeyListener() {
+  document.removeEventListener("keydown", addKeyListener);
+}
+
+if (leaderboardContainer.style.display !== "none") {
+  addKeyListener();
+  console.log("addKeyListenr");
+} else {
+  removeKeyListener();
 }
