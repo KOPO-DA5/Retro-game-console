@@ -8,6 +8,7 @@
   const gameoverMessage = document.querySelector('#gameover-message');
   const gameControls = document.getElementById('game-controls');
   const buttons = gameControls.querySelectorAll('button');
+  const coinDino = document.querySelector('#coin');
   let dinoAccountValues = {
     score: 0,
     lines: 0,
@@ -58,11 +59,19 @@
   }
 
   function restartGame() {
-    setupGame();
-    playBackgroundMusic();
-    resumeGame();
-    document.addEventListener('keydown', handleKeyDown);
-    document.removeEventListener('keydown', modalButtonSelection);
+    if(coin > 0) {
+      coin -= 1;
+      coinDino.textContent = coin;
+      console.log("dino-코인: " + coin);
+      setupGame();
+      playBackgroundMusic();
+      resumeGame();
+      document.addEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keydown', modalButtonSelection);
+    } else {
+      console.log("메인화면으로 돌아가기");
+      returnToInsert();
+    }
   }
 
   function returnToSelection() {
@@ -90,6 +99,42 @@
   </div>
                 `;
     GlobalState.isGameActive = false; //전역으로 게임이 종료되었음을 알림 -> 게임선택 이벤트 리스너가 다시 동작함
+  }
+
+  function returnToInsert() { //코인이 0개일 때 다시 insert 화면으로 돌아가는 함수
+    document.getElementById('game-controls').classList.add('hide'); // 게임 컨트롤 숨기기
+    gameoverMessage.classList.add('hide'); // 게임 오버 메시지 숨기기
+    //공룡게임에서 사용했던 모든 이벤트리스너 제거
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('keydown', onJump);
+    document.removeEventListener('keydown', modalButtonSelection);
+
+    // 게임 뷰의 요소를 삭제
+    const game = document.getElementById('game');
+    if (game) {
+      game.remove();
+    }
+
+    /**
+     * 여기에 10초 카운트 넣기
+     */
+
+    //아래는 10초 카운트가 끝나면 실행되어야 할 내용
+    mainPage.style.transform = 'scale(1)'; //줌아웃
+    mainPage.style.transition = '.5s';
+
+    // 게임 선택 화면 보이기
+    const gameSelection = document.getElementById('content');
+    resetAnimation(gameSelection); // 부드러운 전환 효과 적용
+    playSound('mainBgm');
+    gameSelection.innerHTML = `
+    <div id="game-selection">
+      <p id="selected-game">← Dino →</p>
+      <p>Press Enter to start selected game</p>
+  </div>
+                `;
+    GlobalState.isGameActive = false; //전역으로 게임이 종료되었음을 알림 -> 게임선택 이벤트 리스너가 다시 동작함
+
   }
 
   function resetAnimation(element) {

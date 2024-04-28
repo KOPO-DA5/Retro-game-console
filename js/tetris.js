@@ -1,8 +1,8 @@
 // tetris.js
+// const coinTetris = document.getElementsByClassName('tetris-coin');
 
 function loadGameTetris() {
   const content = document.getElementById("content");
-
   var newStyle = document.createElement("link");
   newStyle.setAttribute("rel", "stylesheet");
 
@@ -81,9 +81,16 @@ function resumeGame() {
 }
 
 function restartGame() {
-  const gameControls = document.getElementById("game-controls");
-  gameControls.classList.add("hide");
-  resetGame();
+  if (coin > 0) {
+    coin -= 1;
+    console.log("테트리스-코인: " + coin);
+    const gameControls = document.getElementById("game-controls");
+    gameControls.classList.add("hide");
+    resetGame();
+  } else {
+    console.log("메인화면으로 돌아가기");
+    returnToInsert();
+  }
 }
 
 function returnToSelection() {
@@ -107,6 +114,34 @@ function returnToSelection() {
       <p>Press Enter to start selected game</p>
   </div>
                 `;
+  GlobalState.isGameActive = false;
+}
+
+function returnToInsert() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.add("hide");
+  const game = document.getElementById("game");
+  if (game) {
+    game.remove(); // 게임 뷰 요소 삭제
+  }
+
+  /**
+   * 여기에 10초 카운트 넣기
+   */
+
+  //아래는 10초 카운트가 끝나면 실행되어야 할 내용
+  mainPage.style.transform = "scale(1)"; //줌아웃
+  mainPage.style.transition = ".5s";
+
+  // 게임 선택 화면 보이기
+  const gameSelection = document.getElementById("content");
+  gameSelection.innerHTML = `
+    <div id="game-selection">
+      <p id="selected-game">← Tetris →</p>
+      <p>Press Enter to start selected game</p>
+  </div>
+                `;
+
   GlobalState.isGameActive = false;
 }
 
@@ -141,6 +176,9 @@ function updateGameContent() {
                   <div class="left-column">
                     <h2 style="margin-bottom:10px;">HIGH SCORES</h2>
                     <ol id="highScores"></ol>
+                    <br><br>
+                    <span>Coin: </span>
+                    <span id="tetris-coin" class="tetris-coin">${coin}</span>
                   </div>
                   <div class="game-board-container">
                   <canvas id="board" class="game-board"></canvas>

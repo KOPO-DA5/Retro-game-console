@@ -1,4 +1,3 @@
-let coin = 0;
 const coinImg = document.querySelector("#game-coin-img");
 const mainPage = document.querySelector("#main-page");
 // const joyStick_app = document.querySelector('#game-joystick-img');
@@ -8,10 +7,7 @@ const mainPage = document.querySelector("#main-page");
 const gameControler = document.write(
   '<script src="./js/gameControler.js"></script>'
 );
-
-function getCoin() {
-  return coin;
-}
+const coin_js = document.write('<script src="./js/coin.js"></script>');
 
 document.addEventListener("DOMContentLoaded", function () {
   const content = document.getElementById("content");
@@ -93,6 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     document.body.appendChild(script);
     GlobalState.scriptElement = script;
+    coin -= 1;
+    console.log("코인: " + coin);
   }
 
   function playSound(soundId) {

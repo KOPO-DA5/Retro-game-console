@@ -2,6 +2,7 @@ const canvasBoard = document.getElementById("board");
 const ctxBoard = canvasBoard.getContext("2d");
 const canvasNext = document.getElementById("next");
 const ctxNext = canvasNext.getContext("2d");
+const coinTetris = document.querySelector('#tetris-coin');
 
 document.addEventListener("keydown", handlePKeyPress);
 
@@ -44,6 +45,10 @@ function updateAccount(key, value) {
   console.log(element);
 }
 
+function updateCoin() {
+  coinTetris.textContent = coin;
+}
+
 let account = new Proxy(accountValues, {
   set: (target, key, value) => {
     target[key] = value;
@@ -56,6 +61,7 @@ function resetGame() {
   account.score = 0;
   account.lines = 0;
   account.level = 0;
+  updateCoin();
   board.clear();
   time = { start: performance.now(), elapsed: 0, level: LEVEL[account.level] };
   backgroundSound.currentTime = 0;
