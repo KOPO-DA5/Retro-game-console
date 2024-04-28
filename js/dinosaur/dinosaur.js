@@ -38,6 +38,10 @@ function updateGameContent() {
     id="obstacleHitSound"
     src="audios/dino/dino-hitobstacle.mp3"
   ></audio>
+  <audio
+    id="insertCoin"
+    src="audios/else/insert-coin.mp3"
+  ></audio>
   <div id="game" class="game">
     <span>Coin: </span>
     <span id="coin" class="coin">${coin}</span>
@@ -102,7 +106,7 @@ function updateGameContent() {
     </div>
   </div>
 
-  <div id="count-down">1</div>
+  <div id="count-down" class="count-down hide">1</div>
               `;
 
   loadScript("js/dinosaur/main.js");
