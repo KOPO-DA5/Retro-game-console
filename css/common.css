@@ -274,3 +274,15 @@ body {
     top: 5px;
   }
 }
+
+#count-down {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 57%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  color: red;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
