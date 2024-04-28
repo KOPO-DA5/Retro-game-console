@@ -9,10 +9,14 @@ const gameControler = document.write(
 );
 const coin_js = document.write('<script src="./js/coin.js"></script>');
 
+window.onload = function(){
+  playSound("mainBgm");
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   const content = document.getElementById("content");
   resetAnimation(content);
-  playSound("mainBgm");
+  
   function resetAnimation(element) {
     element.classList.remove("fade-in");
     void element.offsetWidth;
@@ -82,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
     script.src = scriptPath;
     script.onload = function () {
       if (game === "Tetris") {
+        pauseBackgroundMusic();
         loadGameTetris();
       } else {
         loadGameSkin();
@@ -91,11 +96,16 @@ document.addEventListener("DOMContentLoaded", function () {
     GlobalState.scriptElement = script;
     coin -= 1;
     console.log("코인: " + coin);
-  }
+  } 
 
   function playSound(soundId) {
     const sound = document.getElementById(soundId);
     sound.currentTime = 0;
     sound.play();
+  }
+
+  function pauseBackgroundMusic() {
+    const backgroundMusic = document.getElementById("mainBgm");
+    backgroundMusic.pause();
   }
 });
