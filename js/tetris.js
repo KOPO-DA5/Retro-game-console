@@ -94,14 +94,20 @@ function returnToSelection() {
     game.remove(); // 게임 뷰 요소 삭제
   }
 
+  document.removeEventListener("keydown", handleMenuKeyPress);
+  document.removeEventListener("keydown", handleKeyPress);
+  document.removeEventListener("keydown", handlePKeyPress);
   // 게임 선택 화면 보이기
   const gameSelection = document.getElementById("content");
+  resetAnimation(gameSelection); // 부드러운 전환 효과 적용
+  mainBgm.play();
   gameSelection.innerHTML = `
     <div id="game-selection">
       <p id="selected-game">← Tetris →</p>
       <p>Press Enter to start selected game</p>
   </div>
                 `;
+  GlobalState.isGameActive = false;
 }
 
 function selectThreeButton(direction) {
@@ -156,7 +162,7 @@ function updateGameContent() {
 
                      <div id="game-controls" class="game-controls hide">
                       <button id="resumeButton" class="control-button" onclick="resumeGame()">game resume</button>
-                      <button id="restartButton" class="control-button" onclick="restartGame()">game restart</button>
+                      <button id="restartButton" class="control-button"  onclick="restartGame()">game restart</button>
                       <button id="returnButton" class="control-button" onclick="returnToSelection()">game select</button>
                     </div>
                     <div id="nickname-screen" class="screen">
