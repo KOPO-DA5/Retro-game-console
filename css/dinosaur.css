@@ -6,8 +6,8 @@
 
 .game {
   position: relative;
-  width: 600px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -64,19 +64,20 @@
 
 .dino {
   --bottom: 0;
-  height: 30%;
+  height: 20%;
   position: absolute;
   left: 1%;
   bottom: calc(var(--bottom) * 1%);
 }
 
 .cactus {
-  height: 30%;
+  height: 20%;
   position: absolute;
   bottom: 0;
   left: calc(var(--left) * 1%);
 }
 .parent {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -85,20 +86,28 @@
 }
 
 .button-container {
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }
 
 .button-wrapper {
+  position: relative;
+  height: 100%;
+  width: 90%;
   display: flex;
-  gap: 40px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 30px;
 }
 
 .button {
-  width: 150px;
-  height: 175px;
+  position: relative;
+  width: 50%;
+  height: 80%;
   background-color: #2e2e2e;
   border: none;
   border-radius: 10px;
@@ -117,18 +126,20 @@
 
 .ranking-modal {
   position: relative;
-  bottom: 10%;
+  bottom: 50%;
   left: 50%;
-  width: 400px;
-  height: 220px;
+  width: 80%;
+  height: 70%;
   transform: translate(-50%, -50%);
-  background-color: rgb(188, 145, 145);
+  background-color: rgb(149, 146, 146);
   padding: 10px;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   text-align: center;
+  border-radius: 5%;
 }
 .rank-modal-button {
   width: 100%; /* 전체 너비 사용 */
@@ -139,18 +150,27 @@
   display: none;
 }
 #dinoHighScores > li {
+  position: relative;
+  left: 15%;
+  width: 80%;
   font-size: 13px;
+  margin-top: 10px;
   margin-bottom: 10px;
   text-align: left;
 }
+/* li::marker {
+  p
+  text-align: center;
+} */
 
 .name-entry-modal {
   position: relative;
-  bottom: 10%;
+  bottom: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  background: #e9a0a0;
+  width: 80%;
+  height: 60%;
+  background: #7a7878;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1050;
@@ -166,32 +186,32 @@
 input[type="text"] {
   padding: 10px;
   margin: 10px 0;
-  width: 100%;
+  width: 95%;
 }
 
 .modal-button-name {
   padding: 10px 20px;
   margin-top: 10px;
   cursor: pointer;
-  background-color: #4caf50;
+  background-color: #cddcce;
   border: none;
-  color: white;
+  color: rgb(0, 0, 0);
   text-transform: uppercase;
 }
 .hide {
   display: none;
 }
 .modal-button {
+  font-size: 1em;
   margin-left: 10px;
-  width: 220px;
-  height: 50px;
+  width: 60%;
+  height: 110%;
 }
 
 .modal-button.selected {
   background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
   color: black;
-  font-size: 0.98em; /* 폰트 크기 증가 */
-  transition: transform 0.3s; /* 부드러운 변화 효과 */
+  font-size: 1.2em; /* 폰트 크기 증가 */
 }
 .flash-effect {
   animation: flash 1s infinite;

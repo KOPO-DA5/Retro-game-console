@@ -1,18 +1,18 @@
 function loadGameDino() {
   console.log(globalSelectedCharacter);
-  const content = document.getElementById('content');
+  const content = document.getElementById("content");
 
-  var newStyle = document.createElement('link');
-  newStyle.setAttribute('rel', 'stylesheet');
+  var newStyle = document.createElement("link");
+  newStyle.setAttribute("rel", "stylesheet");
 
   resetAnimation(content);
   updateGameContent();
 }
 
 function resetAnimation(element) {
-  element.classList.remove('fade-in');
+  element.classList.remove("fade-in");
   void element.offsetWidth;
-  element.classList.add('fade-in');
+  element.classList.add("fade-in");
 }
 
 function pauseMusic(soundId) {
@@ -21,8 +21,8 @@ function pauseMusic(soundId) {
 }
 
 function updateGameContent() {
-  pauseMusic('mainBgm');
-  const content = document.getElementById('content');
+  pauseMusic("mainBgm");
+  const content = document.getElementById("content");
   content.innerHTML = `
   <link rel="stylesheet" href="css/dinosaur.css" />
   <audio id="jumpSound" src="audios/dino/dino-jump.mp3"></audio>
@@ -56,15 +56,15 @@ function updateGameContent() {
     </div>
   </div>
   <div id="game-controls" class="game-controls hide">
-    <button id="resumeButton" class="control-button" onclick="resumeGame()">
+    <button id="resumeButton" class="control-button-dino" onclick="resumeGame()">
       game resume
     </button>
-    <button id="restartButton" class="control-button" onclick="restartGame()">
+    <button id="restartButton" class="control-button-dino" onclick="restartGame()">
       game restart
     </button>
     <button
       id="returnButton"
-      class="control-button"
+      class="control-button-dino"
       onclick="returnToSelection()"
     >
       game select
@@ -103,7 +103,7 @@ function updateGameContent() {
   </div>
               `;
 
-  loadScript('js/dinosaur/main.js');
+  loadScript("js/dinosaur/main.js");
 }
 
 function loadScript(src) {
@@ -112,9 +112,9 @@ function loadScript(src) {
     existingScript.remove();
   }
 
-  let script = document.createElement('script');
+  let script = document.createElement("script");
   script.src = src;
-  script.type = 'text/javascript';
+  script.type = "text/javascript";
   script.async = false;
   document.body.appendChild(script);
 }
