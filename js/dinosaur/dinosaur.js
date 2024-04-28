@@ -56,15 +56,15 @@ function updateGameContent() {
     </div>
   </div>
   <div id="game-controls" class="game-controls hide">
-    <button id="resumeButton" class="control-button" onclick="resumeGame()">
+    <button id="resumeButton" class="control-button-dino" onclick="resumeGame()">
       game resume
     </button>
-    <button id="restartButton" class="control-button" onclick="restartGame()">
+    <button id="restartButton" class="control-button-dino" onclick="restartGame()">
       game restart
     </button>
     <button
       id="returnButton"
-      class="control-button"
+      class="control-button-dino"
       onclick="returnToSelection()"
     >
       game select

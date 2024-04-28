@@ -212,7 +212,6 @@ input[type="text"] {
   background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
   color: black;
   font-size: 1.2em; /* 폰트 크기 증가 */
-  transition: transform 0.3s; /* 부드러운 변화 효과 */
 }
 .flash-effect {
   animation: flash 1s infinite;

@@ -105,22 +105,22 @@ body {
 
 .joystick-left {
   animation: jostickLeft;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
 }
 
 .joystick-right {
   animation: jostickRight;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
 }
 
 .joystick-up {
   animation: jostickUp;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
 }
 
 .joystick-down {
   animation: jostickDown;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
 }
 
 #game-joystick-body-img {
@@ -171,22 +171,36 @@ body {
 
 .game-controls {
   position: relative;
-  bottom: 20%;
-  width: 50%;
+  bottom: 50%;
+  height: 50%;
+  width: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10; /* 다른 요소 위에 표시 */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .control-button.selected {
   background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
-  color: black;
+  color: rgb(45, 41, 41);
   font-size: 1.05em; /* 폰트 크기 증가 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
   transition: transform 0.3s, box-shadow 0.3s; /* 부드러운 변화 효과 */
+}
+
+.control-button-dino.selected {
+  background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
+  color: rgb(45, 41, 41);
+  font-size: 1.05em; /* 폰트 크기 증가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+  transition: transform 0.3s, box-shadow 0.3s; /* 부드러운 변화 효과 */
+}
+
+.control-button-dino {
+  position: relative;
+  height: 25%;
 }
 
 .hide {
