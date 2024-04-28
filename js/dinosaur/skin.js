@@ -20,8 +20,8 @@ function loadGameSkin() {
             <button class="button" data-character="mario">
               <img src="images/dinosaur/mario/mario-stationary.png" class="button-image">
             </button>
-            <button class="button" color:white>
-              <span style="color: white; font-weight: bold;">아직 없음</span>
+            <button class="button" data-character="mushroom">
+              <img src="images/dinosaur/mushroom/mushroom-stationary.png">
             </button>
           </div>
         </div>
