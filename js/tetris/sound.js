@@ -75,6 +75,7 @@ let sound = new Sound(document.querySelector("#sound-div")),
   finishSound = sound.create("audios/tetris/tetris-finish.mp3", "finish_sound"),
   escSound = sound.create("audios/else/esc-on.mp3", "esc_sound"),
   escMove = sound.create("audios/else/esc-move.mp3", "esc_move"),
-  mainBgm = sound.create("audios/else/main-bgm.mp3", "main_bgm");
+  mainBgm = sound.create("audios/else/main-bgm.mp3", "main_bgm"),
+  insertCoin = sound.create("audios/else/insert-coin.mp3", "insert-coin");
 sound.muteToggle();
 sound.soundSetting();

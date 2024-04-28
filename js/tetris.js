@@ -117,6 +117,9 @@ function returnToSelection() {
   GlobalState.isGameActive = false;
 }
 
+let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
+let countdown;
+
 function returnToInsert() {
   const gameControls = document.getElementById("game-controls");
   gameControls.classList.add("hide");
@@ -128,13 +131,13 @@ function returnToInsert() {
   console.log("coin:" + coin);
   if (coin == 0) {
     let count = 10;
-    const countdown = document.createElement("div");
+    countdown = document.createElement("div"); // 전역 변수 countdown에 할당
     countdown.id = "count-down";
     countdown.textContent = count;
     countdown.style.display = "block";
     console.log(countdown.style.display);
 
-    const countdownInterval = setInterval(() => {
+    countdownInterval = setInterval(() => {
       count--;
       console.log(count);
       countdown.textContent = count;
@@ -165,8 +168,26 @@ function returnToInsert() {
     const content = document.getElementById("content");
     content.appendChild(countdown);
   } else {
-    const countdown = document.getElementById("count-down");
     countdown.style.display = "none";
+    clearDarkenGameContent();
+  }
+}
+
+document.addEventListener("keydown", handleInsertKeyPress);
+
+function handleInsertKeyPress(event) {
+  if (event.key === "Insert") {
+    coin++; // 코인 증가
+    insertCoin.play();
+    console.log("코인: " + coin);
+
+    GlobalState.isGameActive = false; // 게임 종료 상태로 설정
+    clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
+
+    // 카운트 다운 화면 제거
+    countdown.remove();
+    countdown.style.display = "none";
+    restartGame();
     clearDarkenGameContent();
   }
 }
