@@ -61,8 +61,11 @@ function resetGame() {
   backgroundSound.currentTime = 0;
   isPlaying = true;
 
-  document.addEventListener("keydown", handlePKeyPress);
+  document.removeEventListener("keydown", handleKeyPress);
   document.removeEventListener("keydown", addKeyListener);
+  document.removeEventListener("keydown", addMenuEventListener);
+  document.addEventListener("keydown", handlePKeyPress);
+  document.addEventListener("keydown", handleKeyPress);
 }
 
 function play() {
@@ -292,12 +295,13 @@ function showLeaderboard() {
   leaderboardContainer.style.display = "block"; // leaderboard 보이기
 
   gameAgainButton.addEventListener("click", () => {
+    removeKeyListener();
     resetGame();
     hideLeaderboard();
-    document.removeEventListener("keydown", addKeyListener);
   });
 
   gameSelectButton.addEventListener("click", () => {
+    removeKeyListener();
     returnToSelection();
     hideLeaderboard();
   });
@@ -356,7 +360,7 @@ function removeKeyListener() {
   document.removeEventListener("keydown", addKeyListener);
 }
 
-if (leaderboardContainer.style.display !== "none") {
+if (leaderboardContainer.style.display == "block") {
   addKeyListener();
   console.log("addKeyListenr");
 } else {
