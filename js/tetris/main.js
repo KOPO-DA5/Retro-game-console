@@ -66,6 +66,7 @@ function resetGame() {
 
 function play() {
   document.removeEventListener("keydown", handlePKeyPress);
+  document.removeEventListener("keydown", addKeyListener);
   addEventListener();
   if (document.querySelector("#play-btn").style.display == "") {
     resetGame();
@@ -100,6 +101,7 @@ function removeEventListener() {
 }
 
 function handleKeyPress(event) {
+  removeKeyListener();
   if (event.keyCode === KEY.P) {
     if (isPlaying) {
       console.log(isPlaying);
@@ -217,26 +219,26 @@ function showHighScores() {
 
 function checkHighScore(score) {
   const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-  const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
-  if (score > lowestScore) {
-    showNicknameScreen();
-    function handleNicknameFormSubmit(event) {
-      event.preventDefault();
-      const name = document.getElementById("nickname").value;
-      const newScore = { score, name };
-      saveHighScore(newScore, highScores);
-      hideNicknameScreen();
-      showHighScores();
-    }
-    const nicknameForm = document.getElementById("nickname-form");
-    nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
 
-    const submitButton = document.getElementById("submit-button");
-    submitButton.addEventListener("click", () => {
-      nicknameForm.removeEventListener("submit", handleNicknameFormSubmit); // 제출 이벤트 리스너 삭제
-      hideNicknameScreen(); // 화면 닫기
-    });
+  showNicknameScreen();
+  function handleNicknameFormSubmit(event) {
+    event.preventDefault();
+    const name = document.getElementById("nickname").value;
+    const newScore = { score, name };
+    saveHighScore(newScore, highScores);
+    hideNicknameScreen();
+    showHighScores();
+    showLeaderboard();
   }
+  const nicknameForm = document.getElementById("nickname-form");
+  nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
+
+  const submitButton = document.getElementById("submit-button");
+  submitButton.addEventListener("click", () => {
+    nicknameForm.removeEventListener("submit", handleNicknameFormSubmit); // 제출 이벤트 리스너 삭제
+    hideNicknameScreen(); // 화면 닫기
+    showLeaderboard();
+  });
 }
 
 function saveHighScore(score, highScores) {
@@ -255,4 +257,106 @@ function showNicknameScreen() {
 function hideNicknameScreen() {
   const nicknameScreen = document.getElementById("nickname-screen");
   nicknameScreen.style.display = "none"; // 화면 숨김
+}
+
+function showLeaderboard() {
+  const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+  highScores.sort((a, b) => b.score - a.score); // 점수에 따라 내림차순 정렬
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  const leaderboardList =
+    leaderboardContainer.querySelector("#leaderboard-list");
+  const gameAgainButton =
+    leaderboardContainer.querySelector("#game-again-button");
+  const gameSelectButton = leaderboardContainer.querySelector(
+    "#game-select-button"
+  );
+
+  leaderboardList.innerHTML = ""; // 기존 목록 초기화
+  const previousTopScore = highScores.length > 0 ? highScores[0].score : -1;
+  const currentTopScore = account.score;
+
+  for (let i = 0; i < Math.min(highScores.length, 3); i++) {
+    const listItem = document.createElement("li");
+    listItem.textContent = `${i + 1}. ${highScores[i].name} - ${
+      highScores[i].score
+    }`;
+    leaderboardList.appendChild(listItem);
+    console.log(currentTopScore);
+    console.log(previousTopScore);
+    if (currentTopScore >= previousTopScore) {
+      listItem.classList.add("confetti"); //축하 애니메이션
+    }
+  }
+
+  leaderboardContainer.style.display = "block"; // leaderboard 보이기
+
+  gameAgainButton.addEventListener("click", () => {
+    resetGame();
+    hideLeaderboard();
+  });
+
+  gameSelectButton.addEventListener("click", () => {
+    returnToSelection();
+    hideLeaderboard();
+  });
+
+  addKeyListener();
+}
+
+function hideLeaderboard() {
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  leaderboardContainer.style.display = "none"; // leaderboard 숨기기
+  removeKeyListener();
+}
+
+let twobuttonIndex = 0;
+
+let keydownEventListener = null;
+
+function addKeyListener() {
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  const buttons = leaderboardContainer.querySelectorAll("button");
+  keydownEventListener = document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      selectButton(-1);
+      console.log(buttons);
+      escMove.currentTime = 0;
+      escMove.play();
+    }
+    if (event.key === "ArrowRight") {
+      selectButton(1);
+      escMove.currentTime = 0;
+      escMove.play();
+    }
+    if (event.key === "Enter") {
+      buttons[twobuttonIndex].click();
+    }
+  });
+}
+
+function selectButton(direction) {
+  const leaderboardContainer = document.querySelector(".leaderboard-container");
+  const buttons = leaderboardContainer.querySelectorAll("button");
+  twobuttonIndex =
+    (twobuttonIndex + direction + buttons.length) % buttons.length;
+  buttons.forEach((button, index) => {
+    if (index === twobuttonIndex) {
+      button.classList.add("selected");
+    } else {
+      button.classList.remove("selected");
+    }
+  });
+
+  return buttons;
+}
+
+function removeKeyListener() {
+  document.removeEventListener("keydown", addKeyListener);
+}
+
+if (leaderboardContainer.style.display !== "none") {
+  addKeyListener();
+  console.log("addKeyListenr");
+} else {
+  removeKeyListener();
 }

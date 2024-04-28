@@ -24,25 +24,23 @@ let buttonIndex = 0;
 function handleMenuKeyPress(event) {
   event.stopPropagation();
   const gameControls = document.getElementById("game-controls");
-  const buttons = gameControls.querySelectorAll("button");
-  if (!gameControls.classList.contains("hide")) {
-    if (event.key === "ArrowUp") {
-      selectButton(-1);
-      escMove.currentTime = 0;
-      escMove.play();
+  if (gameControls) {
+    const buttons = gameControls.querySelectorAll("button");
+    if (!gameControls.classList.contains("hide")) {
+      if (event.key === "ArrowUp") {
+        selectButton(-1);
+        escMove.currentTime = 0;
+        escMove.play();
+      }
+      if (event.key === "ArrowDown") {
+        selectButton(1);
+        escMove.currentTime = 0;
+        escMove.play();
+      }
+      if (event.key === "Escape") {
+        buttons[buttonIndex].click();
+      }
     }
-    if (event.key === "ArrowDown") {
-      selectButton(1);
-      escMove.currentTime = 0;
-      escMove.play();
-    }
-    if (event.key === "Escape") {
-      buttons[buttonIndex].click();
-    }
-    // if (event.key === "Escape") {
-    //   resumeGame();
-    //   escSound.play();
-    // }
   }
 }
 
@@ -131,7 +129,7 @@ function updateGameContent() {
                 <link rel="stylesheet" href="./css/tetris.css" />
                 <div class="grid">
                   <div class="left-column">
-                    <h2>HIGH SCORES</h2>
+                    <h2 style="margin-bottom:10px;">HIGH SCORES</h2>
                     <ol id="highScores"></ol>
                   </div>
                   <div class="game-board-container">
@@ -163,6 +161,14 @@ function updateGameContent() {
                     <input type="text" id="nickname" name="nickname">
                     <button type="submit">Submit</button>
                     </form>
+                    </div>
+                    <div class="leaderboard-container">
+                      <h1>Ranking</h1>
+                      <ol id="leaderboard-list"></ol>
+                      <div class="button-row">
+                      <button id="game-again-button" class="gameButton">Game Again</button>
+                      <button id="game-select-button" class="gameButton">Game Select</button>
+                      </div>
                     </div>
 
                 </div>
