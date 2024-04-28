@@ -39,6 +39,8 @@ function updateGameContent() {
     src="audios/dino/dino-hitobstacle.mp3"
   ></audio>
   <div id="game" class="game">
+    <span>Coin: </span>
+    <span id="coin" class="coin">${coin}</span>
     <div id="score" class="score">0</div>
     <div id="start-message" class="start-message">Press any key to start</div>
     <img src="images/dinosaur/ground.png" class="ground" />
