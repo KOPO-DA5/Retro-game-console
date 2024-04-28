@@ -83,8 +83,6 @@ function resumeGame() {
 function restartGame() {
   if(coin > 0) {
     coin -= 1;
-    // coinTetris.innerText = coin;
-    //coinTetris.textContent = coin; //textContent로 해야될거 같은데 오류 발생..
     console.log("테트리스-코인: " + coin);
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
