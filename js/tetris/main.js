@@ -67,7 +67,11 @@ function resetGame() {
   backgroundSound.currentTime = 0;
   isPlaying = true;
 
+  document.removeEventListener("keydown", handleKeyPress);
+  document.removeEventListener("keydown", addKeyListener);
+  document.removeEventListener("keydown", addMenuEventListener);
   document.addEventListener("keydown", handlePKeyPress);
+  document.addEventListener("keydown", handleKeyPress);
 }
 
 function play() {
@@ -180,9 +184,9 @@ function gameOver() {
   ctxBoard.font = "1px Arial";
   ctxBoard.fillText("GAME OVER", 1.8, 4);
 
-  checkHighScore(account.score);
   sound.pause();
   finishSound.play();
+  checkHighScore(account.score);
 
   document.querySelector("#pause-btn").style.display = "none";
   document.querySelector("#play-btn").style.display = "";
@@ -297,11 +301,13 @@ function showLeaderboard() {
   leaderboardContainer.style.display = "block"; // leaderboard 보이기
 
   gameAgainButton.addEventListener("click", () => {
+    removeKeyListener();
     resetGame();
     hideLeaderboard();
   });
 
   gameSelectButton.addEventListener("click", () => {
+    removeKeyListener();
     returnToSelection();
     hideLeaderboard();
   });
@@ -360,7 +366,7 @@ function removeKeyListener() {
   document.removeEventListener("keydown", addKeyListener);
 }
 
-if (leaderboardContainer.style.display !== "none") {
+if (leaderboardContainer.style.display == "block") {
   addKeyListener();
   console.log("addKeyListenr");
 } else {

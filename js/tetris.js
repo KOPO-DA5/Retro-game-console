@@ -81,7 +81,7 @@ function resumeGame() {
 }
 
 function restartGame() {
-  if(coin > 0) {
+  if (coin > 0) {
     coin -= 1;
     console.log("테트리스-코인: " + coin);
     const gameControls = document.getElementById("game-controls");
@@ -101,14 +101,20 @@ function returnToSelection() {
     game.remove(); // 게임 뷰 요소 삭제
   }
 
+  document.removeEventListener("keydown", handleMenuKeyPress);
+  document.removeEventListener("keydown", handleKeyPress);
+  document.removeEventListener("keydown", handlePKeyPress);
   // 게임 선택 화면 보이기
   const gameSelection = document.getElementById("content");
+  resetAnimation(gameSelection); // 부드러운 전환 효과 적용
+  mainBgm.play();
   gameSelection.innerHTML = `
     <div id="game-selection">
       <p id="selected-game">← Tetris →</p>
       <p>Press Enter to start selected game</p>
   </div>
                 `;
+  GlobalState.isGameActive = false;
 }
 
 function returnToInsert() {
@@ -119,24 +125,50 @@ function returnToInsert() {
     game.remove(); // 게임 뷰 요소 삭제
   }
 
-  /**
-     * 여기에 10초 카운트 넣기
-     */
+  console.log("coin:" + coin);
+  if (coin == 0) {
+    let count = 10;
+    const countdown = document.createElement("div");
+    countdown.id = "count-down";
+    countdown.textContent = count;
+    countdown.style.display = "block";
+    console.log(countdown.style.display);
 
-    //아래는 10초 카운트가 끝나면 실행되어야 할 내용
-    mainPage.style.transform = 'scale(1)'; //줌아웃
-    mainPage.style.transition = '.5s';
+    const countdownInterval = setInterval(() => {
+      count--;
+      console.log(count);
+      countdown.textContent = count;
+      if (count === 0) {
+        clearInterval(countdownInterval);
+        // 10초 카운트가 끝나면 아래 코드 실행
 
-  // 게임 선택 화면 보이기
-  const gameSelection = document.getElementById("content");
-  gameSelection.innerHTML = `
-    <div id="game-selection">
-      <p id="selected-game">← Tetris →</p>
-      <p>Press Enter to start selected game</p>
-  </div>
-                `;
+        // 화면 조정
+        mainPage.style.transform = "scale(1)"; // 줌 아웃
+        mainPage.style.transition = ".5s";
 
-  GlobalState.isGameActive = false;
+        // 게임 선택 화면 보이기
+        const gameSelection = document.getElementById("content");
+        mainBgm.play();
+        gameSelection.innerHTML = `
+        <div id="game-selection">
+          <p id="selected-game">← Tetris →</p>
+          <p>Press Enter to start selected game</p>
+        </div>
+      `;
+
+        GlobalState.isGameActive = false;
+      } else {
+        // 카운트 다운 중에는 어둡게 처리
+        darkenGameContent();
+      }
+    }, 1000);
+    const content = document.getElementById("content");
+    content.appendChild(countdown);
+  } else {
+    const countdown = document.getElementById("count-down");
+    countdown.style.display = "none";
+    clearDarkenGameContent();
+  }
 }
 
 function selectThreeButton(direction) {
@@ -194,7 +226,7 @@ function updateGameContent() {
 
                      <div id="game-controls" class="game-controls hide">
                       <button id="resumeButton" class="control-button" onclick="resumeGame()">game resume</button>
-                      <button id="restartButton" class="control-button" onclick="restartGame()">game restart</button>
+                      <button id="restartButton" class="control-button"  onclick="restartGame()">game restart</button>
                       <button id="returnButton" class="control-button" onclick="returnToSelection()">game select</button>
                     </div>
                     <div id="nickname-screen" class="screen">
@@ -212,6 +244,7 @@ function updateGameContent() {
                       <button id="game-select-button" class="gameButton">Game Select</button>
                       </div>
                     </div>
+                    <div id="count-down">1</div>
 
                 </div>
             `;
@@ -287,4 +320,22 @@ function updateGameContent() {
       .querySelectorAll('script[src="./js/tetris/sound.js"]')
       .forEach((script) => script.remove());
   }
+}
+
+function darkenGameContent() {
+  const leftColumn = document.querySelector("#content > .grid > .left-column");
+  const rightColumn = document.querySelector(
+    "#content > .grid > .right-column"
+  );
+  leftColumn.style.filter = "brightness(0.5)";
+  rightColumn.style.filter = "brightness(0.5)";
+}
+
+function clearDarkenGameContent() {
+  const leftColumn = document.querySelector("#content > .grid > .left-column");
+  const rightColumn = document.querySelector(
+    "#content > .grid > .right-column"
+  );
+  leftColumn.style.filter = "";
+  rightColumn.style.filter = "";
 }
