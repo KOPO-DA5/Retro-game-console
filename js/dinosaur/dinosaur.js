@@ -42,7 +42,7 @@ function updateGameContent() {
     id="insertCoin"
     src="audios/else/insert-coin.mp3"
   ></audio>
-  <div id="game" class="game">
+  <div id="game" class="game hide">
     <span>Coin: </span>
     <span id="coin" class="coin">${coin}</span>
     <div id="score" class="score">0</div>

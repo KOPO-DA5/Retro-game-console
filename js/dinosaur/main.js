@@ -9,6 +9,7 @@
   const gameControls = document.getElementById("game-controls");
   const buttons = gameControls.querySelectorAll("button");
   const coinDino = document.querySelector("#coin");
+  game.classList.remove("hide");
   let dinoAccountValues = {
     score: 0,
     lines: 0,
@@ -109,7 +110,7 @@
     gameControls.classList.add("hide");
     const game = document.getElementById("game");
     if (game) {
-      game.remove(); // 게임 뷰 요소 삭제
+      game.classList.add("hide"); // 게임 뷰 요소 삭제
     }
 
     console.log("coin:" + coin);
@@ -170,17 +171,10 @@
         countdown.style.display = "none";
       }
 
-      // 게임 선택 화면 보이기
-      const gameSelection = document.getElementById("content");
-      gameSelection.innerHTML = `
-        <div id="game-selection">
-          <p id="selected-game">← Dino →</p>
-          <p>Press Enter to start selected game</p>
-        </div>
-      `;
-
-      setupGame();
-      startGame();
+      if (game.classList.contains("hide")) {
+        game.classList.remove("hide"); // 게임 뷰 요소 삭제
+      }
+      restartGame();
     }
   }
 
@@ -298,6 +292,7 @@
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keydown", onJump);
     document.getElementById("ranking-modal").classList.add("hide"); // 게임 컨트롤 숨기기
+    game.classList.remove("hide");
 
     playBackgroundMusic();
 
