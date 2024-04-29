@@ -60,66 +60,74 @@
   display: none;
 }
 
-.screen {
-  display: none;
-  position: fixed;
+#nickname-screen {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute; /* 부모 요소를 기준으로 절대 위치 */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-#nickname-screen {
-  display: none;
-  justify-content: center;
-  align-items: center;
+  width: 100%; /* 부모의 전체 너비 */
+  height: 100%; /* 부모의 전체 높이 */
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+  z-index: 10; /* 다른 요소들 위에 놓임 */
+  flex-direction: column;
+  justify-content: space-evenly; /* 내부 요소를 중앙 정렬 */
+  align-items: center; /* 중앙 정렬 */
 }
 
 #nickname-form {
-  background-color: black;
+  background: #7a7878;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  border-radius: 10px;
-  color: white;
+  border-radius: 5%;
+  width: 80%;
+  height: 70%;
+  bottom: 50%;
+  left: 50%;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; /* 내부 요소를 중앙 정렬 */
+  z-index: 1050;
+  align-items: center; /* 중앙 정렬 */
 }
-
 #nickname-form label {
   display: block;
   margin-bottom: 10px;
 }
 
 #nickname-form input {
-  background-color: black;
+  background-color: rgb(255, 255, 255);
   border: 0px;
-  color: white;
-  width: 100%;
-  padding: 5px;
+  width: 95%;
+  padding: 10px;
   margin-bottom: 10px;
-  outline: none;
 }
 
 #nickname-form button {
-  padding: 5px 10px;
-  background-color: #848484;
-  color: white;
-  border: 0px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #cddcce;
+  border: none;
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
 }
 
 .leaderboard-container {
-  display: none;
-  color: white;
   position: relative;
-  top: 50%;
+  bottom: 50%;
   left: 50%;
+  width: 80%;
+  height: 70%;
   transform: translate(-50%, -50%);
-  background-color: black;
-  border: 0px;
-  border-radius: 8px;
-  width: 300px;
-  margin: 0px auto;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgb(149, 146, 146);
+  padding: 10px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  border-radius: 5%;
 }
 
 #leaderboard-list {
@@ -139,18 +147,16 @@
 }
 
 .button-row button {
-  width: 45%;
-  padding: 4px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
+  font-size: 1em;
+  margin: 0px 5px;
+  width: 60%;
+  height: 110%;
 }
 
-.button-row button:hover {
-  background-color: #45a049;
+.modal-button.selected {
+  background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
+  color: black;
+  font-size: 1.2em; /* 폰트 크기 증가 */
 }
 
 /*축하 애니메이션*/
@@ -185,10 +191,9 @@
 }
 
 .gameButton.select {
-  background-color: #1c9822;
+  background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
   color: black;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
+  font-size: 1.2em; /* 폰트 크기 증가 */
 }
 
 .control-button {

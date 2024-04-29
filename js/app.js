@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleKeyDownApp(event) {
     if (!GlobalState.isGameActive) {
-      console.log("1.app.js handleKeyDown", event.code);
+      console.log("1.app.js의 게임 선택 이벤트 리스너", event.code);
 
       if (event.key === "Insert") {
         playSound("insertCoin");

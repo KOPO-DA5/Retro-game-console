@@ -82,29 +82,28 @@ function updateGameContent() {
     </div>
     <div id="nickname-screen" class="screen">
       <form id="nickname-form">
-        <label for="nickname">Enter your nickname:</label>
+      <h2>Enter Your Name</h2>
         <input
           type="text"
           id="nickname"
           name="nickname"
           placeholder="your name"
         />
-        <button type="submit">Submit</button>
+        <button type="submit" class ="modal-button-name">Press Enter!!</button>
       </form>
     </div>
     <div class="leaderboard-container">
-      <h1>Ranking</h1>
+    <h2>Top Scores</h2>
       <ol id="leaderboard-list"></ol>
       <div class="button-row">
-        <button id="game-again-button" class="gameButton">Game Again</button>
-        <button id="game-select-button" class="gameButton">
+        <button id="game-again-button" class="gameButton" onclick="restartGame()">Game Again</button>
+        <button id="game-select-button" class="gameButton" onclick="returnToSelection()">
           Game Select
         </button>
       </div>
     </div>
             `;
   loadScript("js/tetris/main.js");
-
   loadScript("js/tetris/constants.js");
   loadScript("js/tetris/board.js");
   loadScript("js/tetris/piece.js");

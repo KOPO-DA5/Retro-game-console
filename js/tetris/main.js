@@ -27,7 +27,6 @@
   showHighScores();
 
   let requestId = null;
-  let time = null;
 
   function initNext() {
     ctxNext.canvas.width = 4 * BLOCK_SIZE;
@@ -40,7 +39,6 @@
     if (element) {
       element.textContent = value;
     }
-    console.log(element);
   }
 
   function updateCoin() {
@@ -54,6 +52,11 @@
       return true;
     },
   });
+  let time = {
+    start: performance.now(),
+    elapsed: 0,
+    level: LEVEL[account.level],
+  };
 
   function resetGame() {
     account.score = 0;
@@ -72,11 +75,13 @@
     document.removeEventListener("keydown", handleKeyPress);
     document.removeEventListener("keydown", addKeyListener);
     document.removeEventListener("keydown", addMenuEventListener);
+    document.removeEventListener("keydown", handleInsertKeyPress);
     document.addEventListener("keydown", handleKeyPress);
   }
 
   function play() {
     document.removeEventListener("keydown", addKeyListener);
+    document.removeEventListener("keydown", handleInsertKeyPress);
     addEventListener();
     if (document.querySelector("#play-btn").style.display == "") {
       resetGame();
@@ -233,11 +238,11 @@
     const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
     showNicknameScreen();
+    const nameInput = document.getElementById("nickname");
+    nameInput.focus(); // 입력창에 자동으로 포커스를 주기 위함
     function handleNicknameFormSubmit(event) {
       event.preventDefault();
       const name = document.getElementById("nickname").value;
-      const nameInput = document.getElementById("nickname");
-      nameInput.focus();
       const newScore = { score, name };
       saveHighScore(newScore, highScores);
       hideNicknameScreen();
@@ -246,13 +251,6 @@
     }
     const nicknameForm = document.getElementById("nickname-form");
     nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
-
-    const submitButton = document.getElementById("submit-button");
-    submitButton.addEventListener("click", () => {
-      nicknameForm.removeEventListener("submit", handleNicknameFormSubmit); // 제출 이벤트 리스너 삭제
-      hideNicknameScreen(); // 화면 닫기
-      showLeaderboard();
-    });
   }
 
   function saveHighScore(score, highScores) {
@@ -331,14 +329,16 @@
 
   let twobuttonIndex = 0;
 
-  let keydownEventListener = null;
-
   function addKeyListener() {
     const leaderboardContainer = document.querySelector(
       ".leaderboard-container"
     );
     const buttons = leaderboardContainer.querySelectorAll("button");
+    twobuttonIndex = 0; // 초기 선택 인덱스를 0으로 설정하여 첫 번째 버튼을 선택
+    selectButton(0); // 첫 번째 버튼에 `.select` 클래스 추가
+
     keydownEventListener = document.addEventListener("keydown", (event) => {
+      console.log("3. tetris의 리더보드 이벤트 리스너 실행", event.key);
       if (event.key === "ArrowLeft") {
         selectButton(-1);
         console.log(buttons);
@@ -365,30 +365,21 @@
     twobuttonIndex =
       (twobuttonIndex + direction + buttons.length) % buttons.length;
     buttons.forEach((button, index) => {
+      button.classList.remove("select");
       if (index === twobuttonIndex) {
         button.classList.add("select");
-      } else {
-        button.classList.remove("select");
       }
     });
-
-    return buttons;
   }
 
   function removeKeyListener() {
     document.removeEventListener("keydown", addKeyListener);
   }
 
-  // if (leaderboardContainer.style.display == "block") {
-  //   addKeyListener();
-  //   console.log("addKeyListenr");
-  // } else {
-  //   removeKeyListener();
-  // }
-
   // 분리 후 코드 삽입 부분
 
   function handleMenuKeyPress(event) {
+    console.log("3. tetris의 일시정지 이벤트 리스너", event.key);
     event.stopPropagation();
     const gameControls = document.getElementById("game-controls");
     if (gameControls) {
@@ -399,13 +390,11 @@
         }
         if (event.key === "ArrowUp") {
           selectThreeButton(-1);
-          console.log(buttons[buttonIndex]);
           escMove.currentTime = 0;
           escMove.play();
         }
         if (event.key === "ArrowDown") {
           selectThreeButton(1);
-          console.log(buttons[buttonIndex]);
           escMove.currentTime = 0;
           escMove.play();
         }
@@ -450,17 +439,14 @@
   function restartGame() {
     if (coin > 0) {
       coin -= 1;
-      console.log("테트리스-코인: " + coin);
       const gameControls = document.getElementById("game-controls");
       gameControls.classList.add("hide");
       resetGame();
       play();
     } else {
-      console.log("메인화면으로 돌아가기");
       returnToInsert();
     }
   }
-
   function returnToSelection() {
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
@@ -483,6 +469,7 @@
                 `;
     GlobalState.isGameActive = false;
   }
+  window.returnToSelection = returnToSelection;
 
   let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
   let countdown;
@@ -495,18 +482,15 @@
       game.remove(); // 게임 뷰 요소 삭제
     }
 
-    console.log("coin:" + coin);
     if (coin == 0) {
       let count = 10;
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
       countdown.textContent = count;
       countdown.style.display = "block";
-      console.log(countdown.style.display);
 
       countdownInterval = setInterval(() => {
         count--;
-        console.log(count);
         countdown.textContent = count;
         if (count === 0) {
           clearInterval(countdownInterval);
@@ -545,6 +529,7 @@
   document.addEventListener("keydown", handleInsertKeyPress);
 
   function handleInsertKeyPress(event) {
+    console.log("3. tetris의 동전넣기 리스너", event.key);
     if (event.key === "Insert") {
       coin++; // 코인 증가
       insertCoin.play();
@@ -568,7 +553,6 @@
     buttons.forEach((button, index) => {
       if (index === buttonIndex) {
         button.classList.add("selected");
-        console.log(button.classList);
       } else {
         button.classList.remove("selected");
       }
@@ -578,11 +562,6 @@
   }
 
   // 각 스크립트 파일의 로드 상태를 추적하기 위한 변수들
-  let constantsLoaded = false;
-  let boardLoaded = false;
-  let pieceLoaded = false;
-  let mainLoaded = false;
-  let soundLoaded = false;
 
   function darkenGameContent() {
     const leftColumn = document.querySelector(
