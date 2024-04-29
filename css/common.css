@@ -3,10 +3,39 @@
   margin: 0px;
   padding: 0px;
   font-family: "Press Start 2p", cursive;
+  font-size: 15px;
 }
 
 body {
   background-color: black;
+}
+
+#game-select-container{
+  display: none;
+}
+
+#logo{
+  font-size: 30px;
+  margin-bottom: 100px;
+  margin-top: -50px;
+}
+
+#game-diaplay-left{
+  position: absolute;
+  width: 226px;
+  top: 371px;
+  left: 195px;
+}
+
+#game-diaplay-right{
+  position: absolute;
+  width: 245px;
+  top: 361px;
+  left: 1274px;
+}
+
+#insert-coin-text{
+  color: yellow;
 }
 
 #game-container {
@@ -149,7 +178,7 @@ body {
   color: white;
 }
 
-#content {
+#content, #game-start-content {
   width: 100%;
   height: 100%;
   top: 0;
@@ -291,9 +320,9 @@ body {
 
 #count-down {
   display: none;
-  position: fixed;
+  position: relative;
   top: 50%;
-  left: 57%;
+  left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2.5rem;
   color: red;
