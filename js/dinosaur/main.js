@@ -151,6 +151,8 @@
       }, 1000);
       const content = document.getElementById("content");
       content.appendChild(countdown);
+      //랭킹 모달 화면 제거
+      document.getElementById("ranking-modal").classList.add("hide");
     } else {
       countdown.style.display = "none";
     }
