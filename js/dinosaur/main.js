@@ -134,6 +134,8 @@
           mainPage.style.transform = "scale(1)"; // 줌 아웃
           mainPage.style.transition = ".5s";
 
+          gameStartDisplay.style.display = "block";
+
           // 게임 선택 화면 보이기
           const gameSelection = document.getElementById("content");
           mainBgm.play();

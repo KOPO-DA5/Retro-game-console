@@ -1,18 +1,20 @@
 const coinImg = document.querySelector("#game-coin-img");
 const mainPage = document.querySelector("#main-page");
-// const joyStick_app = document.querySelector('#game-joystick-img');
-// const yellowBtn = document.querySelector('#game-yellow-btn-img');
-// const greenBtn = document.querySelector('#game-green-btn-img');
-// const blueBtn = document.querySelector('#game-blue-btn-img');
 const gameControler = document.write(
   '<script src="./js/gameControler.js"></script>'
 );
 const coin_js = document.write('<script src="./js/coin.js"></script>');
+const gameSelectDisplay = document.querySelector("#game-select-container");
+const gameStartDisplay = document.querySelector("#game-start-container");
+
+window.onload = function(){
+  playSound("mainBgm");
+};
 
 document.addEventListener("DOMContentLoaded", function () {
   const content = document.getElementById("content");
   resetAnimation(content);
-  playSound("mainBgm");
+  
   function resetAnimation(element) {
     element.classList.remove("fade-in");
     void element.offsetWidth;
@@ -31,6 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
           coinImg.style.display = "none";
 
           setTimeout(function () {
+            gameStartDisplay.style.display = "none";
+            gameSelectDisplay.style.display = "block";
             mainPage.style.transform = "scale(1.9)";
             mainPage.style.transition = ".5s";
             mainPage.style.overflow = "hidden";
@@ -82,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
     script.src = scriptPath;
     script.onload = function () {
       if (game === "Tetris") {
+        pauseBackgroundMusic();
         loadGameTetris();
       } else {
         loadGameSkin();
@@ -91,11 +96,16 @@ document.addEventListener("DOMContentLoaded", function () {
     GlobalState.scriptElement = script;
     coin -= 1;
     console.log("코인: " + coin);
-  }
+  } 
 
   function playSound(soundId) {
     const sound = document.getElementById(soundId);
     sound.currentTime = 0;
     sound.play();
+  }
+
+  function pauseBackgroundMusic() {
+    const backgroundMusic = document.getElementById("mainBgm");
+    backgroundMusic.pause();
   }
 });
