@@ -9,6 +9,7 @@
   const gameControls = document.getElementById("game-controls");
   const buttons = gameControls.querySelectorAll("button");
   const coinDino = document.querySelector("#coin");
+  game.classList.remove("hide");
   let dinoAccountValues = {
     score: 0,
     lines: 0,
@@ -101,30 +102,27 @@
     GlobalState.isGameActive = false; //전역으로 게임이 종료되었음을 알림 -> 게임선택 이벤트 리스너가 다시 동작함
   }
 
-  function returnToInsert() {
-    //코인이 0개일 때 다시 insert 화면으로 돌아가는 함수
-    document.getElementById("game-controls").classList.add("hide"); // 게임 컨트롤 숨기기
-    gameoverMessage.classList.add("hide"); // 게임 오버 메시지 숨기기
-    //공룡게임에서 사용했던 모든 이벤트리스너 제거
-    document.removeEventListener("keydown", handleKeyDown);
-    document.removeEventListener("keydown", onJump);
-    document.removeEventListener("keydown", modalButtonSelection);
+  let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
+  let countdown;
 
-    // 게임 뷰의 요소를 삭제
+  function returnToInsert() {
+    const gameControls = document.getElementById("game-controls");
+    gameControls.classList.add("hide");
     const game = document.getElementById("game");
     if (game) {
-      game.remove();
+      game.classList.add("hide"); // 게임 뷰 요소 삭제
     }
 
+    console.log("coin:" + coin);
     if (coin == 0) {
       let count = 10;
-      const countdown = document.createElement("div");
+      countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
       countdown.textContent = count;
       countdown.style.display = "block";
       console.log(countdown.style.display);
 
-      const countdownInterval = setInterval(() => {
+      countdownInterval = setInterval(() => {
         count--;
         console.log(count);
         countdown.textContent = count;
@@ -140,22 +138,45 @@
 
           // 게임 선택 화면 보이기
           const gameSelection = document.getElementById("content");
-          resetAnimation(gameSelection); // 부드러운 전환 효과 적용
-          playSound("mainBgm");
+          mainBgm.play();
           gameSelection.innerHTML = `
-    <div id="game-selection">
-      <p id="selected-game">← Dino →</p>
-      <p>Press Enter to start selected game</p>
-  </div>
-                `;
-          GlobalState.isGameActive = false; //전역으로 게임이 종료되었음을 알림 -> 게임선택 이벤트 리스너가 다시 동작함
+        <div id="game-selection">
+          <p id="selected-game">← Dino →</p>
+          <p>Press Enter to start selected game</p>
+        </div>
+      `;
+
+          GlobalState.isGameActive = false;
         }
       }, 1000);
       const content = document.getElementById("content");
       content.appendChild(countdown);
     } else {
-      const countdown = document.getElementById("count-down");
       countdown.style.display = "none";
+    }
+  }
+
+  document.addEventListener("keydown", handleInsertKeyPress);
+
+  function handleInsertKeyPress(event) {
+    if (event.key === "Insert") {
+      coin++; // 코인 증가
+      playSound("insertCoin");
+      console.log("코인: " + coin);
+
+      GlobalState.isGameActive = false; // 게임 종료 상태로 설정
+      clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
+
+      // 카운트 다운 화면 제거
+      if (countdown) {
+        countdown.remove();
+        countdown.style.display = "none";
+      }
+
+      if (game.classList.contains("hide")) {
+        game.classList.remove("hide"); // 게임 뷰 요소 삭제
+      }
+      restartGame();
     }
   }
 
@@ -175,11 +196,13 @@
     speedScale = 1;
     score = 0;
     account.score = 0;
+    console.log("setup");
     setupGround();
     setupDino();
     setupCactus();
     window.requestAnimationFrame(update);
     document.getElementById("ranking-modal").classList.add("hide"); // 게임 컨트롤 숨기기
+    document.getElementById("count-down").classList.add("hide");
     document.removeEventListener("keydown", modalButtonSelection);
   }
 
@@ -271,6 +294,7 @@
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keydown", onJump);
     document.getElementById("ranking-modal").classList.add("hide"); // 게임 컨트롤 숨기기
+    game.classList.remove("hide");
 
     playBackgroundMusic();
 
