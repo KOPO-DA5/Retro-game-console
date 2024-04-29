@@ -1,3 +1,4 @@
+// sound.js : 각종 사운드와 관련된 로직이 있는 파일
 class Sound {
   constructor(parent) {
     this.parent = parent;
