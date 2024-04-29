@@ -33,6 +33,7 @@
   font-size: 0.8rem;
   text-align: center;
   text-transform: uppercase;
+  line-height: 20px;
 }
 
 .gameover-message {
@@ -188,13 +189,47 @@ input[type="text"] {
 }
 
 .modal-button-name {
-  padding: 10px 20px;
+  padding: 10px 12px;
   cursor: pointer;
-  background-color: #cddcce;
+  background-color: rgb(57 42 255 / 35%);
   border: none;
-  color: rgb(0, 0, 0);
+  color: rgb(255 183 0);
   text-transform: uppercase;
+  font-size: 10px;
+  border-radius: 10px;
 }
+
+input#playerNameInput {
+  font-size: 12px;
+  width: 80%;
+  border-radius: 10px;
+text-align: center;
+}
+
+input#playerNameInput::placeholder {
+  text-align: center;
+}
+
+h2#nameLabel {
+  font-size: 13.5px;
+  color: rgb(255 183 0 / 95%);
+  line-height: 20px;
+}
+
+.name-entry-modal {
+  position: relative;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 60%;
+  background: #7a787838;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 18%);
+  z-index: 1050;
+  border-radius: 20px;
+}
+
 .hide {
   display: none;
 }
