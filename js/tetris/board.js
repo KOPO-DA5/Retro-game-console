@@ -1,3 +1,4 @@
+//Board.js : 테트리스 게임화면이 담긴 보드를 지정
 class Board {
   constructor(ctx, ctxNext) {
     this.ctx = ctx;
@@ -12,6 +13,7 @@ class Board {
 
     // Scale so we don't need to give size on every draw.
     this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
+    this.reset();
   }
 
   reset() {

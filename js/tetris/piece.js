@@ -1,3 +1,4 @@
+// piece.js : 테트리스 게임의 블럭에 사용되는 코드
 class Piece {
   // x;
   // y;

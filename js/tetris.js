@@ -1,8 +1,17 @@
-// tetris.js
+// tetris.js : 테트리스 게임이 선택될때마다 요소를 불러와 게임과 js를 로드 하는 코드
+
 function loadGameTetris() {
   const content = document.getElementById("content");
   var newStyle = document.createElement("link");
   newStyle.setAttribute("rel", "stylesheet");
+  if (!window.gameScriptsLoaded) {
+    loadScript("js/tetris/constants.js");
+    loadScript("js/tetris/board.js");
+    loadScript("js/tetris/piece.js");
+    loadScript("js/tetris/main.js");
+    loadScript("js/tetris/sound.js");
+    window.gameScriptsLoaded = true; // 스크립트 로드 상태를 표시
+  }
 
   resetAnimation(content); // 애니메이션 초기화
   updateGameContent(); // 콘텐츠 업데이트
@@ -94,35 +103,11 @@ function updateGameContent() {
       </div>
     </div>
             `;
-
-  // let scriptToConstants = document.createElement("script");
-  // scriptToConstants.type = "text/javascript";
-  // scriptToConstants.src = "./js/tetris/constants.js";
-  // document.body.appendChild(scriptToConstants);
-  loadScript("js/tetris/constants.js");
-
-  // let scriptToBoard = document.createElement("script");
-  // scriptToBoard.type = "text/javascript";
-  // scriptToBoard.src = "./js/tetris/board.js";
-  // document.body.appendChild(scriptToBoard);
-  loadScript("js/tetris/board.js");
-
-  // let scriptToPiece = document.createElement("script");
-  // scriptToPiece.type = "text/javascript";
-  // scriptToPiece.src = "./js/tetris/piece.js";
-  // document.body.appendChild(scriptToPiece);
-  loadScript("js/tetris/piece.js");
-
-  // let scriptTomain = document.createElement("script");
-  // scriptTomain.type = "text/javascript";
-  // scriptTomain.src = "./js/tetris/main.js";
-  // document.body.appendChild(scriptTomain);
   loadScript("js/tetris/main.js");
 
-  // let scriptTosound = document.createElement("script");
-  // scriptTosound.type = "text/javascript";
-  // scriptTosound.src = "./js/tetris/sound.js";
-  // document.body.appendChild(scriptTosound);
+  loadScript("js/tetris/constants.js");
+  loadScript("js/tetris/board.js");
+  loadScript("js/tetris/piece.js");
   loadScript("js/tetris/sound.js");
 }
 
