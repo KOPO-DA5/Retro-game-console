@@ -1,13 +1,11 @@
 const coinImg = document.querySelector("#game-coin-img");
 const mainPage = document.querySelector("#main-page");
-// const joyStick_app = document.querySelector('#game-joystick-img');
-// const yellowBtn = document.querySelector('#game-yellow-btn-img');
-// const greenBtn = document.querySelector('#game-green-btn-img');
-// const blueBtn = document.querySelector('#game-blue-btn-img');
 const gameControler = document.write(
   '<script src="./js/gameControler.js"></script>'
 );
 const coin_js = document.write('<script src="./js/coin.js"></script>');
+const gameSelectDisplay = document.querySelector("#game-select-container");
+const gameStartDisplay = document.querySelector("#game-start-container");
 
 window.onload = function(){
   playSound("mainBgm");
@@ -35,6 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
           coinImg.style.display = "none";
 
           setTimeout(function () {
+            gameStartDisplay.style.display = "none";
+            gameSelectDisplay.style.display = "block";
             mainPage.style.transform = "scale(1.9)";
             mainPage.style.transition = ".5s";
             mainPage.style.overflow = "hidden";
