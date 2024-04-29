@@ -7,11 +7,9 @@ const coin_js = document.write('<script src="./js/coin.js"></script>');
 const gameSelectDisplay = document.querySelector("#game-select-container");
 const gameStartDisplay = document.querySelector("#game-start-container");
 
-function playSound(soundId) {
-  const sound = document.getElementById(soundId);
-  sound.currentTime = 0;
-  sound.play();
-}
+window.onload = function () {
+  playSound("mainBgm");
+};
 
 document.addEventListener("DOMContentLoaded", function () {
   playSound("mainBgm");
@@ -42,9 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
           setTimeout(function () {
             gameStartDisplay.style.display = "none";
             gameSelectDisplay.style.display = "block";
-            mainPage.style.transform = "scale(2.3) translateY(195px)";
+            mainPage.style.transform = "scale(1.9)";
             mainPage.style.transition = ".5s";
-            mainPage.style.transformOrigin = "center bottom";
             mainPage.style.overflow = "hidden";
           }, 100);
         });
@@ -105,6 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
     GlobalState.scriptElement = script;
     coin -= 1;
     console.log("코인: " + coin);
+  }
+
+  function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
   }
 
   function pauseBackgroundMusic() {
