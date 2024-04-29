@@ -1,18 +1,24 @@
+// (function () {
+// let sound = new Sound();
+// let board = new Board();
+
 const canvasBoard = document.getElementById("board");
 const ctxBoard = canvasBoard.getContext("2d");
 const canvasNext = document.getElementById("next");
 const ctxNext = canvasNext.getContext("2d");
-const coinTetris = document.querySelector('#tetris-coin');
+const coinTetris = document.querySelector("#tetris-coin");
+let buttonIndex = 0;
 
-document.addEventListener("keydown", handlePKeyPress);
+// document.addEventListener("keydown", handlePKeyPress);
+document.addEventListener("keydown", play, { once: true });
 
-function handlePKeyPress(event) {
-  if (event.keyCode === KEY.P) {
-    if (document.querySelector("#play-btn").style.display !== "none") {
-      play();
-    }
-  }
-}
+// function handlePKeyPress(event) {
+//   if (event.code === "Enter") {
+//     if (document.querySelector("#play-btn").style.display !== "none") {
+//       play();
+//     }
+//   }
+// }
 
 let accountValues = {
   score: 0,
@@ -63,19 +69,23 @@ function resetGame() {
   account.level = 0;
   updateCoin();
   board.clear();
-  time = { start: performance.now(), elapsed: 0, level: LEVEL[account.level] };
+  time = {
+    start: performance.now(),
+    elapsed: 0,
+    level: LEVEL[account.level],
+  };
   backgroundSound.currentTime = 0;
   isPlaying = true;
 
   document.removeEventListener("keydown", handleKeyPress);
   document.removeEventListener("keydown", addKeyListener);
   document.removeEventListener("keydown", addMenuEventListener);
-  document.addEventListener("keydown", handlePKeyPress);
+  // document.addEventListener("keydown", handlePKeyPress);
   document.addEventListener("keydown", handleKeyPress);
 }
 
 function play() {
-  document.removeEventListener("keydown", handlePKeyPress);
+  // document.removeEventListener("keydown", handlePKeyPress);
   document.removeEventListener("keydown", addKeyListener);
   addEventListener();
   if (document.querySelector("#play-btn").style.display == "") {
@@ -124,7 +134,7 @@ function handleKeyPress(event) {
     document.removeEventListener("keydown", handleKeyPress);
     document.addEventListener("keydown", handleKeyPress);
   }
-  if (event.keyCode === KEY.ESC) {
+  if (event.code === "Escape") {
     toggleGamePauseMenu();
     escSound.play();
   }
@@ -234,6 +244,8 @@ function checkHighScore(score) {
   function handleNicknameFormSubmit(event) {
     event.preventDefault();
     const name = document.getElementById("nickname").value;
+    const nameInput = document.getElementById("nickname");
+    nameInput.focus();
     const newScore = { score, name };
     saveHighScore(newScore, highScores);
     hideNicknameScreen();
@@ -341,6 +353,7 @@ function addKeyListener() {
       escMove.play();
     }
     if (event.key === "Enter") {
+      removeKeyListener();
       buttons[twobuttonIndex].click();
     }
   });
@@ -366,9 +379,228 @@ function removeKeyListener() {
   document.removeEventListener("keydown", addKeyListener);
 }
 
-if (leaderboardContainer.style.display == "block") {
-  addKeyListener();
-  console.log("addKeyListenr");
-} else {
-  removeKeyListener();
+// if (leaderboardContainer.style.display == "block") {
+//   addKeyListener();
+//   console.log("addKeyListenr");
+// } else {
+//   removeKeyListener();
+// }
+
+// 분리 후 코드 삽입 부분
+
+function handleMenuKeyPress(event) {
+  event.stopPropagation();
+  const gameControls = document.getElementById("game-controls");
+  if (gameControls) {
+    const buttons = gameControls.querySelectorAll("button");
+    if (!gameControls.classList.contains("hide")) {
+      if (event.key === "Escape") {
+        resumeGame();
+      }
+      if (event.key === "ArrowUp") {
+        selectThreeButton(-1);
+        console.log(buttons[buttonIndex]);
+        escMove.currentTime = 0;
+        escMove.play();
+      }
+      if (event.key === "ArrowDown") {
+        selectThreeButton(1);
+        console.log(buttons[buttonIndex]);
+        escMove.currentTime = 0;
+        escMove.play();
+      }
+      if (event.key === "Enter") {
+        buttons[buttonIndex].click();
+        console.log(buttons[buttonIndex]);
+      }
+    }
+  }
 }
+
+function toggleGamePauseMenu() {
+  const gameControls = document.getElementById("game-controls");
+  // 게임 컨트롤 보이기/숨기기
+  gameControls.classList.toggle("hide");
+
+  if (!GlobalState.isEventListener) {
+    addMenuEventListener(); // 항상 이벤트 리스너를 추가
+    GlobalState.isEventListener = true;
+  }
+
+  if (!gameControls.classList.contains("hide")) {
+    pause();
+    sound.pause();
+  } else {
+    play();
+  }
+}
+function addMenuEventListener() {
+  document.addEventListener("keydown", handleMenuKeyPress);
+}
+
+function removeMenuEventListener() {
+  document.removeEventListener("keydown", handleMenuKeyPress);
+}
+
+function resumeGame() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.add("hide");
+  play();
+}
+
+function restartGame() {
+  if (coin > 0) {
+    coin -= 1;
+    console.log("테트리스-코인: " + coin);
+    const gameControls = document.getElementById("game-controls");
+    gameControls.classList.add("hide");
+    resetGame();
+    play();
+  } else {
+    console.log("메인화면으로 돌아가기");
+    returnToInsert();
+  }
+}
+
+function returnToSelection() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.add("hide");
+  const game = document.getElementById("game");
+  if (game) {
+    game.remove(); // 게임 뷰 요소 삭제
+  }
+
+  document.removeEventListener("keydown", handleMenuKeyPress);
+  document.removeEventListener("keydown", handleKeyPress);
+  // document.removeEventListener("keydown", handlePKeyPress);
+  // 게임 선택 화면 보이기
+  const gameSelection = document.getElementById("content");
+  resetAnimation(gameSelection); // 부드러운 전환 효과 적용
+  mainBgm.play();
+  gameSelection.innerHTML = `
+    <div id="game-selection">
+      <p id="selected-game">← Tetris →</p>
+      <p>Press Enter to start selected game</p>
+  </div>
+                `;
+  GlobalState.isGameActive = false;
+}
+
+let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
+let countdown;
+
+function returnToInsert() {
+  const gameControls = document.getElementById("game-controls");
+  gameControls.classList.add("hide");
+  const game = document.getElementById("game");
+  if (game) {
+    game.remove(); // 게임 뷰 요소 삭제
+  }
+
+  console.log("coin:" + coin);
+  if (coin == 0) {
+    let count = 10;
+    countdown = document.createElement("div"); // 전역 변수 countdown에 할당
+    countdown.id = "count-down";
+    countdown.textContent = count;
+    countdown.style.display = "block";
+    console.log(countdown.style.display);
+
+    countdownInterval = setInterval(() => {
+      count--;
+      console.log(count);
+      countdown.textContent = count;
+      if (count === 0) {
+        clearInterval(countdownInterval);
+        // 10초 카운트가 끝나면 아래 코드 실행
+
+        // 화면 조정
+        mainPage.style.transform = "scale(1)"; // 줌 아웃
+        mainPage.style.transition = ".5s";
+
+        gameStartDisplay.style.display = "block";
+
+        // 게임 선택 화면 보이기
+        const gameSelection = document.getElementById("content");
+        mainBgm.play();
+        gameSelection.innerHTML = `
+        <div id="game-selection">
+          <p id="selected-game">← Tetris →</p>
+          <p>Press Enter to start selected game</p>
+        </div>
+      `;
+
+        GlobalState.isGameActive = false;
+      } else {
+        // 카운트 다운 중에는 어둡게 처리
+        darkenGameContent();
+      }
+    }, 1000);
+    const content = document.getElementById("content");
+    content.appendChild(countdown);
+  } else {
+    countdown.style.display = "none";
+    clearDarkenGameContent();
+  }
+}
+
+document.addEventListener("keydown", handleInsertKeyPress);
+
+function handleInsertKeyPress(event) {
+  if (event.key === "Insert") {
+    coin++; // 코인 증가
+    insertCoin.play();
+    console.log("코인: " + coin);
+
+    GlobalState.isGameActive = false; // 게임 종료 상태로 설정
+    clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
+
+    // 카운트 다운 화면 제거
+    countdown.remove();
+    countdown.style.display = "none";
+    restartGame();
+    clearDarkenGameContent();
+  }
+}
+
+function selectThreeButton(direction) {
+  const gameControls = document.getElementById("game-controls");
+  const buttons = gameControls.querySelectorAll("button");
+  buttonIndex = (buttonIndex + direction + buttons.length) % buttons.length;
+  buttons.forEach((button, index) => {
+    if (index === buttonIndex) {
+      button.classList.add("selected");
+      console.log(button.classList);
+    } else {
+      button.classList.remove("selected");
+    }
+  });
+
+  return buttons;
+}
+
+// 각 스크립트 파일의 로드 상태를 추적하기 위한 변수들
+let constantsLoaded = false;
+let boardLoaded = false;
+let pieceLoaded = false;
+let mainLoaded = false;
+let soundLoaded = false;
+
+function darkenGameContent() {
+  const leftColumn = document.querySelector("#content > .grid > .left-column");
+  const rightColumn = document.querySelector(
+    "#content > .grid > .right-column"
+  );
+  leftColumn.style.filter = "brightness(0.5)";
+  rightColumn.style.filter = "brightness(0.5)";
+}
+
+function clearDarkenGameContent() {
+  const leftColumn = document.querySelector("#content > .grid > .left-column");
+  const rightColumn = document.querySelector(
+    "#content > .grid > .right-column"
+  );
+  leftColumn.style.filter = "";
+  rightColumn.style.filter = "";
+}
+// })();

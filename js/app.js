@@ -7,11 +7,14 @@ const coin_js = document.write('<script src="./js/coin.js"></script>');
 const gameSelectDisplay = document.querySelector("#game-select-container");
 const gameStartDisplay = document.querySelector("#game-start-container");
 
-window.onload = function () {
-  playSound("mainBgm");
-};
+function playSound(soundId) {
+  const sound = document.getElementById(soundId);
+  sound.currentTime = 0;
+  sound.play();
+}
 
 document.addEventListener("DOMContentLoaded", function () {
+  playSound("mainBgm");
   const content = document.getElementById("content");
   resetAnimation(content);
 
@@ -23,7 +26,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleKeyDownApp(event) {
     if (!GlobalState.isGameActive) {
+      console.log("1.app.js handleKeyDown", event.code);
+
       if (event.key === "Insert") {
+        playSound("insertCoin");
+
         coinImg.style.display = "block";
         coinImg.classList.add("animate__animated", "animate__flip");
 
@@ -67,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("keydown", handleKeyDownApp);
 
   function toggleGameSelection() {
+    playSound("menuMove");
     if (!GlobalState.isGameActive) {
       GlobalState.currentGame =
         GlobalState.currentGame === "Tetris" ? "Dino" : "Tetris";
@@ -78,9 +86,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function loadSelectedGame(game) {
     GlobalState.isGameActive = true;
-    if (GlobalState.scriptElement) {
-      document.body.removeChild(GlobalState.scriptElement);
-    }
+    // if (GlobalState.scriptElement) {
+    //   document.body.removeChild(GlobalState.scriptElement);
+    // }
 
     let scriptPath = game === "Tetris" ? "js/tetris.js" : "js/dinosaur/skin.js";
     let script = document.createElement("script");
@@ -97,12 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
     GlobalState.scriptElement = script;
     coin -= 1;
     console.log("코인: " + coin);
-  }
-
-  function playSound(soundId) {
-    const sound = document.getElementById(soundId);
-    sound.currentTime = 0;
-    sound.play();
   }
 
   function pauseBackgroundMusic() {

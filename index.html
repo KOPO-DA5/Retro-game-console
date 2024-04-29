@@ -13,8 +13,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
     <link rel="stylesheet" href="./css/common.css" />
-    <audio id="mainBgm" src="./audios/else/main-bgm.mp3" ></audio>
+    <audio id="mainBgm" src="./audios/else/main-bgm.mp3"></audio>
     <audio id="menuMove" src="./audios/else/esc-move.mp3"></audio>
+    <audio id="insertCoin" src="./audios/else/insert-coin.mp3"></audio>
   </head>
   <body id="main-page">
     <div id="game-container">
@@ -65,8 +66,8 @@
         id="game-background-img"
         src="./images/main/arcade_background_img_3.jpeg"
       />
-      <img id="game-diaplay-left" src="./images/main/game-display-1.gif">
-      <img id="game-diaplay-right" src="./images/main/game-display-2.gif">
+      <img id="game-diaplay-left" src="./images/main/game-display-1.gif" />
+      <img id="game-diaplay-right" src="./images/main/game-display-2.gif" />
       <div id="game-select-container">
         <div id="console">
           <div id="gameView">
@@ -86,7 +87,12 @@
             <div id="game-start-content">
               <div id="game-selection">
                 <p id="logo">LOGO</p>
-                <p id="insert-coin-text" class="animate__animated animate__flash  animate__slow animate__infinite">insert coin!</p>
+                <p
+                  id="insert-coin-text"
+                  class="animate__animated animate__flash animate__slow animate__infinite"
+                >
+                  insert coin!
+                </p>
               </div>
             </div>
           </div>
@@ -94,7 +100,11 @@
       </div>
     </div>
     <script type="text/javascript" src="./js/globalState.js"></script>
-    <script src="./js/app.js"></script>
     <script src="./js/tetris/constants.js"></script>
+    <!-- <script src="./js/tetris/main.js"></script> -->
+    <!-- <script src="./js/tetris/board.js"></script>
+    <script src="./js/tetris/piece.js"></script>
+    <script src="./js/tetris/sound.js"></script> -->
+    <script src="./js/app.js"></script>
   </body>
 </html>
