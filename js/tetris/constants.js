@@ -1,4 +1,3 @@
-"use strict";
 //10개 열 지정
 const COLS = 10;
 //20개 행 지정

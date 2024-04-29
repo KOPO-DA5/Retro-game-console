@@ -7,32 +7,32 @@ class Piece {
   // hardDropped;
 
   constructor(ctx) {
-      this.ctx = ctx;
-      this.spawn();
+    this.ctx = ctx;
+    this.spawn();
   }
 
   spawn() {
-      const typeId = this.randomizeTetrominoType(COLORS.length - 1);
-      this.shape = SHAPES[typeId];
-      this.color = COLORS[typeId];
-      this.x = 0;
-      this.y = 0;
-      this.hardDropped = false;
+    const typeId = this.randomizeTetrominoType(COLORS.length - 1);
+    this.shape = SHAPES[typeId];
+    this.color = COLORS[typeId];
+    this.x = 0;
+    this.y = 0;
+    this.hardDropped = false;
   }
 
   draw() {
-      this.ctx.fillStyle = this.color;
-      this.shape.forEach((row, y) => {
-        row.forEach((value, x) => {
-          if (value > 0) {
-            this.ctx.fillRect(this.x + x, this.y + y, 1, 1);
-          }
-        });
+    this.ctx.fillStyle = this.color;
+    this.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value > 0) {
+          this.ctx.fillRect(this.x + x, this.y + y, 1, 1);
+        }
       });
+    });
   }
 
   move(p) {
-    if(!this.hardDropped) {
+    if (!this.hardDropped) {
       this.x = p.x;
       this.y = p.y;
     }
@@ -44,11 +44,10 @@ class Piece {
   }
 
   randomizeTetrominoType(noOfTypes) {
-      return Math.floor(Math.random() * noOfTypes + 1);
+    return Math.floor(Math.random() * noOfTypes + 1);
   }
 
   setStartingPosition() {
     this.x = this.typeId === 4 ? 4 : 3;
   }
-
 }
