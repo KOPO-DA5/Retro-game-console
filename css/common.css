@@ -22,16 +22,16 @@ body {
 
 #game-diaplay-left {
   position: absolute;
-  width: 226px;
-  top: 371px;
-  left: 195px;
+  width: 259px;
+  top: 770px;
+  left: 532px;
 }
 
 #game-diaplay-right {
   position: absolute;
   width: 245px;
-  top: 361px;
-  left: 1274px;
+  top: 761px;
+  left: 1900px;
 }
 
 #insert-coin-text {
@@ -57,14 +57,14 @@ body {
 }
 
 #console {
-  width: 403px;
+  width: 512px;
   border: 3px solid #000;
   border-radius: 10px;
   text-align: center;
   position: absolute;
   z-index: 2;
-  left: 660px;
-  bottom: 325px;
+  left: 1094px;
+  bottom: 390px;
 }
 
 #game-coin-img {
@@ -93,7 +93,7 @@ body {
 
 #game-yellow-btn-container {
   position: absolute;
-  top: 630px;
+  top: 1080px;
   left: 850px;
 }
 
@@ -178,7 +178,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 240px; /* 이전에 설정된 높이 */
+  height: 305px; /* 이전에 설정된 높이 */
   background-color: #000; /* 기존의 배경색 */
   color: white;
 }
