@@ -10,31 +10,31 @@ body {
   background-color: black;
 }
 
-#game-select-container{
+#game-select-container {
   display: none;
 }
 
-#logo{
+#logo {
   font-size: 30px;
   margin-bottom: 100px;
   margin-top: -50px;
 }
 
-#game-diaplay-left{
+#game-diaplay-left {
   position: absolute;
   width: 226px;
   top: 371px;
   left: 195px;
 }
 
-#game-diaplay-right{
+#game-diaplay-right {
   position: absolute;
   width: 245px;
   top: 361px;
   left: 1274px;
 }
 
-#insert-coin-text{
+#insert-coin-text {
   color: yellow;
 }
 
@@ -178,7 +178,8 @@ body {
   color: white;
 }
 
-#content, #game-start-content {
+#content,
+#game-start-content {
   width: 100%;
   height: 100%;
   top: 0;

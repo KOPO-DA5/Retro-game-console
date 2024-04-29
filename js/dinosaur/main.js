@@ -1,4 +1,3 @@
-// import { gameState } from "gameState.js";
 (function () {
   const SPEED_SCALE = 0.00001;
 
@@ -60,7 +59,9 @@
   }
 
   function restartGame() {
+    document.removeEventListener("keydown", handleInsertKeyPress);
     if (coin > 0) {
+      GlobalState.isGameActive = true; //전역으로 게임중임을 알림
       coin -= 1;
       coinDino.textContent = coin;
       console.log("dino-코인: " + coin);
@@ -82,6 +83,7 @@
     document.removeEventListener("keydown", handleKeyDown);
     document.removeEventListener("keydown", onJump);
     document.removeEventListener("keydown", modalButtonSelection);
+    document.removeEventListener("keydown", handleInsertKeyPress);
 
     // 게임 뷰의 요소를 삭제
     const game = document.getElementById("game");
@@ -112,7 +114,7 @@
     if (game) {
       game.classList.add("hide"); // 게임 뷰 요소 삭제
     }
-
+    document.addEventListener("keydown", handleInsertKeyPress);
     console.log("coin:" + coin);
     if (coin == 0) {
       let count = 10;
@@ -129,7 +131,10 @@
         if (count === 0) {
           clearInterval(countdownInterval);
           // 10초 카운트가 끝나면 아래 코드 실행
-
+          document.removeEventListener("keydown", handleKeyDown);
+          document.removeEventListener("keydown", onJump);
+          document.removeEventListener("keydown", modalButtonSelection);
+          document.removeEventListener("keydown", handleInsertKeyPress);
           // 화면 조정
           mainPage.style.transform = "scale(1)"; // 줌 아웃
           mainPage.style.transition = ".5s";
@@ -145,7 +150,6 @@
           <p>Press Enter to start selected game</p>
         </div>
       `;
-
           GlobalState.isGameActive = false;
         }
       }, 1000);
@@ -154,11 +158,10 @@
       //랭킹 모달 화면 제거
       document.getElementById("ranking-modal").classList.add("hide");
     } else {
+      document.removeEventListener("keydown", handleInsertKeyPress);
       countdown.style.display = "none";
     }
   }
-
-  document.addEventListener("keydown", handleInsertKeyPress);
 
   function handleInsertKeyPress(event) {
     if (event.key === "Insert") {
@@ -404,7 +407,7 @@
 
   const dino = document.querySelector("#dino");
   const JUMP_SPEED = 0.45;
-  const GRAVITY = 0.0015;
+  const GRAVITY = 0.0017;
   const DINO_FRAME_COUNT = 3;
   const FRAME_TIME = 100;
 

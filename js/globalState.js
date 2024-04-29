@@ -3,4 +3,5 @@ let GlobalState = {
   currentGame: "Tetris",
   isGameActive: false,
   scriptElement: null,
+  isEventListener: false,
 };
