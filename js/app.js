@@ -29,12 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("1.app.js의 게임 선택 이벤트 리스너", event.code);
 
       if (event.key === "Insert") {
-        playSound("insertCoin");
 
-        coinImg.style.display = "block";
-        coinImg.classList.add("animate__animated", "animate__flip");
+        if(coin === 5) {}
+        else {
+          playSound("insertCoin");
+          coinImg.style.display = "block";
+          coinImg.classList.add("animate__animated", "animate__flip");
 
-        coinImg.addEventListener("animationend", () => {
+          coinImg.addEventListener("animationend", () => {
           coinImg.classList.remove("animate__animated", "animate__flip");
 
           coinImg.style.display = "none";
@@ -50,6 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         coin += 5;
         console.log(coin);
+        }
+
+        
       }
       if (coin > 0) {
         gameControl(event.key);
