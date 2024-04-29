@@ -76,7 +76,6 @@ class Board {
   draw() {
     this.piece.draw();
     this.drawBoard();
-    console.log("draw");
   }
 
   drop() {
