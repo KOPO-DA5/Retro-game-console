@@ -247,7 +247,9 @@
       saveHighScore(newScore, highScores);
       hideNicknameScreen();
       showHighScores();
+      addKeyListener();
       showLeaderboard();
+      document.removeEventListener("keydown", addKeyListener);
     }
     const nicknameForm = document.getElementById("nickname-form");
     nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
@@ -256,7 +258,7 @@
   function saveHighScore(score, highScores) {
     highScores.push(score);
     highScores.sort((a, b) => b.score - a.score);
-    highScores.splice(NO_OF_HIGH_SCORES);
+    highScores.splice(5);
 
     localStorage.setItem("highScores", JSON.stringify(highScores));
   }
@@ -270,7 +272,6 @@
     const nicknameScreen = document.getElementById("nickname-screen");
     nicknameScreen.style.display = "none"; // 화면 숨김
   }
-
   function showLeaderboard() {
     const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
     highScores.sort((a, b) => b.score - a.score); // 점수에 따라 내림차순 정렬
@@ -316,7 +317,7 @@
       hideLeaderboard();
     });
 
-    addKeyListener();
+    removeKeyListener();
   }
 
   function hideLeaderboard() {
@@ -341,7 +342,6 @@
       console.log("3. tetris의 리더보드 이벤트 리스너 실행", event.key);
       if (event.key === "ArrowLeft") {
         selectButton(-1);
-        console.log(buttons);
         escMove.currentTime = 0;
         escMove.play();
       }
@@ -469,7 +469,6 @@
                 `;
     GlobalState.isGameActive = false;
   }
-  window.returnToSelection = returnToSelection;
 
   let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
   let countdown;
