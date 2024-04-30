@@ -77,6 +77,10 @@ let sound = new Sound(document.querySelector("#sound-div")),
   escSound = sound.create("audios/else/esc-on.mp3", "esc_sound"),
   escMove = sound.create("audios/else/esc-move.mp3", "esc_move"),
   mainBgm = sound.create("audios/else/main-bgm.mp3", "main_bgm"),
-  insertCoin = sound.create("audios/else/insert-coin.mp3", "insert-coin");
+  insertCoin = sound.create("audios/else/insert-coin.mp3", "insert-coin"),
+  countdownSound = sound.create(
+    "audios/else/countdown-sound.mp3",
+    "countdown-sound"
+  );
 sound.muteToggle();
 sound.soundSetting();

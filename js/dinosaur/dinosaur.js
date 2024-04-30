@@ -42,6 +42,10 @@ function updateGameContent() {
     id="insertCoin"
     src="audios/else/insert-coin.mp3"
   ></audio>
+  <audio
+    id="countdownSound"
+    src="audios/else/countdown-sound.mp3" loop
+  ></audio>
   <div id="game" class="game hide">
     <br>
     <spa style="font-size: 12px">Coin: </spa>
