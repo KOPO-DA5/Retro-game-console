@@ -49,7 +49,6 @@
     gameControls.classList.remove("hide");
     selectButton(0); // 초기 선택된 버튼 설정
     pauseBackgroundMusic();
-    console.log(isClickSelectGameBtn);
   }
 
   function resumeGame() {
@@ -61,6 +60,7 @@
   }
 
   function restartGame() {
+    GlobalState.currentGame = "Dino";
     document.removeEventListener("keydown", handleInsertKeyPress);
     if (coin > 0) {
       GlobalState.isGameActive = true; //전역으로 게임중임을 알림
@@ -80,9 +80,9 @@
 
   function returnToSelection() {
     isClickSelectGameBtn = true;
-    console.log(isClickSelectGameBtn);
+    GlobalState.currentGame = "";
     document.getElementById("game-controls").classList.add("hide"); // 게임 컨트롤 숨기기
-    if(coin > 0) {
+    if (coin > 0) {
       gameoverMessage.classList.add("hide"); // 게임 오버 메시지 숨기기
       //공룡게임에서 사용했던 모든 이벤트리스너 제거
       document.removeEventListener("keydown", handleKeyDown);
@@ -129,10 +129,9 @@
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
       countdown.style.display = "block";
-      console.log(countdown.style.display);
 
       countdownInterval = setInterval(() => {
-        console.log(count);
+        console.log("공룡게임 게임종료 카운트", count);
         document.getElementById("count-number").textContent = count;
         countdown.innerHTML = `
         <p>CONTINUE?</p>
@@ -192,6 +191,7 @@
   }
 
   function handleInsertKeyPress(event) {
+    console.log("3. 공룡게임 동전 넣기 리스너", event.code);
     if (event.key === "Insert") {
       coin++; // 코인 증가
       playSound("insertCoin");
@@ -229,7 +229,6 @@
     speedScale = 1;
     score = 0;
     account.score = 0;
-    console.log("setup");
     setupGround();
     setupDino();
     setupCactus();
@@ -253,11 +252,10 @@
   }
 
   function handleKeyDown(event) {
-    console.log("3.main.js 공룡게임 일시정지 리스너", event.target);
+    console.log("3.main.js 공룡게임 일시정지 리스너", event.code);
     event.stopPropagation(); // 이벤트 버블링 중단
 
     gameControl(event.code);
-    console.log(event.code);
     switch (event.code) {
       case "Escape":
         if (!isPaused) {
@@ -323,6 +321,7 @@
   }
 
   function startGame() {
+    GlobalState.currentGame = "Dino";
     isGameOver = false;
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keydown", onJump);
@@ -504,7 +503,7 @@
     e.preventDefault(); // 스페이스바 기본 동작 방지
     e.stopPropagation(); // 이벤트 버블링 중단
 
-    console.log("3. main.js 공룡게임 onJump", e.target);
+    console.log("3. main.js 공룡게임 onJump", e.code);
     if (e.code !== "Space" || isJumping) return;
 
     yVelocity = JUMP_SPEED;
@@ -609,6 +608,7 @@
     modal.classList.remove("hide"); // 모달 보이기
     input.focus();
     input.addEventListener("keypress", function (event) {
+      console.log("3. 체크 하이 스코어", event.code);
       if (event.key === "Enter") {
         submitScore();
         input.removeEventListener("keypress", arguments.callee);
@@ -676,6 +676,7 @@
   }
 
   function modalButtonSelection(event) {
+    console.log("3. 공룡게임 랭킹 모달 리스너", event.code);
     updateButtonSelection(modalCurrentButtonIndex); // 초기 버튼 선택
 
     switch (event.key) {
