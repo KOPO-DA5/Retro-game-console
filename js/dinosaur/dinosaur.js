@@ -43,9 +43,10 @@ function updateGameContent() {
     src="audios/else/insert-coin.mp3"
   ></audio>
   <div id="game" class="game hide">
-    <span>Coin: </span>
-    <span id="coin" class="coin">${coin}</span>
-    <div id="score" class="score">0</div>
+    <br>
+    <spa style="font-size: 12px">Coin: </spa>
+    <span style="font-size: 12px" id="coin" class="coin">${coin}</span>
+    <div style="font-size: 12px" id="score" class="score">0</div>
     <div id="start-message" class="start-message">Press any key to start</div>
     <img src="images/dinosaur/ground.png" class="ground" />
     <img src="images/dinosaur/ground.png" class="ground" />
@@ -75,7 +76,7 @@ function updateGameContent() {
     </button>
   </div>
   <div id="ranking-modal" class="ranking-modal hide">
-    <h2>Top Scores</h2>
+    <h2 id="topScore-label">Top Scores</h2>
     <ol id="dinoHighScores">
       <!-- 여기에 점수를 동적으로 추가-->
     </ol>
@@ -98,7 +99,7 @@ function updateGameContent() {
   </div>
   <div id="nameInputModal" class="name-entry-modal hide">
     <div class="modal-content">
-      <h2>Enter Your Name</h2>
+      <h2 id="nameLabel">Enter Your Name</h2>
       <input type="text" id="playerNameInput" placeholder="Your name" />
       <button id="submitScoreButton" class="modal-button-name">
         Press Enter!!

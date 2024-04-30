@@ -38,6 +38,7 @@
   let selectedButtonIndex = 0;
   let isGameOver = false;
   let score = 0;
+  let isClickSelectGameBtn = false;
 
   // 명명된 함수 정의
 
@@ -48,6 +49,7 @@
     gameControls.classList.remove("hide");
     selectButton(0); // 초기 선택된 버튼 설정
     pauseBackgroundMusic();
+    console.log(isClickSelectGameBtn);
   }
 
   function resumeGame() {
@@ -77,31 +79,37 @@
   }
 
   function returnToSelection() {
+    isClickSelectGameBtn = true;
+    console.log(isClickSelectGameBtn);
     document.getElementById("game-controls").classList.add("hide"); // 게임 컨트롤 숨기기
-    gameoverMessage.classList.add("hide"); // 게임 오버 메시지 숨기기
-    //공룡게임에서 사용했던 모든 이벤트리스너 제거
-    document.removeEventListener("keydown", handleKeyDown);
-    document.removeEventListener("keydown", onJump);
-    document.removeEventListener("keydown", modalButtonSelection);
-    document.removeEventListener("keydown", handleInsertKeyPress);
+    if(coin > 0) {
+      gameoverMessage.classList.add("hide"); // 게임 오버 메시지 숨기기
+      //공룡게임에서 사용했던 모든 이벤트리스너 제거
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", onJump);
+      document.removeEventListener("keydown", modalButtonSelection);
+      document.removeEventListener("keydown", handleInsertKeyPress);
 
-    // 게임 뷰의 요소를 삭제
-    const game = document.getElementById("game");
-    if (game) {
-      game.remove();
-    }
+      // 게임 뷰의 요소를 삭제
+      const game = document.getElementById("game");
+      if (game) {
+        game.remove();
+      }
 
-    // 게임 선택 화면 보이기
-    const gameSelection = document.getElementById("content");
-    resetAnimation(gameSelection); // 부드러운 전환 효과 적용
-    playSound("mainBgm");
-    gameSelection.innerHTML = `
-    <div id="game-selection">
-      <p id="selected-game">← Dino →</p>
-      <p>Press Enter to start selected game</p>
-  </div>
+      // 게임 선택 화면 보이기
+      const gameSelection = document.getElementById("content");
+      resetAnimation(gameSelection); // 부드러운 전환 효과 적용
+      playSound("mainBgm");
+      gameSelection.innerHTML = `
+      <div id="game-selection">
+        <p id="selected-game">← Dino →</p>
+        <p>Press Enter to start selected game</p>
+      </div>
                 `;
-    GlobalState.isGameActive = false; //전역으로 게임이 종료되었음을 알림 -> 게임선택 이벤트 리스너가 다시 동작함
+      GlobalState.isGameActive = false; //전역으로 게임이 종료되었음을 알림 -> 게임선택 이벤트 리스너가 다시 동작함
+    } else {
+      returnToInsert();
+    }
   }
 
   let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
@@ -116,7 +124,7 @@
     }
     document.addEventListener("keydown", handleInsertKeyPress);
     console.log("coin:" + coin);
-    if (coin == 0) {
+    if (coin === 0 && !isClickSelectGameBtn) {
       let count = 10;
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
@@ -163,7 +171,23 @@
       document.getElementById("ranking-modal").classList.add("hide");
     } else {
       document.removeEventListener("keydown", handleInsertKeyPress);
-      countdown.style.display = "none";
+      //countdown.style.display = "none";
+      // 화면 조정
+      mainPage.style.transform = "scale(1)"; // 줌 아웃
+      mainPage.style.transition = ".5s";
+
+      gameStartDisplay.style.display = "block";
+
+      // 게임 선택 화면 보이기
+      const gameSelection = document.getElementById("content");
+      mainBgm.play();
+      gameSelection.innerHTML = `
+      <div id="game-selection">
+        <p id="selected-game">← Dino →</p>
+        <p>Press Enter to start selected game</p>
+      </div>
+    `;
+      GlobalState.isGameActive = false;
     }
   }
 
@@ -626,6 +650,7 @@
 
     scores.slice(0, 3).forEach((score, index) => {
       const scoreElement = document.createElement("li");
+      scoreElement.id = "li_marker";
       scoreElement.textContent = `${Math.round(score.score)} - ${score.name}`;
       rankingList.appendChild(scoreElement);
       if (index === 0 && isNewTopScore) {

@@ -32,10 +32,10 @@ function updateGameContent() {
   <link rel="stylesheet" href="./css/tetris.css" />
   <div class="grid">
     <div class="left-column">
-      <h2 style="margin-bottom: 10px">HIGH SCORES</h2>
+      <h2 style="margin-bottom: 10px" id="highScore-label">HIGH SCORES</h2>
       <ol id="highScores"></ol>
       <br /><br />
-      <span>Coin: </span>
+      <span id="tetris-coin-label">Coin: </span>
       <span id="tetris-coin" class="tetris-coin">${coin}</span>
     </div>
     <div class="game-board-container">
@@ -43,10 +43,10 @@ function updateGameContent() {
     </div>
     <div class="right-column">
       <div>
-        <h1>TETRIS</h1>
-        <p>Score: <span id="score">0</span></p>
-        <p>Lines: <span id="lines">0</span></p>
-        <p>Level: <span id="level">0</span></p>
+        <h1 style="margin-bottom: 10px">TETRIS</h1>
+        <p id="tetris-label">Score: <span id="score">0</span></p>
+        <p id="tetris-label">Lines: <span id="lines" style="font-size: 10px">0</span></p>
+        <p id="tetris-label">Level: <span id="level">0</span></p>
         <canvas id="next" class="next"></canvas>
       </div>
       <div id="sound-div">
@@ -83,7 +83,7 @@ function updateGameContent() {
     </div>
     <div id="nickname-screen" class="screen">
       <form id="nickname-form">
-      <h2>Enter Your Name</h2>
+      <h2 id="nameLabel">Enter Your Name</h2>
         <input
           type="text"
           id="nickname"
@@ -94,7 +94,7 @@ function updateGameContent() {
       </form>
     </div>
     <div class="leaderboard-container">
-    <h2>Top Scores</h2>
+    <h2 id="topScore-label">Top Scores</h2>
       <ol id="leaderboard-list"></ol>
       <div class="button-row">
         <button id="game-again-button" class="gameButton" onclick="restartGame()">Game Again</button>
