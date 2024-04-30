@@ -485,7 +485,7 @@
     }
 
     if (coin == 0) {
-      let count = 10;
+      let count = 100000;
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
       countdown.style.display = "block";
