@@ -52,6 +52,7 @@
       return true;
     },
   });
+
   let time = {
     start: performance.now(),
     elapsed: 0,
@@ -98,6 +99,7 @@
     //board.piece = piece;
     isPlaying = true;
   }
+  window.time = time;
 
   const moves = {
     [KEY.SPACE]: (p) => ({ ...p, y: p.y + 1 }),
@@ -107,6 +109,7 @@
     [KEY.DOWN]: (p) => ({ ...p, y: p.y + 1 }),
   };
   window.moves = moves;
+  window.account = account;
 
   function addEventListener() {
     document.removeEventListener("keydown", handleKeyPress);
