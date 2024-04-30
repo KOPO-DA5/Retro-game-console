@@ -76,7 +76,7 @@ function updateGameContent() {
     </button>
   </div>
   <div id="ranking-modal" class="ranking-modal hide">
-    <h2>Top Scores</h2>
+    <h2 id="topScore-label">Top Scores</h2>
     <ol id="dinoHighScores">
       <!-- 여기에 점수를 동적으로 추가-->
     </ol>

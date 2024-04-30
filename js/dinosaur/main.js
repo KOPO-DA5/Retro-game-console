@@ -650,6 +650,7 @@
 
     scores.slice(0, 3).forEach((score, index) => {
       const scoreElement = document.createElement("li");
+      scoreElement.id = "li_marker";
       scoreElement.textContent = `${Math.round(score.score)} - ${score.name}`;
       rankingList.appendChild(scoreElement);
       if (index === 0 && isNewTopScore) {

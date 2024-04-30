@@ -197,8 +197,11 @@
 }
 
 .control-button {
-  height: 4vmin;
+  height: 25%;
   position: relative;
   top: 50px;
   margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #6a6a6aa3;
+  color: #868686;
 }

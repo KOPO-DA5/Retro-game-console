@@ -213,11 +213,12 @@ body {
 }
 
 .control-button.selected {
-  background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
-  color: rgb(45, 41, 41);
+  background-color: #e55b5b; /* 선택된 버튼의 배경색 변경 */
+  color: rgb(236 236 236);
   font-size: 1.05em; /* 폰트 크기 증가 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
   transition: transform 0.3s, box-shadow 0.3s; /* 부드러운 변화 효과 */
+  border-radius: 10px;
 }
 
 .control-button-dino.selected {
@@ -237,6 +238,23 @@ body {
     font-size: 12px;
     background-color: #6a6a6aa3;
     color: #868686;
+}
+
+h2#highScore-label, #tetris-label {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+#tetris-coin-label, #tetris-coin {
+  font-size: 12px;
+}
+
+#tetris-label, #score, #lines, #level {
+  font-size: 10px;
+}
+
+canvas#next {
+  margin-top: 10px;
 }
 
 .hide {
