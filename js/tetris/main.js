@@ -7,6 +7,7 @@
   const coinTetris = document.querySelector("#tetris-coin");
   const grid = document.querySelector("#grid");
   grid.classList.remove("hide");
+  let requestId;
 
   let buttonIndex = 0;
   let isClickSelectGameBtn = false;
@@ -27,8 +28,6 @@
   initNext();
   showHighScores();
 
-  let requestId;
-  // window.requestId = requestId;
   function initNext() {
     ctxNext.canvas.width = 4 * BLOCK_SIZE;
     ctxNext.canvas.height = 4 * BLOCK_SIZE;
@@ -167,7 +166,9 @@
   }
 
   function animate(now = 0) {
-    // console.log(requestId);
+    if (requestId % 100 === 0) {
+      console.log(requestId);
+    }
     time.elapsed = now - time.start;
 
     if (time.elapsed > time.level) {
@@ -302,8 +303,6 @@
         highScores[i].score
       }`;
       leaderboardList.appendChild(listItem);
-      console.log(currentTopScore);
-      console.log(previousTopScore);
       if (currentTopScore >= previousTopScore) {
         listItem.classList.add("confetti"); //축하 애니메이션
       }
@@ -312,12 +311,17 @@
     leaderboardContainer.style.display = "flex"; // leaderboard 보이기
 
     gameAgainButton.addEventListener("click", () => {
-      removeKeyListener();
+      // removeKeyListener();
       resetGame();
       hideLeaderboard();
     });
 
-    removeKeyListener();
+    gameSelectButton.addEventListener("click", () => {
+      // removeKeyListener();
+      resetGame();
+      hideLeaderboard();
+      returnToSelection();
+    });
   }
 
   function hideLeaderboard() {
@@ -336,11 +340,11 @@
     );
     const buttons = leaderboardContainer.querySelectorAll("button");
     twobuttonIndex = 0; // 초기 선택 인덱스를 0으로 설정하여 첫 번째 버튼을 선택
+    // buttons.focus();
     selectButton(0); // 첫 번째 버튼에 `.select` 클래스 추가
 
     const keydownHandler = (event) => {
-      selectButton(0); // 첫 번째 버튼에 `.select` 클래스 추가
-
+      // selectButton(0); // 첫 번째 버튼에 `.select` 클래스 추가
       console.log("3. tetris의 리더보드 이벤트 리스너 실행", event.key);
 
       if (event.key === "ArrowLeft") {
@@ -458,7 +462,6 @@
   function returnToSelection() {
     isClickSelectGameBtn = true;
     GlobalState.currentGame = null;
-    window.GlobalState.currentGame = null;
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
     const game = document.getElementById("game");
@@ -571,7 +574,7 @@
       insertCoin.play();
       console.log("코인: " + coin);
 
-      GlobalState.isGameActive = false; // 게임 종료 상태로 설정
+      GlobalState.isGameActive = true; // 게임 종료 상태로 설정
       clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
 
       // 카운트 다운 화면 제거
