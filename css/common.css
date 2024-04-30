@@ -249,7 +249,7 @@ h2#highScore-label, #tetris-label {
   font-size: 12px;
 }
 
-#tetris-label, #score, #lines, #level {
+#score, #lines, #level {
   font-size: 10px;
 }
 
@@ -341,6 +341,11 @@ canvas#next {
   100% {
     top: 5px;
   }
+}
+
+li#li-marker-tetris {
+  font-size: 10px;
+  margin-left: 12%;
 }
 
 #count-down {

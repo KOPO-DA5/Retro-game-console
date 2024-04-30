@@ -202,6 +202,7 @@
 
   function pause() {
     removeEventListener();
+    console.log(isClickSelectGameBtn);
 
     if (!requestId) {
       document.querySelector("#play-btn").style.display = "none";
@@ -231,7 +232,7 @@
     const highScoreList = document.getElementById("highScores");
 
     highScoreList.innerHTML = highScores
-      .map((score) => `<li>${score.score} - ${score.name}`)
+      .map((score) => `<li id="li-marker-tetris">${score.score} - ${score.name}`)
       .join("");
   }
 
@@ -292,6 +293,7 @@
 
     for (let i = 0; i < Math.min(highScores.length, 3); i++) {
       const listItem = document.createElement("li");
+      listItem.id = "li_marker";
       listItem.textContent = `${i + 1}. ${highScores[i].name} - ${
         highScores[i].score
       }`;
@@ -303,7 +305,7 @@
       }
     }
 
-    leaderboardContainer.style.display = "block"; // leaderboard 보이기
+    leaderboardContainer.style.display = "flex"; // leaderboard 보이기
 
     gameAgainButton.addEventListener("click", () => {
       removeKeyListener();
@@ -451,6 +453,7 @@
 
   function returnToSelection() {
     isClickSelectGameBtn = true;
+    console.log(isClickSelectGameBtn);
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
     const game = document.getElementById("game");
@@ -474,6 +477,7 @@
       GlobalState.isGameActive = false;
     } else {
       returnToInsert();
+      console.log("테트리스 코인: " + coin);
     }
   } 
 
@@ -492,9 +496,8 @@
       game.remove(); // 게임 뷰 요소 삭제
     }
 
-    console.log("테트리스: insert 안되게");
-
     if (coin === 0 && !isClickSelectGameBtn) {
+      console.log("코인: " + coin);
       let count = 10;
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";

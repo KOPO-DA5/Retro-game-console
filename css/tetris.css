@@ -74,25 +74,38 @@
   align-items: center; /* 중앙 정렬 */
 }
 
+h2#nameLabel {
+  font-size: 13.5px;
+  color: rgb(255 183 0 / 95%);
+  line-height: 20px;
+}
+
 #nickname-form {
-  background: #7a7878;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  border-radius: 5%;
-  width: 80%;
-  height: 70%;
-  bottom: 50%;
-  left: 50%;
-  text-align: center; /* 텍스트 중앙 정렬 */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around; /* 내부 요소를 중앙 정렬 */
-  z-index: 1050;
-  align-items: center; /* 중앙 정렬 */
+    background: #323030;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 18%);
+    padding: 20px;
+    border-radius: 5%;
+    width: 50%;
+    height: 60%;
+    bottom: 50%;
+    left: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    z-index: 1050;
+    align-items: center;
 }
 #nickname-form label {
   display: block;
   margin-bottom: 10px;
+}
+
+input#nickname {
+  font-size: 12px;
+  width: 80%;
+  border-radius: 10px;
+  text-align: center;
 }
 
 #nickname-form input {
@@ -104,22 +117,24 @@
 }
 
 #nickname-form button {
-  padding: 10px 20px;
+  padding: 10px 12px;
   cursor: pointer;
-  background-color: #cddcce;
+  background-color: rgb(57 42 255 / 35%);
   border: none;
-  color: rgb(0, 0, 0);
+  color: rgb(255 183 0);
   text-transform: uppercase;
+  font-size: 10px;
+  border-radius: 10px;
 }
 
 .leaderboard-container {
   position: relative;
   bottom: 50%;
   left: 50%;
-  width: 80%;
+  width: 50%;
   height: 70%;
   transform: translate(-50%, -50%);
-  background-color: rgb(149, 146, 146);
+  background-color: rgb(47 47 47);
   padding: 10px;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -134,7 +149,7 @@
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 15px;
 }
 
 #leaderboard-list li {
@@ -147,10 +162,14 @@
 }
 
 .button-row button {
-  font-size: 1em;
-  margin: 0px 5px;
-  width: 60%;
+  font-size: 0.5em;
+  margin-left: 10px;
+  width: 40%;
   height: 110%;
+  border-radius: 10px;
+  padding: 3px;
+  background-color: #00000026;
+  color: #7a7878;
 }
 
 .modal-button.selected {
@@ -177,6 +196,16 @@
   transform-origin: top left;
 }
 
+#li_marker {
+  font-size: 10px;
+}
+
+h2#topScore-label {
+  color: #e55b5b;
+  margin-top: 10px;
+}
+
+
 .confetti::before {
   content: "🎉";
   position: absolute;
@@ -191,9 +220,9 @@
 }
 
 .gameButton.select {
-  background-color: #a19f9f; /* 선택된 버튼의 배경색 변경 */
-  color: black;
-  font-size: 1.2em; /* 폰트 크기 증가 */
+  background-color: rgb(91 78 253 / 92%);;
+  color: #e55b5b;
+  font-size: 0.55em;
 }
 
 .control-button {

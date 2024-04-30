@@ -43,7 +43,7 @@ function updateGameContent() {
     </div>
     <div class="right-column">
       <div>
-        <h1 style="margin-bottom: 10px" id="tetris-label">TETRIS</h1>
+        <h1 style="margin-bottom: 10px">TETRIS</h1>
         <p id="tetris-label">Score: <span id="score">0</span></p>
         <p id="tetris-label">Lines: <span id="lines" style="font-size: 10px">0</span></p>
         <p id="tetris-label">Level: <span id="level">0</span></p>
@@ -83,7 +83,7 @@ function updateGameContent() {
     </div>
     <div id="nickname-screen" class="screen">
       <form id="nickname-form">
-      <h2>Enter Your Name</h2>
+      <h2 id="nameLabel">Enter Your Name</h2>
         <input
           type="text"
           id="nickname"
@@ -94,7 +94,7 @@ function updateGameContent() {
       </form>
     </div>
     <div class="leaderboard-container">
-    <h2>Top Scores</h2>
+    <h2 id="topScore-label">Top Scores</h2>
       <ol id="leaderboard-list"></ol>
       <div class="button-row">
         <button id="game-again-button" class="gameButton" onclick="restartGame()">Game Again</button>
