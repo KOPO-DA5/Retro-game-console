@@ -74,6 +74,15 @@ body {
   display: none;
 }
 
+#game-addcoin-img {
+  position: absolute;
+  z-index: 10000;
+  top: 30%;
+  left: 40%;
+  width: 100px;
+  display: none;
+}
+
 #game-yellow-btn-img {
   position: absolute;
   width: 100px;
@@ -235,24 +244,28 @@ body {
 
 .control-button-dino {
   position: relative;
-    height: 25%;
-    width: 100%;
-    border-radius: 10px;
-    font-size: 12px;
-    background-color: #6a6a6aa3;
-    color: #868686;
+  height: 25%;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 12px;
+  background-color: #6a6a6aa3;
+  color: #868686;
 }
 
-h2#highScore-label, #tetris-label {
+h2#highScore-label,
+#tetris-label {
   font-size: 13px;
   line-height: 16px;
 }
 
-#tetris-coin-label, #tetris-coin {
+#tetris-coin-label,
+#tetris-coin {
   font-size: 12px;
 }
 
-#score, #lines, #level {
+#score,
+#lines,
+#level {
   font-size: 10px;
 }
 
