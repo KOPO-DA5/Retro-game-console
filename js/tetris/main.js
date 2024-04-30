@@ -567,6 +567,7 @@
   }
 
   document.addEventListener("keydown", handleInsertKeyPress);
+
   function handleInsertKeyPress(event) {
     console.log("3. tetris의 동전넣기 리스너", event.key);
     if (event.key === "Insert") {
@@ -574,34 +575,20 @@
       insertCoin.play();
       console.log("코인: " + coin);
 
-      const coinImg = document.querySelector("#game-addcoin-img");
-      coinImg.style.display = "block";
-      coinImg.classList.add("animate__animated", "animate__flip");
+      GlobalState.isGameActive = true; // 게임 종료 상태로 설정
+      clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
+      countdownSound.pause();
 
-      coinImg.addEventListener("animationend", () => {
-        coinImg.classList.remove("animate__animated", "animate__flip");
+      // 카운트 다운 화면 제거
+      if (countdown) {
+        countdown.remove();
+        countdown.style.display = "none";
+      }
 
-        // 1초 후에 동전 애니메이션을 종료하고 게임을 시작합니다.
-        setTimeout(() => {
-          coinImg.style.display = "none";
+      const grid = document.getElementById("grid"); // grid 요소를 가져옴
+      grid.classList.remove("hide");
 
-          GlobalState.isGameActive = true; // 게임 종료 상태로 설정
-          clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
-          countdownSound.pause();
-
-          // 카운트 다운 화면 제거
-          if (countdown) {
-            countdown.remove();
-            countdown.style.display = "none";
-            countdown.classList.add("hide");
-          }
-
-          const grid = document.getElementById("grid"); // grid 요소를 가져옴
-          grid.classList.remove("hide");
-
-          restartGame();
-        }, 100);
-      });
+      restartGame();
     }
   }
 

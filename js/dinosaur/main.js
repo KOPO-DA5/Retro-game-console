@@ -198,35 +198,21 @@
     if (event.key === "Insert") {
       coin++; // 코인 증가
       playSound("insertCoin");
+      console.log("코인: " + coin);
 
-      const coinImg = document.querySelector("#game-addcoin-img");
-      coinImg.style.display = "block";
-      coinImg.classList.add("animate__animated", "animate__flip");
+      GlobalState.isGameActive = false; // 게임 종료 상태로 설정
+      clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
+      pauseMusic("countdownSound");
+      // 카운트 다운 화면 제거
+      if (countdown) {
+        countdown.remove();
+        countdown.style.display = "none";
+      }
 
-      coinImg.addEventListener("animationend", () => {
-        coinImg.classList.remove("animate__animated", "animate__flip");
-
-        // 1초 후에 동전 애니메이션을 종료하고 게임을 시작합니다.
-        setTimeout(() => {
-          coinImg.style.display = "none";
-
-          GlobalState.isGameActive = true; // 게임 종료 상태로 설정
-          clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
-          pauseMusic("countdownSound");
-
-          // 카운트 다운 화면 제거
-          if (countdown) {
-            countdown.remove();
-            countdown.style.display = "none";
-            countdown.classList.add("hide");
-          }
-
-          const game = document.getElementById("game"); // grid 요소를 가져옴
-          game.classList.remove("hide");
-
-          restartGame();
-        }, 100);
-      });
+      if (game.classList.contains("hide")) {
+        game.classList.remove("hide"); // 게임 뷰 요소 삭제
+      }
+      restartGame();
     }
   }
 

@@ -62,7 +62,6 @@ function updateGameContent() {
     <div id="count-down" class="count-down hide">
       <p id="count-number">0</p>
     </div>
-    <img id="game-addcoin-img" src="./images/main/coin_img.png" class="animate__animated animate__flip" style="display: none;">
   <div id="game-controls" class="game-controls hide">
       <button id="resumeButton" class="control-button" onclick="resumeGame()">
         game resume
