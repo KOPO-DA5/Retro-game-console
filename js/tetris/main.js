@@ -7,14 +7,12 @@
   const coinTetris = document.querySelector("#tetris-coin");
   const grid = document.querySelector("#grid");
   grid.classList.remove("hide");
+  let requestId;
 
   let buttonIndex = 0;
   let isClickSelectGameBtn = false;
 
   document.addEventListener("keydown", play, { once: true });
-  window.returnToSelection = returnToSelection;
-  window.restartGame = restartGame;
-  window.resumeGame = resumeGame;
   let accountValues = {
     score: 0,
     lines: 0,
@@ -29,8 +27,6 @@
 
   initNext();
   showHighScores();
-
-  let requestId = null;
 
   function initNext() {
     ctxNext.canvas.width = 4 * BLOCK_SIZE;
@@ -77,15 +73,13 @@
     backgroundSound.currentTime = 0;
     isPlaying = true;
 
-    document.removeEventListener("keydown", handleKeyPress);
-    document.removeEventListener("keydown", addKeyListener);
     document.removeEventListener("keydown", addMenuEventListener);
     document.removeEventListener("keydown", handleInsertKeyPress);
-    document.addEventListener("keydown", handleKeyPress);
+    addEventListener();
   }
 
   function play() {
-    document.removeEventListener("keydown", addKeyListener);
+    GlobalState.currentGame = "Tetris";
     document.removeEventListener("keydown", handleInsertKeyPress);
     addEventListener();
     if (document.querySelector("#play-btn").style.display == "") {
@@ -125,7 +119,6 @@
   }
 
   function handleKeyPress(event) {
-    removeKeyListener();
     if (event.keyCode === KEY.P) {
       if (isPlaying) {
         console.log(isPlaying);
@@ -135,9 +128,9 @@
         console.log(isPlaying);
         play();
       }
-      document.removeEventListener("keydown", handleKeyPress);
-      document.addEventListener("keydown", handleKeyPress);
+      addEventListener();
     }
+
     if (event.code === "Escape") {
       toggleGamePauseMenu();
       escSound.play();
@@ -173,6 +166,9 @@
   }
 
   function animate(now = 0) {
+    if (requestId % 100 === 0) {
+      console.log(requestId);
+    }
     time.elapsed = now - time.start;
 
     if (time.elapsed > time.level) {
@@ -207,20 +203,20 @@
   }
 
   function pause() {
+    console.log("paused 함수 진입", requestId);
     removeEventListener();
-    console.log(isClickSelectGameBtn);
 
-    if (!requestId) {
-      document.querySelector("#play-btn").style.display = "none";
-      document.querySelector("#pause-btn").style.display = "block";
-      animate();
-      backgroundSound.play();
-      isPlaying = true;
-      return;
-    }
+    // if (!requestId) {
+    //   document.querySelector("#play-btn").style.display = "none";
+    //   document.querySelector("#pause-btn").style.display = "block";
+    //   animate();
+    //   backgroundSound.play();
+    //   isPlaying = true;
+    //   return;
+    // }
 
     cancelAnimationFrame(requestId);
-    requestId = null;
+    // requestId = null;
 
     ctxBoard.fillStyle = "black";
     ctxBoard.fillRect(1, 3, 8, 1.2);
@@ -249,6 +245,7 @@
 
     showNicknameScreen();
     const nameInput = document.getElementById("nickname");
+    nameInput.value = "";
     nameInput.focus(); // 입력창에 자동으로 포커스를 주기 위함
     function handleNicknameFormSubmit(event) {
       event.preventDefault();
@@ -257,9 +254,8 @@
       saveHighScore(newScore, highScores);
       hideNicknameScreen();
       showHighScores();
-      addKeyListener();
+      leaderboardaddKeyListener();
       showLeaderboard();
-      document.removeEventListener("keydown", addKeyListener);
     }
     const nicknameForm = document.getElementById("nickname-form");
     nicknameForm.addEventListener("submit", handleNicknameFormSubmit);
@@ -307,8 +303,6 @@
         highScores[i].score
       }`;
       leaderboardList.appendChild(listItem);
-      console.log(currentTopScore);
-      console.log(previousTopScore);
       if (currentTopScore >= previousTopScore) {
         listItem.classList.add("confetti"); //축하 애니메이션
       }
@@ -317,18 +311,17 @@
     leaderboardContainer.style.display = "flex"; // leaderboard 보이기
 
     gameAgainButton.addEventListener("click", () => {
-      removeKeyListener();
-      resetGame();
+      // removeKeyListener();
+      restartGame();
       hideLeaderboard();
     });
 
     gameSelectButton.addEventListener("click", () => {
-      removeKeyListener();
-      returnToSelection();
+      // removeKeyListener();
+      resetGame();
       hideLeaderboard();
+      returnToSelection();
     });
-
-    removeKeyListener();
   }
 
   function hideLeaderboard() {
@@ -341,16 +334,19 @@
 
   let twobuttonIndex = 0;
 
-  function addKeyListener() {
+  function leaderboardaddKeyListener() {
     const leaderboardContainer = document.querySelector(
       ".leaderboard-container"
     );
     const buttons = leaderboardContainer.querySelectorAll("button");
     twobuttonIndex = 0; // 초기 선택 인덱스를 0으로 설정하여 첫 번째 버튼을 선택
+    // buttons.focus();
     selectButton(0); // 첫 번째 버튼에 `.select` 클래스 추가
 
-    keydownEventListener = document.addEventListener("keydown", (event) => {
+    const keydownHandler = (event) => {
+      // selectButton(0); // 첫 번째 버튼에 `.select` 클래스 추가
       console.log("3. tetris의 리더보드 이벤트 리스너 실행", event.key);
+
       if (event.key === "ArrowLeft") {
         selectButton(-1);
         escMove.currentTime = 0;
@@ -362,10 +358,12 @@
         escMove.play();
       }
       if (event.key === "Enter") {
-        removeKeyListener();
-        buttons[twobuttonIndex].click();
+        // 여기서 이벤트 리스너를 제거
+        removeKeyListener(keydownHandler);
+        buttons[buttonIndex].click();
       }
-    });
+    };
+    document.addEventListener("keydown", keydownHandler);
   }
 
   function selectButton(direction) {
@@ -383,34 +381,36 @@
     });
   }
 
-  function removeKeyListener() {
-    document.removeEventListener("keydown", addKeyListener);
+  function removeKeyListener(keydownEventListener) {
+    document.removeEventListener("keydown", keydownEventListener);
   }
 
   // 분리 후 코드 삽입 부분
 
   function handleMenuKeyPress(event) {
-    console.log("3. tetris의 일시정지 이벤트 리스너", event.key);
-    event.stopPropagation();
-    const gameControls = document.getElementById("game-controls");
-    if (gameControls) {
-      const buttons = gameControls.querySelectorAll("button");
-      if (!gameControls.classList.contains("hide")) {
-        if (event.key === "Escape") {
-          resumeGame();
-        }
-        if (event.key === "ArrowUp") {
-          selectThreeButton(-1);
-          escMove.currentTime = 0;
-          escMove.play();
-        }
-        if (event.key === "ArrowDown") {
-          selectThreeButton(1);
-          escMove.currentTime = 0;
-          escMove.play();
-        }
-        if (event.key === "Enter") {
-          buttons[buttonIndex].click();
+    if (GlobalState.currentGame === "Tetris") {
+      console.log("3. tetris의 일시정지 이벤트 리스너", event.key);
+      event.stopPropagation();
+      const gameControls = document.getElementById("game-controls");
+      if (gameControls) {
+        const buttons = gameControls.querySelectorAll("button");
+        if (!gameControls.classList.contains("hide")) {
+          // if (event.key === "Escape") {
+          //   resumeGame();
+          // }
+          if (event.key === "ArrowUp") {
+            selectThreeButton(-1);
+            escMove.currentTime = 0;
+            escMove.play();
+          }
+          if (event.key === "ArrowDown") {
+            selectThreeButton(1);
+            escMove.currentTime = 0;
+            escMove.play();
+          }
+          if (event.key === "Enter") {
+            buttons[buttonIndex].click();
+          }
         }
       }
     }
@@ -434,11 +434,8 @@
     }
   }
   function addMenuEventListener() {
-    document.addEventListener("keydown", handleMenuKeyPress);
-  }
-
-  function removeMenuEventListener() {
     document.removeEventListener("keydown", handleMenuKeyPress);
+    document.addEventListener("keydown", handleMenuKeyPress);
   }
 
   function resumeGame() {
@@ -446,6 +443,7 @@
     gameControls.classList.add("hide");
     play();
   }
+  window.resumeGame = resumeGame;
 
   function restartGame() {
     document.removeEventListener("keydown", handleInsertKeyPress);
@@ -459,10 +457,11 @@
       returnToInsert();
     }
   }
+  window.restartGame = restartGame;
 
   function returnToSelection() {
     isClickSelectGameBtn = true;
-    console.log(isClickSelectGameBtn);
+    GlobalState.currentGame = null;
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
     const game = document.getElementById("game");
@@ -472,7 +471,7 @@
 
     if (coin > 0) {
       document.removeEventListener("keydown", handleMenuKeyPress);
-      document.removeEventListener("keydown", handleKeyPress);
+      addEventListener();
       // 게임 선택 화면 보이기
       const gameSelection = document.getElementById("content");
       resetAnimation(gameSelection); // 부드러운 전환 효과 적용
@@ -494,7 +493,8 @@
 
   let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
   let countdown;
-
+  window.countdown = countdownInterval;
+  window.countdown = countdown;
   function returnToInsert() {
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
@@ -518,6 +518,7 @@
       `;
         count--;
         if (count === -1) {
+          GlobalState.currentGame = null;
           clearInterval(countdownInterval);
           // 10초 카운트가 끝나면 아래 코드 실행
 
@@ -544,7 +545,6 @@
       content.appendChild(countdown);
     } else {
       //countdown.style.display = "none";
-      clearDarkenGameContent();
 
       // 화면 조정
       mainPage.style.transform = "scale(1)"; // 줌 아웃
@@ -574,7 +574,7 @@
       insertCoin.play();
       console.log("코인: " + coin);
 
-      GlobalState.isGameActive = false; // 게임 종료 상태로 설정
+      GlobalState.isGameActive = true; // 게임 종료 상태로 설정
       clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
 
       // 카운트 다운 화면 제거

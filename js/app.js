@@ -24,32 +24,29 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("1.app.js의 게임 선택 이벤트 리스너", event.code);
 
       if (event.key === "Insert") {
-
-        if(coin === 5) {}
-        else {
+        if (coin === 5) {
+        } else {
           playSound("insertCoin");
           coinImg.style.display = "block";
           coinImg.classList.add("animate__animated", "animate__flip");
 
           coinImg.addEventListener("animationend", () => {
-          coinImg.classList.remove("animate__animated", "animate__flip");
+            coinImg.classList.remove("animate__animated", "animate__flip");
 
-          coinImg.style.display = "none";
+            coinImg.style.display = "none";
 
-          setTimeout(function () {
-            gameStartDisplay.style.display = "none";
-            gameSelectDisplay.style.display = "block";
-            mainPage.style.transform = "scale(1.9)";
-            mainPage.style.transition = ".5s";
-            mainPage.style.overflow = "hidden";
-          }, 100);
-        });
+            setTimeout(function () {
+              gameStartDisplay.style.display = "none";
+              gameSelectDisplay.style.display = "block";
+              mainPage.style.transform = "scale(1.9)";
+              mainPage.style.transition = ".5s";
+              mainPage.style.overflow = "hidden";
+            }, 100);
+          });
 
-        coin += 5;
-        console.log(coin);
+          coin += 5;
+          console.log(coin);
         }
-
-        
       }
       if (coin > 0) {
         gameControl(event.key);
