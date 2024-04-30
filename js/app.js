@@ -1,19 +1,18 @@
 const coinImg = document.querySelector("#game-coin-img");
 const mainPage = document.querySelector("#main-page");
-const gameControler = document.write(
-  '<script src="./js/gameControler.js"></script>'
-);
-const coin_js = document.write('<script src="./js/coin.js"></script>');
+// const gameControler = document.write(
+//   '<script src="./js/gameControler.js"></script>'
+// );
+// const coin_js = document.write('<script src="./js/coin.js"></script>');
 const gameSelectDisplay = document.querySelector("#game-select-container");
 const gameStartDisplay = document.querySelector("#game-start-container");
 
-function playSound(soundId) {
-  const sound = document.getElementById(soundId);
-  sound.currentTime = 0;
-  sound.play();
-}
-
 document.addEventListener("DOMContentLoaded", function () {
+  function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
+  }
   playSound("mainBgm");
   const content = document.getElementById("content");
   resetAnimation(content);
@@ -110,4 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const backgroundMusic = document.getElementById("mainBgm");
     backgroundMusic.pause();
   }
+  // function playSound(soundId) {
+  //   const sound = document.getElementById(soundId);
+  //   sound.currentTime = 0;
+  //   sound.play();
+  // }
 });

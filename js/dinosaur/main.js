@@ -229,11 +229,10 @@
   }
 
   function handleKeyDown(event) {
-    console.log("3.main.js 공룡게임 일시정지 리스너", event.target);
+    console.log("3.main.js 공룡게임 일시정지 리스너", event.code);
     event.stopPropagation(); // 이벤트 버블링 중단
 
     gameControl(event.code);
-    console.log(event.code);
     switch (event.code) {
       case "Escape":
         if (!isPaused) {
@@ -480,7 +479,7 @@
     e.preventDefault(); // 스페이스바 기본 동작 방지
     e.stopPropagation(); // 이벤트 버블링 중단
 
-    console.log("3. main.js 공룡게임 onJump", e.target);
+    console.log("3. main.js 공룡게임 onJump", e.code);
     if (e.code !== "Space" || isJumping) return;
 
     yVelocity = JUMP_SPEED;
