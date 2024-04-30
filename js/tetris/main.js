@@ -312,7 +312,7 @@
 
     gameAgainButton.addEventListener("click", () => {
       // removeKeyListener();
-      resetGame();
+      restartGame();
       hideLeaderboard();
     });
 
