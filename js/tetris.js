@@ -30,7 +30,7 @@ function updateGameContent() {
   const content = document.getElementById("content");
   content.innerHTML = `
   <link rel="stylesheet" href="./css/tetris.css" />
-  <div class="grid">
+  <div id="grid" class="grid hide">
     <div class="left-column">
       <h2 style="margin-bottom: 10px">HIGH SCORES</h2>
       <ol id="highScores"></ol>
@@ -58,10 +58,10 @@ function updateGameContent() {
         Pause
       </button>
     </div>
+  </div>
     <div id="count-down" class="count-down hide">
       <p id="count-number">0</p>
     </div>
-  </div>
   <div id="game-controls" class="game-controls hide">
       <button id="resumeButton" class="control-button" onclick="resumeGame()">
         game resume

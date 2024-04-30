@@ -7,14 +7,9 @@ const coin_js = document.write('<script src="./js/coin.js"></script>');
 const gameSelectDisplay = document.querySelector("#game-select-container");
 const gameStartDisplay = document.querySelector("#game-start-container");
 
-function playSound(soundId) {
-  const sound = document.getElementById(soundId);
-  sound.currentTime = 0;
-  sound.play();
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   playSound("mainBgm");
+  playSound.autoplay = true;
   const content = document.getElementById("content");
   resetAnimation(content);
 
@@ -104,6 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
     GlobalState.scriptElement = script;
     coin -= 1;
     console.log("코인: " + coin);
+  }
+
+  function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
   }
 
   function pauseBackgroundMusic() {
