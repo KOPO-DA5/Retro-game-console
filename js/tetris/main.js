@@ -9,6 +9,7 @@
   grid.classList.remove("hide");
 
   let buttonIndex = 0;
+  let isClickSelectGameBtn = false;
 
   document.addEventListener("keydown", play, { once: true });
   window.returnToSelection = returnToSelection;
@@ -207,6 +208,7 @@
 
   function pause() {
     removeEventListener();
+    console.log(isClickSelectGameBtn);
 
     if (!requestId) {
       document.querySelector("#play-btn").style.display = "none";
@@ -236,7 +238,9 @@
     const highScoreList = document.getElementById("highScores");
 
     highScoreList.innerHTML = highScores
-      .map((score) => `<li>${score.score} - ${score.name}`)
+      .map(
+        (score) => `<li id="li-marker-tetris">${score.score} - ${score.name}`
+      )
       .join("");
   }
 
@@ -298,6 +302,7 @@
 
     for (let i = 0; i < Math.min(highScores.length, 3); i++) {
       const listItem = document.createElement("li");
+      listItem.id = "li_marker";
       listItem.textContent = `${i + 1}. ${highScores[i].name} - ${
         highScores[i].score
       }`;
@@ -309,7 +314,7 @@
       }
     }
 
-    leaderboardContainer.style.display = "block"; // leaderboard 보이기
+    leaderboardContainer.style.display = "flex"; // leaderboard 보이기
 
     gameAgainButton.addEventListener("click", () => {
       removeKeyListener();
@@ -454,7 +459,10 @@
       returnToInsert();
     }
   }
+
   function returnToSelection() {
+    isClickSelectGameBtn = true;
+    console.log(isClickSelectGameBtn);
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
     const game = document.getElementById("game");
@@ -462,20 +470,27 @@
       game.remove(); // 게임 뷰 요소 삭제
     }
 
-    document.removeEventListener("keydown", handleMenuKeyPress);
-    document.removeEventListener("keydown", handleKeyPress);
-    // 게임 선택 화면 보이기
-    const gameSelection = document.getElementById("content");
-    resetAnimation(gameSelection); // 부드러운 전환 효과 적용
-    mainBgm.play();
-    gameSelection.innerHTML = `
-    <div id="game-selection">
-      <p id="selected-game">← Tetris →</p>
-      <p>Press Enter to start selected game</p>
-  </div>
+    if (coin > 0) {
+      document.removeEventListener("keydown", handleMenuKeyPress);
+      document.removeEventListener("keydown", handleKeyPress);
+      // 게임 선택 화면 보이기
+      const gameSelection = document.getElementById("content");
+      resetAnimation(gameSelection); // 부드러운 전환 효과 적용
+      mainBgm.play();
+      gameSelection.innerHTML = `
+      <div id="game-selection">
+        <p id="selected-game">← Tetris →</p>
+        <p>Press Enter to start selected game</p>
+      </div>
                 `;
-    GlobalState.isGameActive = false;
+      GlobalState.isGameActive = false;
+    } else {
+      returnToInsert();
+      console.log("테트리스 코인: " + coin);
+    }
   }
+
+  window.returnToSelection = returnToSelection;
 
   let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
   let countdown;
@@ -486,9 +501,10 @@
     const grid = document.getElementById("grid"); // grid 요소를 가져옴
     grid.classList.add("hide");
 
-    if (coin == 0) {
+    if (coin === 0 && !isClickSelectGameBtn) {
+      console.log("코인: " + coin);
       document.addEventListener("keydown", handleInsertKeyPress);
-      let count = 10000;
+      let count = 10;
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
       countdown.style.display = "block";
@@ -526,6 +542,26 @@
       }, 1000);
       const content = document.getElementById("content");
       content.appendChild(countdown);
+    } else {
+      //countdown.style.display = "none";
+      clearDarkenGameContent();
+
+      // 화면 조정
+      mainPage.style.transform = "scale(1)"; // 줌 아웃
+      mainPage.style.transition = ".5s";
+
+      gameStartDisplay.style.display = "block";
+
+      // 게임 선택 화면 보이기
+      const gameSelection = document.getElementById("content");
+      mainBgm.play();
+      gameSelection.innerHTML = `
+    <div id="game-selection">
+      <p id="selected-game">← Tetris →</p>
+      <p>Press Enter to start selected game</p>
+    </div>
+  `;
+      GlobalState.isGameActive = false;
     }
   }
 
