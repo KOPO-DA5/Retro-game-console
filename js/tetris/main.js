@@ -5,6 +5,9 @@
   const canvasNext = document.getElementById("next");
   const ctxNext = canvasNext.getContext("2d");
   const coinTetris = document.querySelector("#tetris-coin");
+  const grid = document.querySelector("#grid");
+  grid.classList.remove("hide");
+
   let buttonIndex = 0;
   let isClickSelectGameBtn = false;
 
@@ -235,7 +238,9 @@
     const highScoreList = document.getElementById("highScores");
 
     highScoreList.innerHTML = highScores
-      .map((score) => `<li id="li-marker-tetris">${score.score} - ${score.name}`)
+      .map(
+        (score) => `<li id="li-marker-tetris">${score.score} - ${score.name}`
+      )
       .join("");
   }
 
@@ -443,6 +448,7 @@
   }
 
   function restartGame() {
+    document.removeEventListener("keydown", handleInsertKeyPress);
     if (coin > 0) {
       coin -= 1;
       const gameControls = document.getElementById("game-controls");
@@ -464,7 +470,7 @@
       game.remove(); // 게임 뷰 요소 삭제
     }
 
-    if(coin > 0) {
+    if (coin > 0) {
       document.removeEventListener("keydown", handleMenuKeyPress);
       document.removeEventListener("keydown", handleKeyPress);
       // 게임 선택 화면 보이기
@@ -482,25 +488,22 @@
       returnToInsert();
       console.log("테트리스 코인: " + coin);
     }
-  } 
+  }
 
   window.returnToSelection = returnToSelection;
 
   let countdownInterval; // 전역 변수로 선언하여 clearInterval을 통해 중단 가능하도록 함
   let countdown;
 
-
-
   function returnToInsert() {
     const gameControls = document.getElementById("game-controls");
     gameControls.classList.add("hide");
-    const game = document.getElementById("game");
-    if (game) {
-      game.remove(); // 게임 뷰 요소 삭제
-    }
+    const grid = document.getElementById("grid"); // grid 요소를 가져옴
+    grid.classList.add("hide");
 
     if (coin === 0 && !isClickSelectGameBtn) {
       console.log("코인: " + coin);
+      document.addEventListener("keydown", handleInsertKeyPress);
       let count = 10;
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
@@ -514,15 +517,13 @@
         <p>INSERT COIN</p>
       `;
         count--;
-        if (count === 0) {
+        if (count === -1) {
           clearInterval(countdownInterval);
           // 10초 카운트가 끝나면 아래 코드 실행
 
           // 화면 조정
           mainPage.style.transform = "scale(1)"; // 줌 아웃
           mainPage.style.transition = ".5s";
-
-          gameStartDisplay.style.display = "block";
 
           // 게임 선택 화면 보이기
           const gameSelection = document.getElementById("content");
@@ -535,9 +536,8 @@
       `;
 
           GlobalState.isGameActive = false;
-        } else {
-          // 카운트 다운 중에는 어둡게 처리
-          darkenGameContent();
+          countdown.remove();
+          countdown.style.display = "none";
         }
       }, 1000);
       const content = document.getElementById("content");
@@ -578,10 +578,15 @@
       clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
 
       // 카운트 다운 화면 제거
-      countdown.remove();
-      countdown.style.display = "none";
+      if (countdown) {
+        countdown.remove();
+        countdown.style.display = "none";
+      }
+
+      const grid = document.getElementById("grid"); // grid 요소를 가져옴
+      grid.classList.remove("hide");
+
       restartGame();
-      clearDarkenGameContent();
     }
   }
 
@@ -598,29 +603,5 @@
     });
 
     return buttons;
-  }
-
-  // 각 스크립트 파일의 로드 상태를 추적하기 위한 변수들
-
-  function darkenGameContent() {
-    const leftColumn = document.querySelector(
-      "#content > .grid > .left-column"
-    );
-    const rightColumn = document.querySelector(
-      "#content > .grid > .right-column"
-    );
-    leftColumn.style.filter = "brightness(0.5)";
-    rightColumn.style.filter = "brightness(0.5)";
-  }
-
-  function clearDarkenGameContent() {
-    const leftColumn = document.querySelector(
-      "#content > .grid > .left-column"
-    );
-    const rightColumn = document.querySelector(
-      "#content > .grid > .right-column"
-    );
-    leftColumn.style.filter = "";
-    rightColumn.style.filter = "";
   }
 })();

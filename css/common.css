@@ -8,6 +8,9 @@
 
 body {
   background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #game-select-container {
@@ -350,7 +353,7 @@ li#li-marker-tetris {
 
 #count-down {
   display: none;
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
