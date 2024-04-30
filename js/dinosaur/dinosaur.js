@@ -107,7 +107,10 @@ function updateGameContent() {
     </div>
   </div>
 
-  <div id="count-down" class="count-down hide">1</div>
+  <div id="count-down" class="count-down hide">
+    <p id="count-number">0</p>
+  </div>
+
               `;
 
   loadScript("js/dinosaur/main.js");

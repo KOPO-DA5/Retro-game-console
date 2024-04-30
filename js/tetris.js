@@ -58,8 +58,9 @@ function updateGameContent() {
         Pause
       </button>
     </div>
-   
-    <div id="count-down">1</div>
+    <div id="count-down" class="count-down hide">
+      <p id="count-number">0</p>
+    </div>
   </div>
   <div id="game-controls" class="game-controls hide">
       <button id="resumeButton" class="control-button" onclick="resumeGame()">

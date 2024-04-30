@@ -498,12 +498,16 @@
       let count = 10;
       countdown = document.createElement("div"); // 전역 변수 countdown에 할당
       countdown.id = "count-down";
-      countdown.textContent = count;
       countdown.style.display = "block";
 
       countdownInterval = setInterval(() => {
+        document.getElementById("count-number").textContent = count;
+        countdown.innerHTML = `
+        <p>CONTINUE?</p>
+        <p id="count-number">${count}</p>
+        <p>INSERT COIN</p>
+      `;
         count--;
-        countdown.textContent = count;
         if (count === 0) {
           clearInterval(countdownInterval);
           // 10초 카운트가 끝나면 아래 코드 실행
