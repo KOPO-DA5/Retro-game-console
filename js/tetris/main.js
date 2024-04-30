@@ -517,10 +517,12 @@
         <p>INSERT COIN</p>
       `;
         count--;
+        countdownSound.play();
         if (count === -1) {
           GlobalState.currentGame = null;
           clearInterval(countdownInterval);
           // 10초 카운트가 끝나면 아래 코드 실행
+          countdownSound.pause();
 
           // 화면 조정
           mainPage.style.transform = "scale(1)"; // 줌 아웃
@@ -537,15 +539,14 @@
       `;
 
           GlobalState.isGameActive = false;
-          countdown.remove();
-          countdown.style.display = "none";
         }
       }, 1000);
       const content = document.getElementById("content");
       content.appendChild(countdown);
     } else {
       //countdown.style.display = "none";
-
+      document.removeEventListener("keydown", handleInsertKeyPress);
+      countdownSound.pause();
       // 화면 조정
       mainPage.style.transform = "scale(1)"; // 줌 아웃
       mainPage.style.transition = ".5s";
@@ -576,6 +577,7 @@
 
       GlobalState.isGameActive = true; // 게임 종료 상태로 설정
       clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
+      countdownSound.pause();
 
       // 카운트 다운 화면 제거
       if (countdown) {

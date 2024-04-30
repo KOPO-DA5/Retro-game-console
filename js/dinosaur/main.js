@@ -139,6 +139,7 @@
         <p>INSERT COIN</p>
       `;
         count--;
+        playSound("countdownSound");
         if (count === -1) {
           clearInterval(countdownInterval);
           // 10초 카운트가 끝나면 아래 코드 실행
@@ -146,6 +147,7 @@
           document.removeEventListener("keydown", onJump);
           document.removeEventListener("keydown", modalButtonSelection);
           document.removeEventListener("keydown", handleInsertKeyPress);
+          pauseMusic("countdownSound");
           // 화면 조정
           mainPage.style.transform = "scale(1)"; // 줌 아웃
           mainPage.style.transition = ".5s";
@@ -154,7 +156,7 @@
 
           // 게임 선택 화면 보이기
           const gameSelection = document.getElementById("content");
-          mainBgm.play();
+          playSound("mainBgm");
           gameSelection.innerHTML = `
         <div id="game-selection">
           <p id="selected-game">← Dino →</p>
@@ -174,12 +176,13 @@
       // 화면 조정
       mainPage.style.transform = "scale(1)"; // 줌 아웃
       mainPage.style.transition = ".5s";
+      pauseMusic("countdownSound");
 
       gameStartDisplay.style.display = "block";
 
       // 게임 선택 화면 보이기
       const gameSelection = document.getElementById("content");
-      mainBgm.play();
+      playSound("mainBgm");
       gameSelection.innerHTML = `
       <div id="game-selection">
         <p id="selected-game">← Dino →</p>
@@ -199,7 +202,7 @@
 
       GlobalState.isGameActive = false; // 게임 종료 상태로 설정
       clearInterval(countdownInterval); // 카운트 다운 인터벌 중지
-
+      pauseMusic("countdownSound");
       // 카운트 다운 화면 제거
       if (countdown) {
         countdown.remove();
