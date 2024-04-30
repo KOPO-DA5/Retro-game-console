@@ -132,7 +132,7 @@
         <p>INSERT COIN</p>
       `;
         count--;
-        if (count === 0) {
+        if (count === -1) {
           clearInterval(countdownInterval);
           // 10초 카운트가 끝나면 아래 코드 실행
           document.removeEventListener("keydown", handleKeyDown);
