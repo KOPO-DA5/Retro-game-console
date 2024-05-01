@@ -9,6 +9,8 @@
   const buttons = gameControls.querySelectorAll("button");
   const coinDino = document.querySelector("#coin");
   game.classList.remove("hide");
+
+
   let dinoAccountValues = {
     score: 0,
     lines: 0,
@@ -657,7 +659,12 @@
       scoreElement.textContent = `${Math.round(score.score)} - ${score.name}`;
       rankingList.appendChild(scoreElement);
       if (index === 0 && isNewTopScore) {
+        console.log(isNewTopScore);
         scoreElement.classList.add("flash-effect");
+
+        confetti({
+          particleCount: 130
+        });
       }
     });
 
@@ -702,6 +709,7 @@
         break;
       case "Enter":
         // 선택된 버튼의 클릭 이벤트를 강제 실행
+        confetti.reset();
         modalButtons[modalCurrentButtonIndex].click();
         break;
     }

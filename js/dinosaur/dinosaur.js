@@ -114,10 +114,10 @@ function updateGameContent() {
   <div id="count-down" class="count-down hide">
     <p id="count-number">0</p>
   </div>
-
               `;
 
   loadScript("js/dinosaur/main.js");
+  loadScript('https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js');
 }
 
 function loadScript(src) {
