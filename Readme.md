@@ -20,10 +20,9 @@
 ---
 
 ### 팀
-- 김해린
-- 성창민
-- 송지원
-- 최승환
+| <a href="https://github.com/khr0923">김해린</a> | <a href="https://github.com/indaegu">성창민</a> | <a href="https://github.com/wldnjs7064">송지원</a> | <a href="https://github.com/ctmdghks">최승환</a> |
+|:---:|:---:|:---:|:---:|
+|<img src="https://avatars.githubusercontent.com/u/127317034?v=4" width="100%" height="100%"> | <img src="https://avatars.githubusercontent.com/u/129815040?v=4" width="100%" height="100%"> | <img src="https://avatars.githubusercontent.com/u/72726948?v=4" width="100%" height="100%"> | <img src="https://avatars.githubusercontent.com/u/167735084?v=4" width="100%" height="100%"> |
 
 ---
 
